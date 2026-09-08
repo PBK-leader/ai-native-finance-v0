@@ -1,0 +1,110 @@
+invoice_id,vendor_id,invoice_number,invoice_date,approved_date,erp_job_id,cost_code,commitment_id,invoice_amount,approval_status,posting_status,description
+INV-00001,V-E03,V-E03-00001,2026-07-10,2026-07-11,J-24017,260300,PO-0001,75920.0,approved,posted,Feeders & Distribution package
+INV-00002,V-E03,V-E03-00002,2026-07-15,2026-07-16,J-24017,260300,PO-0001,70080.0,approved,posted,Feeders & Distribution package
+INV-00003,V-G02,V-G02-00003,2026-07-10,2026-07-11,J-24017,260400,PO-0002,131040.0,approved,posted,Branch Wiring package
+INV-00004,V-G02,V-G02-00004,2026-07-15,2026-07-16,J-24017,260400,PO-0002,120960.0,approved,posted,Branch Wiring package
+INV-00005,V-G01,V-G01-00005,2026-07-10,2026-07-11,J-24017,260500,PO-0003,61360.0,approved,posted,Lighting package
+INV-00006,V-G01,V-G01-00006,2026-07-15,2026-07-16,J-24017,260500,PO-0003,56640.0,approved,posted,Lighting package
+INV-00007,V-G02,V-G02-00007,2026-07-10,2026-07-11,J-24017,260600,PO-0004,65000.0,approved,posted,Switchgear package
+INV-00008,V-G02,V-G02-00008,2026-07-15,2026-07-16,J-24017,260600,PO-0004,60000.0,approved,posted,Switchgear package
+INV-00009,V-E03,V-E03-00009,2026-07-10,2026-07-11,J-24017,260700,PO-0005,65780.0,approved,posted,Controls / Low Voltage package
+INV-00010,V-E03,V-E03-00010,2026-07-15,2026-07-16,J-24017,260700,PO-0005,60720.0,approved,posted,Controls / Low Voltage package
+INV-00011,V-E03,V-E03-00011,2026-07-10,2026-07-11,J-24017,260800,PO-0006,26780.0,approved,posted,Temporary Power package
+INV-00012,V-E03,V-E03-00012,2026-07-15,2026-07-16,J-24017,260800,PO-0006,24720.0,approved,posted,Temporary Power package
+INV-00013,V-G02,V-G02-00013,2026-07-10,2026-07-11,J-24017,269900,PO-0007,46540.0,approved,posted,Other Direct Cost package
+INV-00014,V-G02,V-G02-00014,2026-07-15,2026-07-16,J-24017,269900,PO-0007,42960.0,approved,posted,Other Direct Cost package
+INV-00015,V-M02,V-M02-00015,2026-07-10,2026-07-11,J-23981,230300,PO-0008,94900.0,approved,posted,Ductwork package
+INV-00016,V-M02,V-M02-00016,2026-07-15,2026-07-16,J-23981,230300,PO-0008,87600.0,approved,posted,Ductwork package
+INV-00017,V-M03,V-M03-00017,2026-07-10,2026-07-11,J-23981,230400,PO-0009,107380.0,approved,posted,Hydronic Piping package
+INV-00018,V-M03,V-M03-00018,2026-07-15,2026-07-16,J-23981,230400,PO-0009,99120.0,approved,posted,Hydronic Piping package
+INV-00019,V-M01,V-M01-00019,2026-07-10,2026-07-11,J-23981,230300,PO-0010,187200.0,approved,posted,Air Handling Equipment package
+INV-00020,V-M01,V-M01-00020,2026-07-15,2026-07-16,J-23981,230500,PO-0010,172800.0,approved,posted,Air Handling Equipment package
+INV-00021,V-G01,V-G01-00021,2026-07-10,2026-07-11,J-23981,230600,PO-0011,80860.0,approved,posted,Controls package
+INV-00022,V-G01,V-G01-00022,2026-07-15,2026-07-16,J-23981,230600,PO-0011,74640.0,approved,posted,Controls package
+INV-00023,V-M03,V-M03-00023,2026-07-10,2026-07-11,J-23981,230700,PO-0012,79560.0,approved,posted,Insulation package
+INV-00024,V-M03,V-M03-00024,2026-07-15,2026-07-16,J-23981,230700,PO-0012,73440.0,approved,posted,Insulation package
+INV-00025,V-G01,V-G01-00025,2026-07-10,2026-07-11,J-23981,230800,PO-0013,85020.0,approved,posted,Sheet Metal Fabrication package
+INV-00026,V-G01,V-G01-00026,2026-07-15,2026-07-16,J-23981,230800,PO-0013,78480.0,approved,posted,Sheet Metal Fabrication package
+INV-00027,V-G02,V-G02-00027,2026-07-10,2026-07-11,J-23981,230900,PO-0014,69680.0,approved,posted,Testing / Balancing package
+INV-00028,V-G02,V-G02-00028,2026-07-15,2026-07-16,J-23981,230900,PO-0014,64320.0,approved,posted,Testing / Balancing package
+INV-00029,V-M03,V-M03-00029,2026-07-10,2026-07-11,J-23981,239900,PO-0015,85280.0,approved,posted,Other Direct Cost package
+INV-00030,V-M03,V-M03-00030,2026-07-15,2026-07-16,J-23981,239900,PO-0015,78720.0,approved,posted,Other Direct Cost package
+INV-00031,V-P01,V-P01-00031,2026-07-10,2026-07-11,J-24042,220300,PO-0016,74100.0,approved,posted,Domestic Water Piping package
+INV-00032,V-P01,V-P01-00032,2026-07-15,2026-07-16,J-24042,220300,PO-0016,68400.0,approved,posted,Domestic Water Piping package
+INV-00033,V-P01,V-P01-00033,2026-07-10,2026-07-11,J-24042,220400,PO-0017,53560.0,approved,posted,Sanitary / Storm Piping package
+INV-00034,V-P01,V-P01-00034,2026-07-15,2026-07-16,J-24042,220400,PO-0017,49440.0,approved,posted,Sanitary / Storm Piping package
+INV-00035,V-P01,V-P01-00035,2026-07-10,2026-07-11,J-24042,220500,PO-0018,61880.0,approved,posted,Fixtures package
+INV-00036,V-P01,V-P01-00036,2026-07-15,2026-07-16,J-24042,220500,PO-0018,57120.0,approved,posted,Fixtures package
+INV-00037,V-P02,V-G01-00037,2026-07-10,2026-07-11,J-24042,220600,PO-0019,28600.0,approved,posted,Pumps / Equipment package
+INV-00038,V-P02,V-G01-00038,2026-07-15,2026-07-16,J-24042,220600,PO-0019,26400.0,approved,posted,Pumps / Equipment package
+INV-00039,V-G01,V-G01-00039,2026-07-10,2026-07-11,J-24042,220700,PO-0020,53900.0,approved,posted,Specialty Systems package
+INV-00040,V-G01,V-G01-00040,2026-07-15,2026-07-16,J-24042,220700,PO-0020,44100.0,approved,posted,Specialty Systems package
+INV-00041,V-G01,V-G01-00041,2026-07-10,2026-07-11,J-24042,220800,PO-0021,26260.0,approved,posted,Hangers / Supports package
+INV-00042,V-G01,V-G01-00042,2026-07-15,2026-07-16,J-24042,220800,PO-0021,24240.0,approved,posted,Hangers / Supports package
+INV-00043,V-P01,V-P01-00043,2026-07-10,2026-07-11,J-24042,229900,PO-0022,40040.0,approved,posted,Other Direct Cost package
+INV-00044,V-P01,V-P01-00044,2026-07-15,2026-07-16,J-24042,229900,PO-0022,36960.0,approved,posted,Other Direct Cost package
+INV-00045,V-G01,V-G01-00045,2026-07-10,2026-07-11,J-23874,260300,PO-0023,165620.0,approved,posted,Feeders & Distribution package
+INV-00046,V-G01,V-G01-00046,2026-07-15,2026-07-16,J-23874,260300,PO-0023,152880.0,approved,posted,Feeders & Distribution package
+INV-00047,V-E01,V-E01-00047,2026-07-10,2026-07-11,J-23874,260400,PO-0024,274560.0,approved,posted,Branch Wiring package
+INV-00048,V-E01,V-E01-00048,2026-07-15,2026-07-16,J-23874,260400,PO-0024,253440.0,approved,posted,Branch Wiring package
+INV-00049,V-G01,V-G01-00049,2026-07-10,2026-07-11,J-23874,260500,PO-0025,153920.0,approved,posted,Lighting package
+INV-00050,V-G01,V-G01-00050,2026-07-15,2026-07-16,J-23874,260500,PO-0025,142080.0,approved,posted,Lighting package
+INV-00051,V-E02,V-E02-00051,2026-07-10,2026-07-11,J-23874,260600,PO-0026,131040.0,approved,posted,Switchgear package
+INV-00052,V-E02,V-E02-00052,2026-07-15,2026-07-16,J-23874,260600,PO-0026,120960.0,approved,posted,Switchgear package
+INV-00053,V-G02,V-G02-00053,2026-07-10,2026-07-11,J-23874,260700,PO-0027,121160.0,approved,posted,Controls / Low Voltage package
+INV-00054,V-G02,V-G02-00054,2026-07-15,2026-07-16,J-23874,260700,PO-0027,111840.0,approved,posted,Controls / Low Voltage package
+INV-00055,V-G02,V-G02-00055,2026-07-10,2026-07-11,J-23874,260800,PO-0028,51220.0,approved,posted,Temporary Power package
+INV-00056,V-G02,V-G02-00056,2026-07-15,2026-07-16,J-23874,260800,PO-0028,47280.0,approved,posted,Temporary Power package
+INV-00057,V-E03,V-E03-00057,2026-07-10,2026-07-11,J-23874,269900,PO-0029,51220.0,approved,posted,Other Direct Cost package
+INV-00058,V-E03,V-E03-00058,2026-07-15,2026-07-16,J-23874,269900,PO-0029,47280.0,approved,posted,Other Direct Cost package
+INV-00059,V-G02,V-G02-00059,2026-07-10,2026-07-11,J-24008,230300,PO-0030,90740.0,approved,posted,Ductwork package
+INV-00060,V-G02,V-G02-00060,2026-07-15,2026-07-16,J-24008,230300,PO-0030,83760.0,approved,posted,Ductwork package
+INV-00061,V-M02,V-M02-00061,2026-07-10,2026-07-11,J-24008,230400,PO-0031,109720.0,approved,posted,Hydronic Piping package
+INV-00062,V-M02,V-M02-00062,2026-07-15,2026-07-16,J-24008,230400,PO-0031,101280.0,approved,posted,Hydronic Piping package
+INV-00063,V-G01,V-G01-00063,2026-07-10,2026-07-11,J-24008,230500,PO-0032,156000.0,approved,posted,Air Handling Equipment package
+INV-00064,V-G01,V-G01-00064,2026-07-15,2026-07-16,J-24008,230500,PO-0032,144000.0,approved,approved_unposted,Air Handling Equipment package
+INV-00065,V-G01,V-G01-00065,2026-07-10,2026-07-11,J-24008,230600,PO-0033,62140.0,approved,posted,Controls package
+INV-00066,V-G01,V-G01-00066,2026-07-15,2026-07-16,J-24008,230600,PO-0033,57360.0,approved,posted,Controls package
+INV-00067,V-G02,V-G02-00067,2026-07-10,2026-07-11,J-24008,230700,PO-0034,49920.0,approved,posted,Insulation package
+INV-00068,V-G02,V-G02-00068,2026-07-15,2026-07-16,J-24008,230700,PO-0034,46080.0,approved,posted,Insulation package
+INV-00069,V-G02,V-G02-00069,2026-07-10,2026-07-11,J-24008,230800,PO-0035,46800.0,approved,posted,Sheet Metal Fabrication package
+INV-00070,V-G02,V-G02-00070,2026-07-15,2026-07-16,J-24008,230800,PO-0035,43200.0,approved,posted,Sheet Metal Fabrication package
+INV-00071,V-G02,V-G02-00071,2026-07-10,2026-07-11,J-24008,230900,PO-0036,30160.0,approved,posted,Testing / Balancing package
+INV-00072,V-G02,V-G02-00072,2026-07-15,2026-07-16,J-24008,230900,PO-0036,27840.0,approved,posted,Testing / Balancing package
+INV-00073,V-G02,V-G02-00073,2026-07-10,2026-07-11,J-24008,239900,PO-0037,40040.0,approved,posted,Other Direct Cost package
+INV-00074,V-G02,V-G02-00074,2026-07-15,2026-07-16,J-24008,239900,PO-0037,36960.0,approved,posted,Other Direct Cost package
+INV-00075,V-P03,V-P03-00075,2026-07-10,2026-07-11,J-23955,220300,PO-0038,113100.0,approved,posted,Domestic Water Piping package
+INV-00076,V-P03,V-P03-00076,2026-07-15,2026-07-16,J-23955,220300,PO-0038,104400.0,approved,posted,Domestic Water Piping package
+INV-00077,V-G01,V-G01-00077,2026-07-10,2026-07-11,J-23955,220400,PO-0039,160680.0,approved,posted,Sanitary / Storm Piping package
+INV-00078,V-G01,V-G01-00078,2026-07-15,2026-07-16,J-23955,220400,PO-0039,148320.0,approved,posted,Sanitary / Storm Piping package
+INV-00079,V-G01,V-G01-00079,2026-07-10,2026-07-11,J-23955,220500,PO-0040,145340.0,approved,posted,Fixtures package
+INV-00080,V-G01,V-G01-00080,2026-07-15,2026-07-16,J-23955,220500,PO-0040,134160.0,approved,posted,Fixtures package
+INV-00081,V-P03,V-P03-00081,2026-07-10,2026-07-11,J-23955,220600,PO-0041,127400.0,approved,posted,Pumps / Equipment package
+INV-00082,V-P03,V-P03-00082,2026-07-15,2026-07-16,J-23955,220600,PO-0041,117600.0,approved,posted,Pumps / Equipment package
+INV-00083,V-G01,V-G01-00083,2026-07-10,2026-07-11,J-23955,220700,PO-0042,65260.0,approved,posted,Specialty Systems package
+INV-00084,V-G01,V-G01-00084,2026-07-15,2026-07-16,J-23955,220700,PO-0042,60240.0,approved,posted,Specialty Systems package
+INV-00085,V-G01,V-G01-00085,2026-07-10,2026-07-11,J-23955,220800,PO-0043,39780.0,approved,posted,Hangers / Supports package
+INV-00086,V-G01,V-G01-00086,2026-07-15,2026-07-16,J-23955,220800,PO-0043,36720.0,approved,posted,Hangers / Supports package
+INV-00087,V-G02,V-G02-00087,2026-07-10,2026-07-11,J-23955,229900,PO-0044,58760.0,approved,posted,Other Direct Cost package
+INV-00088,V-G02,V-G02-00088,2026-07-15,2026-07-16,J-23955,229900,PO-0044,54240.0,approved,posted,Other Direct Cost package
+INV-00089,V-E03,V-E03-00001,2026-07-19,2026-07-20,J-24017,260300,PO-0001,75920.0,approved,approved_unposted,Feeders & Distribution package
+INV-00090,V-G01,OVER-COMMIT-1004,2026-07-26,2026-07-29,J-23874,260300,PO-0023,339500.0,approved,approved_unposted,Invoice pushes cumulative approved invoices over PO
+INV-00091,V-G01,MISC-P-1001-1,2026-07-07,2026-07-08,J-24017,269900,,9499.21,approved,posted,Rental / miscellaneous field cost
+INV-00092,V-G01,MISC-P-1001-2,2026-07-14,2026-07-15,J-24017,269900,,11367.47,approved,posted,Rental / miscellaneous field cost
+INV-00093,V-G01,MISC-P-1001-3,2026-07-21,2026-07-22,J-24017,269900,,21456.94,approved,posted,Rental / miscellaneous field cost
+INV-00094,V-G01,MISC-P-1002-1,2026-07-07,2026-07-08,J-23981,239900,,12816.42,approved,posted,Rental / miscellaneous field cost
+INV-00095,V-G01,MISC-P-1002-2,2026-07-14,2026-07-15,J-23981,239900,,21461.22,approved,posted,Rental / miscellaneous field cost
+INV-00096,V-G01,MISC-P-1002-3,2026-07-21,2026-07-22,J-23981,239900,,17040.29,approved,posted,Rental / miscellaneous field cost
+INV-00097,V-G01,MISC-P-1003-1,2026-07-07,2026-07-08,J-24042,229900,,18047.72,approved,posted,Rental / miscellaneous field cost
+INV-00098,V-G01,MISC-P-1003-2,2026-07-14,2026-07-15,J-24042,229900,,9387.46,approved,posted,Rental / miscellaneous field cost
+INV-00099,V-G01,MISC-P-1003-3,2026-07-21,2026-07-22,J-24042,229900,,15553.26,approved,posted,Rental / miscellaneous field cost
+INV-00100,V-G01,MISC-P-1004-1,2026-07-07,2026-07-08,J-23874,269900,,23872.49,approved,posted,Rental / miscellaneous field cost
+INV-00101,V-G01,MISC-P-1004-2,2026-07-14,2026-07-15,J-23874,269900,,23754.89,approved,posted,Rental / miscellaneous field cost
+INV-00102,V-G01,MISC-P-1004-3,2026-07-21,2026-07-22,J-23874,269900,,16767.47,approved,posted,Rental / miscellaneous field cost
+INV-00103,V-G01,MISC-P-1005-1,2026-07-07,2026-07-08,J-24008,239900,,18459.62,approved,posted,Rental / miscellaneous field cost
+INV-00104,V-G01,MISC-P-1005-2,2026-07-14,2026-07-15,J-24008,239900,,16584.07,approved,posted,Rental / miscellaneous field cost
+INV-00105,V-G01,MISC-P-1005-3,2026-07-21,2026-07-22,J-24008,239900,,10830.32,approved,posted,Rental / miscellaneous field cost
+INV-00106,V-G01,MISC-P-1006-1,2026-07-07,2026-07-08,J-23955,229900,,10269.25,approved,posted,Rental / miscellaneous field cost
+INV-00107,V-G01,MISC-P-1006-2,2026-07-14,2026-07-15,J-23955,229900,,11134.32,approved,posted,Rental / miscellaneous field cost
+INV-00108,V-G01,MISC-P-1006-3,2026-07-21,2026-07-22,J-23955,229900,,13450.22,approved,posted,Rental / miscellaneous field cost
+INV-00109,V-P01,PENDING-TEST-001,2026-07-30,,J-24042,220500,PO-0018,8000.0,pending,pending_approval,Pending fixture invoice - negative control

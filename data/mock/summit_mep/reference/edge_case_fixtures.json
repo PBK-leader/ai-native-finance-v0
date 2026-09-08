@@ -1,0 +1,54 @@
+{
+  "description": "Small synthetic calculation fixtures for QA edge-case tests. These are not additional Summit MEP client projects.",
+  "cases": [
+    {
+      "id": "EDGE-ZERO-CONTRACT",
+      "revisedContractValue": 0,
+      "eac": 100000,
+      "adjustedCostToDate": 50000,
+      "expected": {
+        "projectedMargin": null,
+        "note": "margin not applicable; never NaN/Infinity"
+      }
+    },
+    {
+      "id": "EDGE-ZERO-EAC-ZERO-COST",
+      "revisedContractValue": 100000,
+      "eac": 0,
+      "adjustedCostToDate": 0,
+      "expected": {
+        "percentComplete": 0,
+        "note": "zero/zero treated as 0% for V0"
+      }
+    },
+    {
+      "id": "EDGE-ZERO-EAC-NONZERO-COST",
+      "revisedContractValue": 100000,
+      "eac": 0,
+      "adjustedCostToDate": 5000,
+      "expected": {
+        "percentComplete": null,
+        "dataQualityError": true,
+        "note": "do not divide"
+      }
+    },
+    {
+      "id": "EDGE-ZERO-LABOR-BUDGET",
+      "budgetedLaborHours": 0,
+      "actualLaborHours": 12,
+      "physicalProgressPct": 50,
+      "expected": {
+        "hoursConsumedPct": null,
+        "laborBurnRuleEvaluable": false
+      }
+    },
+    {
+      "id": "EDGE-ZERO-PRIOR-FORECAST",
+      "priorRemainingCost": 0,
+      "currentRemainingCost": 60000,
+      "expected": {
+        "pmChangeUsesDollarThresholdOnly": true
+      }
+    }
+  ]
+}

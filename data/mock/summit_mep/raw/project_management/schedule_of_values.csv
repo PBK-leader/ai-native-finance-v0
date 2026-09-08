@@ -1,0 +1,37 @@
+sov_item_id,pm_project_id,line_number,description,scheduled_value,approved_co_id,retainage_pct,active
+SOV-P-1001-1,PC-7712,1,Base contract line 1,500000,,5.0,true
+SOV-P-1001-2,PC-7712,2,Base contract line 2,1100000,,5.0,true
+SOV-P-1001-3,PC-7712,3,Base contract line 3,1400000,,5.0,true
+SOV-P-1001-4,PC-7712,4,Base contract line 4,1250000,,5.0,true
+SOV-P-1001-5,PC-7712,5,Base contract line 5,750000,,5.0,true
+SOV-CO-1001-A,PC-7712,6,Approved CO CO-1001-A,150000.0,CO-1001-A,5.0,true
+SOV-P-1002-1,PC-7633,1,Base contract line 1,750000,,5.0,true
+SOV-P-1002-2,PC-7633,2,Base contract line 2,1650000,,5.0,true
+SOV-P-1002-3,PC-7633,3,Base contract line 3,2100000,,5.0,true
+SOV-P-1002-4,PC-7633,4,Base contract line 4,1875000,,5.0,true
+SOV-P-1002-5,PC-7633,5,Base contract line 5,1125000,,5.0,true
+SOV-CO-1002-A,PC-7633,6,Approved CO CO-1002-A,250000.0,CO-1002-A,5.0,true
+SOV-P-1003-1,PC-7791,1,Base contract line 1,320000,,5.0,true
+SOV-P-1003-2,PC-7791,2,Base contract line 2,704000,,5.0,true
+SOV-P-1003-3,PC-7791,3,Base contract line 3,896000,,5.0,true
+SOV-P-1003-4,PC-7791,4,Base contract line 4,800000,,5.0,true
+SOV-P-1003-5,PC-7791,5,Base contract line 5,480000,,5.0,true
+SOV-CO-1003-A,PC-7791,6,Approved CO CO-1003-A,100000.0,CO-1003-A,5.0,true
+SOV-P-1004-1,PC-7480,1,Base contract line 1,920000,,5.0,true
+SOV-P-1004-2,PC-7480,2,Base contract line 2,2024000,,5.0,true
+SOV-P-1004-3,PC-7480,3,Base contract line 3,2576000,,5.0,true
+SOV-P-1004-4,PC-7480,4,Base contract line 4,2300000,,5.0,true
+SOV-P-1004-5,PC-7480,5,Base contract line 5,1380000,,5.0,true
+SOV-CO-1004-C,PC-7480,6,Approved CO CO-1004-C,95000.0,CO-1004-C,5.0,true
+SOV-P-1005-1,PC-7688,1,Base contract line 1,480000,,5.0,true
+SOV-P-1005-2,PC-7688,2,Base contract line 2,1056000,,5.0,true
+SOV-P-1005-3,PC-7688,3,Base contract line 3,1344000,,5.0,true
+SOV-P-1005-4,PC-7688,4,Base contract line 4,1200000,,5.0,true
+SOV-P-1005-5,PC-7688,5,Base contract line 5,720000,,5.0,true
+SOV-CO-1005-B,PC-7688,6,Approved CO CO-1005-B,160000.0,CO-1005-B,5.0,true
+SOV-P-1006-1,PC-7588,1,Base contract line 1,610000,,5.0,true
+SOV-P-1006-2,PC-7588,2,Base contract line 2,1342000,,5.0,true
+SOV-P-1006-3,PC-7588,3,Base contract line 3,1708000,,5.0,true
+SOV-P-1006-4,PC-7588,4,Base contract line 4,1525000,,5.0,true
+SOV-P-1006-5,PC-7588,5,Base contract line 5,915000,,5.0,true
+SOV-CO-1006-A,PC-7588,6,Approved CO CO-1006-A,210000.0,CO-1006-A,5.0,true

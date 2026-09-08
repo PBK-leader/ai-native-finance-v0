@@ -1,0 +1,123 @@
+forecast_snapshot_id,pm_project_id,as_of_date,cost_code,pm_remaining_uncommitted_cost,pm_remaining_labor_hours,comment,updated_by_person_id
+FS-P-1001-260100-PRIOR,PC-7712,2026-06-30,260100,40000,1855.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260100-CURR,PC-7712,2026-07-28,260100,56000,1963.0,Updated for slower field productivity and higher remaining crew/material needs.,PERS-PM1
+FS-P-1001-260200-PRIOR,PC-7712,2026-06-30,260200,226000,9761.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260200-CURR,PC-7712,2026-07-28,260200,320000,11215.0,Updated for slower field productivity and higher remaining crew/material needs.,PERS-PM1
+FS-P-1001-260300-PRIOR,PC-7712,2026-06-30,260300,110000,2049.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260300-CURR,PC-7712,2026-07-28,260300,85000,1335.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM1
+FS-P-1001-260400-PRIOR,PC-7712,2026-06-30,260400,131000,3114.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260400-CURR,PC-7712,2026-07-28,260400,187000,3598.0,,PERS-PM1
+FS-P-1001-260500-PRIOR,PC-7712,2026-06-30,260500,89000,1638.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260500-CURR,PC-7712,2026-07-28,260500,67000,1058.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM1
+FS-P-1001-260600-PRIOR,PC-7712,2026-06-30,260600,75000,,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260600-CURR,PC-7712,2026-07-28,260600,57000,,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM1
+FS-P-1001-260700-PRIOR,PC-7712,2026-06-30,260700,77000,158.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260700-CURR,PC-7712,2026-07-28,260700,59000,104.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM1
+FS-P-1001-260800-PRIOR,PC-7712,2026-06-30,260800,31000,260.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260800-CURR,PC-7712,2026-07-28,260800,23000,164.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM1
+FS-P-1001-260900-PRIOR,PC-7712,2026-06-30,260900,27000,1178.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-260900-CURR,PC-7712,2026-07-28,260900,21000,724.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM1
+FS-P-1001-269900-PRIOR,PC-7712,2026-06-30,269900,44000,181.0,Prior-period forecast snapshot.,PERS-PM1
+FS-P-1001-269900-CURR,PC-7712,2026-07-28,269900,34000,117.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM1
+FS-P-1002-230100-PRIOR,PC-7633,2026-05-31,230100,75000,3016.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230100-CURR,PC-7633,2026-06-20,230100,73000,2561.0,Routine monthly refresh; no material scope change.,PERS-PM2
+FS-P-1002-230200-PRIOR,PC-7633,2026-05-31,230200,263000,11098.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230200-CURR,PC-7633,2026-06-20,230200,448000,15680.0,Updated for slower field productivity and higher remaining crew/material needs.,PERS-PM2
+FS-P-1002-230300-PRIOR,PC-7633,2026-05-31,230300,111000,2246.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230300-CURR,PC-7633,2026-06-20,230300,189000,2975.0,Updated for slower field productivity and higher remaining crew/material needs.,PERS-PM2
+FS-P-1002-230400-PRIOR,PC-7633,2026-05-31,230400,136000,2789.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230400-CURR,PC-7633,2026-06-20,230400,133000,2333.0,Routine monthly refresh; no material scope change.,PERS-PM2
+FS-P-1002-230500-PRIOR,PC-7633,2026-05-31,230500,200000,,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230500-CURR,PC-7633,2026-06-20,230500,340000,,Updated for slower field productivity and higher remaining crew/material needs.,PERS-PM2
+FS-P-1002-230600-PRIOR,PC-7633,2026-05-31,230600,97000,200.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230600-CURR,PC-7633,2026-06-20,230600,95000,166.0,Routine monthly refresh; no material scope change.,PERS-PM2
+FS-P-1002-230700-PRIOR,PC-7633,2026-05-31,230700,76000,154.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230700-CURR,PC-7633,2026-06-20,230700,75000,131.0,Routine monthly refresh; no material scope change.,PERS-PM2
+FS-P-1002-230800-PRIOR,PC-7633,2026-05-31,230800,83000,678.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230800-CURR,PC-7633,2026-06-20,230800,82000,571.0,Routine monthly refresh; no material scope change.,PERS-PM2
+FS-P-1002-230900-PRIOR,PC-7633,2026-05-31,230900,41000,171.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-230900-CURR,PC-7633,2026-06-20,230900,40000,140.0,Routine monthly refresh; no material scope change.,PERS-PM2
+FS-P-1002-239900-PRIOR,PC-7633,2026-05-31,239900,63000,263.0,Prior-period forecast snapshot.,PERS-PM2
+FS-P-1002-239900-CURR,PC-7633,2026-06-20,239900,62000,217.0,Routine monthly refresh; no material scope change.,PERS-PM2
+FS-P-1003-220100-PRIOR,PC-7791,2026-06-30,220100,46000,1851.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220100-CURR,PC-7791,2026-07-28,220100,31000,1099.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220200-PRIOR,PC-7791,2026-06-30,220200,153000,6222.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220200-CURR,PC-7791,2026-07-28,220200,105000,3682.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220300-PRIOR,PC-7791,2026-06-30,220300,99000,1996.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220300-CURR,PC-7791,2026-07-28,220300,69000,1202.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220400-PRIOR,PC-7791,2026-06-30,220400,97000,1921.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220400-CURR,PC-7791,2026-07-28,220400,66000,1164.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220500-PRIOR,PC-7791,2026-06-30,220500,90000,360.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220500-CURR,PC-7791,2026-07-28,220500,63000,219.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220600-PRIOR,PC-7791,2026-06-30,220600,69000,,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220600-CURR,PC-7791,2026-07-28,220600,48000,,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220700-PRIOR,PC-7791,2026-06-30,220700,50000,98.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220700-CURR,PC-7791,2026-07-28,220700,34000,60.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220800-PRIOR,PC-7791,2026-06-30,220800,38000,226.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220800-CURR,PC-7791,2026-07-28,220800,26000,137.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-220900-PRIOR,PC-7791,2026-06-30,220900,29000,1140.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-220900-CURR,PC-7791,2026-07-28,220900,20000,687.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1003-229900-PRIOR,PC-7791,2026-06-30,229900,48000,189.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-229900-CURR,PC-7791,2026-07-28,229900,33000,116.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM3
+FS-P-1004-260100-PRIOR,PC-7480,2026-06-30,260100,90000,3952.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260100-CURR,PC-7480,2026-07-28,260100,64000,2232.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1004-260200-PRIOR,PC-7480,2026-06-30,260200,381000,16954.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260200-CURR,PC-7480,2026-07-28,260200,397000,13908.0,Routine monthly refresh; no material scope change.,PERS-PM4
+FS-P-1004-260300-PRIOR,PC-7480,2026-06-30,260300,132000,2822.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260300-CURR,PC-7480,2026-07-28,260300,138000,2177.0,Routine monthly refresh; no material scope change.,PERS-PM4
+FS-P-1004-260400-PRIOR,PC-7480,2026-06-30,260400,242000,5076.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260400-CURR,PC-7480,2026-07-28,260400,172000,2984.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1004-260500-PRIOR,PC-7480,2026-06-30,260500,132000,2614.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260500-CURR,PC-7480,2026-07-28,260500,94000,1487.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1004-260600-PRIOR,PC-7480,2026-06-30,260600,140000,,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260600-CURR,PC-7480,2026-07-28,260600,100000,,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1004-260700-PRIOR,PC-7480,2026-06-30,260700,121000,258.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260700-CURR,PC-7480,2026-07-28,260700,86000,150.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1004-260800-PRIOR,PC-7480,2026-06-30,260800,56000,490.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260800-CURR,PC-7480,2026-07-28,260800,40000,283.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1004-260900-PRIOR,PC-7480,2026-06-30,260900,43000,1946.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-260900-CURR,PC-7480,2026-07-28,260900,30000,1049.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1004-269900-PRIOR,PC-7480,2026-06-30,269900,51000,235.0,Prior-period forecast snapshot.,PERS-PM4
+FS-P-1004-269900-CURR,PC-7480,2026-07-28,269900,36000,126.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM4
+FS-P-1005-230100-PRIOR,PC-7688,2026-06-30,230100,55000,2235.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230100-CURR,PC-7688,2026-07-28,230100,45000,1573.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-230200-PRIOR,PC-7688,2026-06-30,230200,196000,7880.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230200-CURR,PC-7688,2026-07-28,230200,160000,5599.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-230300-PRIOR,PC-7688,2026-06-30,230300,119000,2177.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230300-CURR,PC-7688,2026-07-28,230300,97000,1532.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-230400-PRIOR,PC-7688,2026-06-30,230400,132000,2622.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230400-CURR,PC-7688,2026-07-28,230400,108000,1894.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-230500-PRIOR,PC-7688,2026-06-30,230500,188000,,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230500-CURR,PC-7688,2026-07-28,230500,153000,,,PERS-PM5
+FS-P-1005-230600-PRIOR,PC-7688,2026-06-30,230600,105000,207.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230600-CURR,PC-7688,2026-07-28,230600,86000,150.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-230700-PRIOR,PC-7688,2026-06-30,230700,66000,131.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230700-CURR,PC-7688,2026-07-28,230700,54000,95.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-230800-PRIOR,PC-7688,2026-06-30,230800,79000,623.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230800-CURR,PC-7688,2026-07-28,230800,64000,451.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-230900-PRIOR,PC-7688,2026-06-30,230900,45000,174.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-230900-CURR,PC-7688,2026-07-28,230900,36000,126.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1005-239900-PRIOR,PC-7688,2026-06-30,239900,71000,277.0,Prior-period forecast snapshot.,PERS-PM5
+FS-P-1005-239900-CURR,PC-7688,2026-07-28,239900,57000,201.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM5
+FS-P-1006-220100-PRIOR,PC-7588,2026-06-30,220100,97000,4025.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220100-CURR,PC-7588,2026-07-28,220100,55000,1942.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220200-PRIOR,PC-7588,2026-06-30,220200,256000,11140.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220200-CURR,PC-7588,2026-07-28,220200,146000,5114.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220300-PRIOR,PC-7588,2026-06-30,220300,120000,2736.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220300-CURR,PC-7588,2026-07-28,220300,68000,1193.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220400-PRIOR,PC-7588,2026-06-30,220400,166000,3492.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220400-CURR,PC-7588,2026-07-28,220400,95000,1661.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220500-PRIOR,PC-7588,2026-06-30,220500,158000,660.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220500-CURR,PC-7588,2026-07-28,220500,90000,315.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220600-PRIOR,PC-7588,2026-06-30,220600,115000,,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220600-CURR,PC-7588,2026-07-28,220600,66000,,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220700-PRIOR,PC-7588,2026-06-30,220700,49000,114.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220700-CURR,PC-7588,2026-07-28,220700,28000,49.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220800-PRIOR,PC-7588,2026-06-30,220800,47000,320.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220800-CURR,PC-7588,2026-07-28,220800,27000,144.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-220900-PRIOR,PC-7588,2026-06-30,220900,54000,2247.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-220900-CURR,PC-7588,2026-07-28,220900,31000,1080.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1006-229900-PRIOR,PC-7588,2026-06-30,229900,79000,331.0,Prior-period forecast snapshot.,PERS-PM6
+FS-P-1006-229900-CURR,PC-7588,2026-07-28,229900,45000,158.0,Reduced remaining estimate after July progress and scope/commitment review.,PERS-PM6
+FS-P-1003-229950-PRIOR,PC-7791,2026-06-30,229950,0,0.0,Prior-period forecast snapshot.,PERS-PM3
+FS-P-1003-229950-CURR,PC-7791,2026-07-28,229950,0,0.0,Routine monthly refresh; no material scope change.,PERS-PM3

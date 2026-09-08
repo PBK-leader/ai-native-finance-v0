@@ -1,0 +1,60 @@
+scenario_id,rule_id,project_id,workstream,source_record,expected_owner,blocking,notes
+EX-001,AP_COMMITMENT_OVERRUN,P-1004,AP,INV-00090,Project Accountant,True,"Cumulative valid invoices exceed commitment by $35,000."
+EX-002,AP_COST_CODE_MISMATCH,P-1002,AP,INV-00019,Project Accountant,True,Invoice cost code 230300 differs from commitment cost code 230500.
+EX-003,AP_DUPLICATE,P-1001,AP,INV-00089,Project Accountant,True,Exact vendor + invoice number duplicate.
+EX-004,AP_MISSING_POSTING,P-1005,AP,INV-00064,Project Accountant,True,Approved invoice has no job-cost posting after 15 days.
+EX-005,AP_RNI,P-1001,AP,PO-0004,Project Accountant,True,"Received-not-invoiced gap $120,000."
+EX-006,AP_RNI,P-1002,AP,PO-0010,Project Accountant,True,"Received-not-invoiced gap $230,000."
+EX-007,AP_RNI,P-1005,AP,PO-0032,Project Accountant,True,"Received-not-invoiced gap $155,000."
+EX-008,BILL_SOV_MISMATCH,P-1002,Billing,P-1002,Project Accountant,True,"SOV differs from revised contract by $-85,000; group with underlying missing-CO exceptions."
+EX-009,BILL_SOV_MISMATCH,P-1004,Billing,P-1004,Project Accountant,True,"SOV differs from revised contract by $-420,000; group with underlying missing-CO exceptions."
+EX-010,BILL_UNDERBILLING,P-1001,Billing,P-1001,Project Accountant,False,"Underbilling $235,678."
+EX-011,BILL_UNDERBILLING,P-1002,Billing,P-1002,Project Accountant,False,"Underbilling $275,411."
+EX-012,BILL_UNDERBILLING,P-1004,Billing,P-1004,Project Accountant,False,"Underbilling $515,275."
+EX-013,CO_APPROVED_UNBILLED,P-1001,Change Orders,CO-1001-A,Project Accountant,False,"Approved CO has $67,500 unbilled after 26 days."
+EX-014,CO_APPROVED_UNBILLED,P-1005,Change Orders,CO-1005-B,Project Accountant,False,"Approved CO has $72,000 unbilled after 23 days."
+EX-015,CO_LARGE_AGING,P-1001,Change Orders,CO-1001-B,PM,False,"Pending CO $120,000, 47 days open."
+EX-016,CO_LARGE_AGING,P-1002,Change Orders,CO-1002-B,PM,False,"Pending CO $400,000, 71 days open."
+EX-017,CO_LARGE_AGING,P-1004,Change Orders,CO-1004-B,PM,False,"Pending CO $310,000, 65 days open."
+EX-018,CO_LARGE_AGING,P-1005,Change Orders,CO-1005-A,PM,False,"Pending CO $180,000, 52 days open."
+EX-019,CO_MISSING_SOV,P-1002,Change Orders,CO-1002-C,Project Accountant,True,Approved CO absent from SOV.
+EX-020,CO_MISSING_SOV,P-1004,Change Orders,CO-1004-A,Project Accountant,True,Approved CO absent from SOV.
+EX-021,CO_UNAPPROVED_COST,P-1001,Change Orders,CO-1001-B,PM,True,"$42,000 cost incurred on pending CO."
+EX-022,CO_UNAPPROVED_COST,P-1002,Change Orders,CO-1002-B,PM,True,"$180,000 cost incurred on pending CO."
+EX-023,CO_UNAPPROVED_COST,P-1004,Change Orders,CO-1004-B,PM,True,"$160,000 cost incurred on pending CO."
+EX-024,CO_UNAPPROVED_COST,P-1005,Change Orders,CO-1005-A,PM,True,"$76,000 cost incurred on pending CO."
+EX-025,DQ_PROJECT_MAP,,Data Quality,PC-UNKNOWN-88,Project Accountant,True,Source project has no canonical mapping.
+EX-026,DQ_UNMAPPED_COST_CODE,P-1005,Data Quality,JC-00388:239777,Project Accountant,True,Material project-mapped transaction uses unmapped cost code.
+EX-027,FC_COMPLETE_CODE_REMAINING,P-1006,Forecast,220900,PM,False,"Progress 100% but $31,000 remaining forecast."
+EX-028,FC_COST_CODE_OVERRUN,P-1001,Forecast,260300,PM,False,"Cost-code EAC $595,777 is 21.1% above current budget $492,000."
+EX-029,FC_COST_CODE_OVERRUN,P-1001,Forecast,260400,PM,False,"Cost-code EAC $787,911 is 37.3% above current budget $574,000."
+EX-030,FC_COST_CODE_OVERRUN,P-1001,Forecast,260500,PM,False,"Cost-code EAC $513,441 is 25.2% above current budget $410,000."
+EX-031,FC_COST_CODE_OVERRUN,P-1001,Forecast,260600,PM,False,"Cost-code EAC $497,469 is 10.3% above current budget $451,000."
+EX-032,FC_COST_CODE_OVERRUN,P-1002,Forecast,230300,PM,False,"Cost-code EAC $1,075,621 is 28.4% above current budget $838,000."
+EX-033,FC_COST_CODE_OVERRUN,P-1002,Forecast,230400,PM,False,"Cost-code EAC $907,515 is 17.2% above current budget $774,000."
+EX-034,FC_COST_CODE_OVERRUN,P-1003,Forecast,220300,PM,False,"Cost-code EAC $448,041 is 18.5% above current budget $378,000."
+EX-035,FC_COST_CODE_OVERRUN,P-1003,Forecast,229900,PM,False,"Cost-code EAC $203,590 is 25.7% above current budget $162,000."
+EX-036,FC_COST_CODE_OVERRUN,P-1004,Forecast,260400,PM,False,"Cost-code EAC $1,567,082 is 44.4% above current budget $1,085,000."
+EX-037,FC_COST_CODE_OVERRUN,P-1004,Forecast,260500,PM,False,"Cost-code EAC $1,035,538 is 33.6% above current budget $775,000."
+EX-038,FC_COST_CODE_OVERRUN,P-1004,Forecast,260600,PM,False,"Cost-code EAC $950,770 is 11.6% above current budget $852,000."
+EX-039,FC_COST_CODE_OVERRUN,P-1004,Forecast,260800,PM,False,"Cost-code EAC $358,946 is 15.8% above current budget $310,000."
+EX-040,FC_COST_CODE_OVERRUN,P-1005,Forecast,230300,PM,False,"Cost-code EAC $604,670 is 15.0% above current budget $526,000."
+EX-041,FC_COST_CODE_OVERRUN,P-1005,Forecast,230400,PM,False,"Cost-code EAC $535,984 is 10.3% above current budget $486,000."
+EX-042,FC_COST_CODE_OVERRUN,P-1005,Forecast,230800,PM,False,"Cost-code EAC $322,951 is 13.7% above current budget $284,000."
+EX-043,FC_COST_CODE_OVERRUN,P-1005,Forecast,239900,PM,False,"Cost-code EAC $270,803 is 11.0% above current budget $244,000."
+EX-044,FC_COST_CODE_OVERRUN,P-1006,Forecast,220300,PM,False,"Cost-code EAC $963,390 is 31.1% above current budget $735,000."
+EX-045,FC_COST_CODE_OVERRUN,P-1006,Forecast,220400,PM,False,"Cost-code EAC $900,589 is 32.1% above current budget $682,000."
+EX-046,FC_COST_CODE_OVERRUN,P-1006,Forecast,220700,PM,False,"Cost-code EAC $371,455 is 17.9% above current budget $315,000."
+EX-047,FC_COST_CODE_OVERRUN,P-1006,Forecast,229900,PM,False,"Cost-code EAC $361,120 is 14.3% above current budget $316,000."
+EX-048,FC_EAC_DETERIORATION,P-1001,Forecast,P-1001,Controller,False,"EAC increased $527,908 vs prior baseline."
+EX-049,FC_EAC_DETERIORATION,P-1002,Forecast,P-1002,Controller,False,"EAC increased $471,515 vs prior baseline."
+EX-050,FC_EAC_DETERIORATION,P-1004,Forecast,P-1004,Controller,False,"EAC increased $368,723 vs prior baseline."
+EX-051,FC_LABOR_BURN,P-1001,Forecast,260200,PM,False,Hours consumed are 65.0% vs 52.0% progress.
+EX-052,FC_LABOR_BURN,P-1001,Forecast,260400,PM,False,Hours consumed are 62.5% vs 50.0% progress.
+EX-053,FC_MARGIN_FADE,P-1001,Forecast,P-1001,Controller,False,Margin fade 6.14 percentage points.
+EX-054,FC_PM_CHANGE_NO_EXPLANATION,P-1001,Forecast,260400,PM,False,Material PM forecast change has blank current explanation.
+EX-055,FC_PM_CHANGE_NO_EXPLANATION,P-1005,Forecast,230500,PM,False,Material PM forecast change has blank current explanation.
+EX-056,FC_PROFIT_RISK_CONCENTRATION,P-1002,Forecast,P-1002,Controller,False,"Pending CO incurred-cost exposure $180,000 is material vs projected profit $1,193,029."
+EX-057,FC_PROFIT_RISK_CONCENTRATION,P-1004,Forecast,P-1004,Controller,False,"Pending CO incurred-cost exposure $160,000 is material vs projected profit $1,264,727."
+EX-058,FC_STALE,P-1002,Forecast,PC-7633 latest 2026-06-20,PM,True,Latest PM forecast is 41 days old.
+EX-059,LABOR_MISSING_POSTING,P-1004,Forecast,PC-7480:260200 unposted labor,Project Accountant,True,40 approved time rows older than posting lag are unposted.

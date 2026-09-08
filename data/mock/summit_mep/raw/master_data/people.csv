@@ -1,0 +1,12 @@
+person_id,person_name,role,function,trade,email
+PERS-CFO,Dana Ruiz,CFO,Finance,,dana.ruiz@example.test
+PERS-CTRL,Sam Carter,Controller,Finance,,sam.carter@example.test
+PERS-PA1,Jamie Nguyen,Project Accountant,Finance,,jamie.nguyen@example.test
+PERS-PA2,Priya Shah,Project Accountant,Finance,,priya.shah@example.test
+PERS-PM1,Alex Morgan,Project Manager,Operations,Electrical,alex.morgan@example.test
+PERS-PM2,Jordan Lee,Project Manager,Operations,Mechanical/HVAC,jordan.lee@example.test
+PERS-PM3,Taylor Brooks,Project Manager,Operations,Plumbing,taylor.brooks@example.test
+PERS-PM4,Morgan Chen,Project Manager,Operations,Electrical,morgan.chen@example.test
+PERS-PM5,Casey Patel,Project Manager,Operations,Mechanical/HVAC,casey.patel@example.test
+PERS-PM6,Riley Thompson,Project Manager,Operations,Plumbing,riley.thompson@example.test
+PERS-PM7,Jamie Fox,Project Manager,Operations,Mechanical/HVAC,jamie.fox@example.test

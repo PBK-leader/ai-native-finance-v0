@@ -1,0 +1,16 @@
+change_order_id,pm_project_id,description,status,requested_value,approved_value,estimated_cost,cost_incurred_to_date,submitted_date,days_open,approval_date,billing_status
+CO-1001-A,PC-7712,Emergency power scope,approved,150000,150000,90000,90000,2026-06-25,36,2026-07-05,partially_billed
+CO-1001-B,PC-7712,Lighting controls redesign,pending,120000,0,85000,42000,2026-06-14,47,,not_billable
+CO-1002-A,PC-7633,Isolation-room HVAC,approved,250000,250000,170000,150000,2026-06-22,39,2026-07-02,billed
+CO-1002-B,PC-7633,Mechanical room redesign,pending,400000,0,260000,180000,2026-05-21,71,,not_billable
+CO-1002-C,PC-7633,Temporary cooling,approved,85000,85000,62000,61000,2026-06-21,40,2026-06-25,not_billed
+CO-1003-A,PC-7791,Process-water drops,approved,100000,100000,65000,58000,2026-07-10,21,2026-07-15,billed
+CO-1003-B,PC-7791,Restroom relocation,pending,28000,0,18000,5000,2026-07-19,12,,not_billable
+CO-1004-A,PC-7480,Lab equipment feeders,approved,420000,420000,280000,250000,2026-06-20,41,2026-06-30,not_billed
+CO-1004-B,PC-7480,Lighting control redesign,pending,310000,0,210000,160000,2026-05-27,65,,not_billable
+CO-1004-C,PC-7480,Temporary power extension,approved,95000,95000,70000,69000,2026-07-14,17,2026-07-14,billed
+CO-1005-A,PC-7688,Kitchen exhaust redesign,pending,180000,0,125000,76000,2026-06-09,52,,not_billable
+CO-1005-B,PC-7688,Additional FCUs,approved,160000,160000,115000,90000,2026-07-06,25,2026-07-08,partially_billed
+CO-1006-A,PC-7588,Additional process piping,approved,210000,210000,145000,138000,2026-06-26,35,2026-06-28,billed
+CO-1006-B,PC-7588,Pump relocation,pending,55000,0,38000,12000,2026-07-03,28,,not_billable
+CO-1003-C,PC-7791,Rejected owner-requested fixture upgrade,rejected,75000,0,52000,0,2026-07-12,19,,rejected

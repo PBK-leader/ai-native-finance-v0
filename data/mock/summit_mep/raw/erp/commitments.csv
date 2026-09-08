@@ -1,0 +1,45 @@
+commitment_id,erp_job_id,cost_code,vendor_id,description,committed_amount,erp_invoiced_to_date_snapshot,status,created_date
+PO-0001,J-24017,260300,V-E03,Feeders & Distribution package,241000,146000.0,open,2026-03-15
+PO-0002,J-24017,260400,V-G02,Branch Wiring package,383000,252000.0,open,2026-03-15
+PO-0003,J-24017,260500,V-G01,Lighting package,235000,118000.0,open,2026-03-15
+PO-0004,J-24017,260600,V-G02,Switchgear package,300000,125000.0,open,2026-03-15
+PO-0005,J-24017,260700,V-E03,Controls / Low Voltage package,244000,126500.0,open,2026-03-15
+PO-0006,J-24017,260800,V-E03,Temporary Power package,86000,51500.0,open,2026-03-15
+PO-0007,J-24017,269900,V-G02,Other Direct Cost package,136000,89500.0,open,2026-03-15
+PO-0008,J-23981,230300,V-M02,Ductwork package,391000,182500.0,open,2026-03-15
+PO-0009,J-23981,230400,V-M03,Hydronic Piping package,380000,206500.0,open,2026-03-15
+PO-0010,J-23981,230500,V-M01,Air Handling Equipment package,700000,360000.0,open,2026-03-15
+PO-0011,J-23981,230600,V-G01,Controls package,289000,155500.0,open,2026-03-15
+PO-0012,J-23981,230700,V-M03,Insulation package,257000,153000.0,open,2026-03-15
+PO-0013,J-23981,230800,V-G01,Sheet Metal Fabrication package,300000,163500.0,open,2026-03-15
+PO-0014,J-23981,230900,V-G02,Testing / Balancing package,193000,134000.0,open,2026-03-15
+PO-0015,J-23981,239900,V-M03,Other Direct Cost package,281000,164000.0,open,2026-03-15
+PO-0016,J-24042,220300,V-P01,Domestic Water Piping package,239000,142500.0,open,2026-03-15
+PO-0017,J-24042,220400,V-P01,Sanitary / Storm Piping package,164000,103000.0,open,2026-03-15
+PO-0018,J-24042,220500,V-P01,Fixtures package,236000,119000.0,open,2026-03-15
+PO-0019,J-24042,220600,V-P02,Pumps / Equipment package,121000,55000.0,open,2026-03-15
+PO-0020,J-24042,220700,V-G01,Specialty Systems package,98000,98000.0,closed,2026-03-15
+PO-0021,J-24042,220800,V-G01,Hangers / Supports package,98000,50500.0,open,2026-03-15
+PO-0022,J-24042,229900,V-P01,Other Direct Cost package,121000,77000.0,open,2026-03-15
+PO-0023,J-23874,260300,V-G01,Feeders & Distribution package,623000,658000.0,open,2026-03-15
+PO-0024,J-23874,260400,V-E01,Branch Wiring package,850000,528000.0,open,2026-03-15
+PO-0025,J-23874,260500,V-G01,Lighting package,479000,296000.0,open,2026-03-15
+PO-0026,J-23874,260600,V-E02,Switchgear package,521000,252000.0,open,2026-03-15
+PO-0027,J-23874,260700,V-G02,Controls / Low Voltage package,382000,233000.0,open,2026-03-15
+PO-0028,J-23874,260800,V-G02,Temporary Power package,178000,98500.0,open,2026-03-15
+PO-0029,J-23874,269900,V-E03,Other Direct Cost package,180000,98500.0,open,2026-03-15
+PO-0030,J-24008,230300,V-G02,Ductwork package,291000,174500.0,open,2026-03-15
+PO-0031,J-24008,230400,V-M02,Hydronic Piping package,307000,211000.0,open,2026-03-15
+PO-0032,J-24008,230500,V-G01,Air Handling Equipment package,510000,300000.0,open,2026-03-15
+PO-0033,J-24008,230600,V-G01,Controls package,215000,119500.0,open,2026-03-15
+PO-0034,J-24008,230700,V-G02,Insulation package,143000,96000.0,open,2026-03-15
+PO-0035,J-24008,230800,V-G02,Sheet Metal Fabrication package,197000,90000.0,open,2026-03-15
+PO-0036,J-24008,230900,V-G02,Testing / Balancing package,112000,58000.0,open,2026-03-15
+PO-0037,J-24008,239900,V-G02,Other Direct Cost package,158000,77000.0,open,2026-03-15
+PO-0038,J-23955,220300,V-P03,Domestic Water Piping package,340000,217500.0,open,2026-03-15
+PO-0039,J-23955,220400,V-G01,Sanitary / Storm Piping package,521000,309000.0,open,2026-03-15
+PO-0040,J-23955,220500,V-G01,Fixtures package,413000,279500.0,open,2026-03-15
+PO-0041,J-23955,220600,V-P03,Pumps / Equipment package,359000,245000.0,open,2026-03-15
+PO-0042,J-23955,220700,V-G01,Specialty Systems package,226000,125500.0,open,2026-03-15
+PO-0043,J-23955,220800,V-G01,Hangers / Supports package,125000,76500.0,open,2026-03-15
+PO-0044,J-23955,229900,V-G02,Other Direct Cost package,214000,113000.0,open,2026-03-15

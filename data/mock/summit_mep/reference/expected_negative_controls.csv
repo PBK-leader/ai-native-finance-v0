@@ -1,0 +1,7 @@
+control_id,source_record,expected_behavior,must_not_trigger
+NC-01,PO-0020,Closed/full-invoiced PO has zero remaining commitment and does not create RNI.,AP_RNI;AP_COMMITMENT_OVERRUN
+NC-02,PC-7791:229950,Zero-budget/zero-hour unused labor code returns not-applicable labor ratios without NaN/Infinity.,DQ_UNBUDGETED_COST;FC_LABOR_BURN
+NC-03,CO-1003-C,Rejected change order is excluded from revised contract and does not require an SOV item.,CO_MISSING_SOV;CO_UNAPPROVED_COST
+NC-04,INV-00109,"Pending/non-approved invoice does not reduce commitment, create posted cost, or create AP-missing-posting.",AP_MISSING_POSTING
+NC-05,P-1003,"Current positive billing position is overbilling, not underbilling.",BILL_UNDERBILLING
+NC-06,all billing rows,Retainage matches SOV retainage within tolerance.,BILL_RETAINAGE

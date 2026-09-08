@@ -1,0 +1,12 @@
+vendor_id,vendor_name,category,trade_scope,active
+V-E01,Metro Electric Supply,material,Electrical,true
+V-E02,Gridline Switchgear,equipment,Electrical,true
+V-E03,Bright Controls LLC,subcontract,Electrical,true
+V-M01,Apex Air Systems,equipment,Mechanical/HVAC,true
+V-M02,Climate Supply Co.,material,Mechanical/HVAC,true
+V-M03,Precision Controls Inc.,subcontract,Mechanical/HVAC,true
+V-P01,PipeWorks Supply,material,Plumbing,true
+V-P02,FlowTech Equipment,equipment,Plumbing,true
+V-P03,Pioneer Plumbing Services,subcontract,Plumbing,true
+V-G01,Unified Rentals,other,All,true
+V-G02,Metro Testing Services,subcontract,All,true

@@ -1,0 +1,31 @@
+@import 'tailwindcss';
+
+/*
+ * A deliberately quiet palette. This is a finance tool: colour is reserved for status and severity so that
+ * when something is red, it means something.
+ */
+@theme {
+  --color-ink: #0f172a;
+  --color-muted: #64748b;
+  --color-line: #e2e8f0;
+  --color-surface: #ffffff;
+  --color-canvas: #f8fafc;
+
+  --color-blocking: #b91c1c;
+  --color-high: #c2410c;
+  --color-medium: #a16207;
+  --color-ok: #15803d;
+  --color-accent: #1d4ed8;
+}
+
+html, body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  font-feature-settings: 'tnum' 1, 'cv05' 1;
+}
+
+/* Financial figures line up column-wise when they use tabular numerals. */
+.tabular { font-variant-numeric: tabular-nums; }

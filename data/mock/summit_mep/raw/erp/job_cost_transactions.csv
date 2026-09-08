@@ -1,0 +1,443 @@
+job_cost_txn_id,erp_job_id,posting_date,accounting_period,cost_code,cost_type,amount,source_type,source_doc_id,description
+JC-00001,J-23874,2026-04-26,2026-04,260300,Labor/Material,101611.95,Other,HIST-P-1004-260300-4,Historical Feeders & Distribution cost
+JC-00002,J-23874,2026-04-26,2026-04,260400,Labor/Material,46641.49,Other,HIST-P-1004-260400-4,Historical Branch Wiring cost
+JC-00003,J-23874,2026-04-26,2026-04,260500,Labor/Material,67153.6,Other,HIST-P-1004-260500-4,Historical Lighting cost
+JC-00004,J-23874,2026-04-26,2026-04,260600,Equipment,98930.96,Other,HIST-P-1004-260600-4,Historical Switchgear cost
+JC-00005,J-23874,2026-04-26,2026-04,260700,Subcontract,38318.37,Other,HIST-P-1004-260700-4,Historical Controls / Low Voltage cost
+JC-00006,J-23874,2026-04-26,2026-04,260800,Other,30141.15,Other,HIST-P-1004-260800-4,Historical Temporary Power cost
+JC-00007,J-23874,2026-04-26,2026-04,269900,Other,30145.87,Other,HIST-P-1004-269900-4,Historical Other Direct Cost cost
+JC-00008,J-23955,2026-04-26,2026-04,220300,Labor/Material,89167.44,Other,HIST-P-1006-220300-4,Historical Domestic Water Piping cost
+JC-00009,J-23955,2026-04-26,2026-04,220400,Labor/Material,23520.16,Other,HIST-P-1006-220400-4,Historical Sanitary / Storm Piping cost
+JC-00010,J-23955,2026-04-26,2026-04,220500,Material,21922.72,Other,HIST-P-1006-220500-4,Historical Fixtures cost
+JC-00011,J-23955,2026-04-26,2026-04,220600,Equipment,6998.78,Other,HIST-P-1006-220600-4,Historical Pumps / Equipment cost
+JC-00012,J-23955,2026-04-26,2026-04,220700,Subcontract,32085.92,Other,HIST-P-1006-220700-4,Historical Specialty Systems cost
+JC-00013,J-23955,2026-04-26,2026-04,220800,Material,30113.54,Other,HIST-P-1006-220800-4,Historical Hangers / Supports cost
+JC-00014,J-23955,2026-04-26,2026-04,229900,Other,14716.21,Other,HIST-P-1006-229900-4,Historical Other Direct Cost cost
+JC-00015,J-23981,2026-04-26,2026-04,230300,Labor/Material,21835.21,Other,HIST-P-1002-230300-4,Historical Ductwork cost
+JC-00016,J-23981,2026-04-26,2026-04,230400,Labor/Material,51344.57,Other,HIST-P-1002-230400-4,Historical Hydronic Piping cost
+JC-00017,J-23981,2026-04-26,2026-04,230500,Equipment,84547.55,Other,HIST-P-1002-230500-4,Historical Air Handling Equipment cost
+JC-00018,J-23981,2026-04-26,2026-04,230600,Subcontract,50348.59,Other,HIST-P-1002-230600-4,Historical Controls cost
+JC-00019,J-23981,2026-04-26,2026-04,230700,Subcontract,7418.4,Other,HIST-P-1002-230700-4,Historical Insulation cost
+JC-00020,J-23981,2026-04-26,2026-04,230800,Material,14436.59,Other,HIST-P-1002-230800-4,Historical Sheet Metal Fabrication cost
+JC-00021,J-23981,2026-04-26,2026-04,230900,Subcontract,8725.01,Other,HIST-P-1002-230900-4,Historical Testing / Balancing cost
+JC-00022,J-24008,2026-04-26,2026-04,230300,Labor/Material,26282.54,Other,HIST-P-1005-230300-4,Historical Ductwork cost
+JC-00023,J-24008,2026-04-26,2026-04,230400,Labor/Material,2781.99,Other,HIST-P-1005-230400-4,Historical Hydronic Piping cost
+JC-00024,J-24008,2026-04-26,2026-04,230500,Equipment,43938.57,Other,HIST-P-1005-230500-4,Historical Air Handling Equipment cost
+JC-00025,J-24008,2026-04-26,2026-04,230600,Subcontract,6960.02,Other,HIST-P-1005-230600-4,Historical Controls cost
+JC-00026,J-24008,2026-04-26,2026-04,230700,Subcontract,1774.67,Other,HIST-P-1005-230700-4,Historical Insulation cost
+JC-00027,J-24008,2026-04-26,2026-04,230800,Material,11286.36,Other,HIST-P-1005-230800-4,Historical Sheet Metal Fabrication cost
+JC-00028,J-24008,2026-04-26,2026-04,230900,Subcontract,2359.24,Other,HIST-P-1005-230900-4,Historical Testing / Balancing cost
+JC-00029,J-24017,2026-04-26,2026-04,260300,Labor/Material,42955.2,Other,HIST-P-1001-260300-4,Historical Feeders & Distribution cost
+JC-00030,J-24017,2026-04-26,2026-04,260400,Labor/Material,6153.26,Other,HIST-P-1001-260400-4,Historical Branch Wiring cost
+JC-00031,J-24017,2026-04-26,2026-04,260500,Labor/Material,29176.85,Other,HIST-P-1001-260500-4,Historical Lighting cost
+JC-00032,J-24017,2026-04-26,2026-04,260600,Equipment,42140.73,Other,HIST-P-1001-260600-4,Historical Switchgear cost
+JC-00033,J-24017,2026-04-26,2026-04,260700,Subcontract,12302.66,Other,HIST-P-1001-260700-4,Historical Controls / Low Voltage cost
+JC-00034,J-24017,2026-04-26,2026-04,260800,Other,12411.71,Other,HIST-P-1001-260800-4,Historical Temporary Power cost
+JC-00035,J-24042,2026-04-26,2026-04,220300,Labor/Material,13430.1,Other,HIST-P-1003-220300-4,Historical Domestic Water Piping cost
+JC-00036,J-24042,2026-04-26,2026-04,220400,Labor/Material,21196.7,Other,HIST-P-1003-220400-4,Historical Sanitary / Storm Piping cost
+JC-00037,J-24042,2026-04-26,2026-04,220500,Material,9110.27,Other,HIST-P-1003-220500-4,Historical Fixtures cost
+JC-00038,J-24042,2026-04-26,2026-04,220600,Equipment,18531.27,Other,HIST-P-1003-220600-4,Historical Pumps / Equipment cost
+JC-00039,J-24042,2026-04-26,2026-04,220700,Subcontract,3644.75,Other,HIST-P-1003-220700-4,Historical Specialty Systems cost
+JC-00040,J-24042,2026-04-26,2026-04,220800,Material,3777.03,Other,HIST-P-1003-220800-4,Historical Hangers / Supports cost
+JC-00041,J-23874,2026-04-30,2026-04,260100,Labor,83278.6,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00042,J-23874,2026-04-30,2026-04,260200,Labor,292750.1,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00043,J-23874,2026-04-30,2026-04,260300,Labor/Material,65629.0,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00044,J-23874,2026-04-30,2026-04,260400,Labor/Material,86033.1,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00045,J-23874,2026-04-30,2026-04,260500,Labor/Material,53766.4,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00046,J-23874,2026-04-30,2026-04,260700,Subcontract,4065.0,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00047,J-23874,2026-04-30,2026-04,260800,Other,9051.9,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00048,J-23874,2026-04-30,2026-04,260900,Labor,49035.7,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00049,J-23874,2026-04-30,2026-04,269900,Other,6465.8,Payroll,PR-P-1004-2026-04,Monthly payroll allocation
+JC-00050,J-23955,2026-04-30,2026-04,220100,Labor,43136.8,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00051,J-23955,2026-04-30,2026-04,220200,Labor,181388.8,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00052,J-23955,2026-04-30,2026-04,220300,Labor/Material,58043.2,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00053,J-23955,2026-04-30,2026-04,220400,Labor/Material,44224.8,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00054,J-23955,2026-04-30,2026-04,220500,Material,7764.0,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00055,J-23955,2026-04-30,2026-04,220700,Subcontract,2426.4,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00056,J-23955,2026-04-30,2026-04,220800,Material,6973.2,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00057,J-23955,2026-04-30,2026-04,220900,Labor,30697.6,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00058,J-23955,2026-04-30,2026-04,229900,Other,4820.4,Payroll,PR-P-1006-2026-04,Monthly payroll allocation
+JC-00059,J-23981,2026-04-30,2026-04,230100,Labor,47124.8,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00060,J-23981,2026-04-30,2026-04,230200,Labor,148277.2,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00061,J-23981,2026-04-30,2026-04,230300,Labor/Material,50727.6,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00062,J-23981,2026-04-30,2026-04,230400,Labor/Material,52709.2,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00063,J-23981,2026-04-30,2026-04,230600,Subcontract,4446.0,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00064,J-23981,2026-04-30,2026-04,230700,Subcontract,2581.2,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00065,J-23981,2026-04-30,2026-04,230800,Material,11315.6,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00066,J-23981,2026-04-30,2026-04,230900,Subcontract,3367.2,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00067,J-23981,2026-04-30,2026-04,239900,Other,5304.0,Payroll,PR-P-1002-2026-04,Monthly payroll allocation
+JC-00068,J-24008,2026-04-30,2026-04,230100,Labor,28135.2,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00069,J-24008,2026-04-30,2026-04,230200,Labor,88596.0,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00070,J-24008,2026-04-30,2026-04,230300,Labor/Material,27070.0,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00071,J-24008,2026-04-30,2026-04,230400,Labor/Material,23286.8,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00072,J-24008,2026-04-30,2026-04,230600,Subcontract,1548.0,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00073,J-24008,2026-04-30,2026-04,230700,Subcontract,1116.0,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00074,J-24008,2026-04-30,2026-04,230800,Material,5670.0,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00075,J-24008,2026-04-30,2026-04,230900,Subcontract,1918.8,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00076,J-24008,2026-04-30,2026-04,239900,Other,2714.4,Payroll,PR-P-1005-2026-04,Monthly payroll allocation
+JC-00077,J-24017,2026-04-30,2026-04,260100,Labor,48103.6,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00078,J-24017,2026-04-30,2026-04,260200,Labor,145676.2,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00079,J-24017,2026-04-30,2026-04,260300,Labor/Material,27638.0,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00080,J-24017,2026-04-30,2026-04,260400,Labor/Material,43933.8,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00081,J-24017,2026-04-30,2026-04,260500,Labor/Material,24777.3,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00082,J-24017,2026-04-30,2026-04,260700,Subcontract,2356.8,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00083,J-24017,2026-04-30,2026-04,260800,Other,4248.0,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00084,J-24017,2026-04-30,2026-04,260900,Labor,25933.8,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00085,J-24017,2026-04-30,2026-04,269900,Other,2676.3,Payroll,PR-P-1001-2026-04,Monthly payroll allocation
+JC-00086,J-24042,2026-04-30,2026-04,220100,Labor,24846.4,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00087,J-24042,2026-04-30,2026-04,220200,Labor,79907.2,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00088,J-24042,2026-04-30,2026-04,220300,Labor/Material,20722.4,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00089,J-24042,2026-04-30,2026-04,220400,Labor/Material,19416.8,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00090,J-24042,2026-04-30,2026-04,220500,Material,3628.8,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00091,J-24042,2026-04-30,2026-04,220700,Subcontract,820.8,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00092,J-24042,2026-04-30,2026-04,220800,Material,2172.4,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00093,J-24042,2026-04-30,2026-04,220900,Labor,11091.2,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00094,J-24042,2026-04-30,2026-04,229900,Other,1450.8,Payroll,PR-P-1003-2026-04,Monthly payroll allocation
+JC-00095,J-23874,2026-05-26,2026-05,260300,Labor/Material,108386.08,Other,HIST-P-1004-260300-5,Historical Feeders & Distribution cost
+JC-00096,J-23874,2026-05-26,2026-05,260400,Labor/Material,49750.92,Other,HIST-P-1004-260400-5,Historical Branch Wiring cost
+JC-00097,J-23874,2026-05-26,2026-05,260500,Labor/Material,71630.51,Other,HIST-P-1004-260500-5,Historical Lighting cost
+JC-00098,J-23874,2026-05-26,2026-05,260600,Equipment,105526.35,Other,HIST-P-1004-260600-5,Historical Switchgear cost
+JC-00099,J-23874,2026-05-26,2026-05,260700,Subcontract,40872.92,Other,HIST-P-1004-260700-5,Historical Controls / Low Voltage cost
+JC-00100,J-23874,2026-05-26,2026-05,260800,Other,32150.56,Other,HIST-P-1004-260800-5,Historical Temporary Power cost
+JC-00101,J-23874,2026-05-26,2026-05,269900,Other,32155.6,Other,HIST-P-1004-269900-5,Historical Other Direct Cost cost
+JC-00102,J-23955,2026-05-26,2026-05,220300,Labor/Material,95111.94,Other,HIST-P-1006-220300-5,Historical Domestic Water Piping cost
+JC-00103,J-23955,2026-05-26,2026-05,220400,Labor/Material,25088.17,Other,HIST-P-1006-220400-5,Historical Sanitary / Storm Piping cost
+JC-00104,J-23955,2026-05-26,2026-05,220500,Material,23384.23,Other,HIST-P-1006-220500-5,Historical Fixtures cost
+JC-00105,J-23955,2026-05-26,2026-05,220600,Equipment,7465.36,Other,HIST-P-1006-220600-5,Historical Pumps / Equipment cost
+JC-00106,J-23955,2026-05-26,2026-05,220700,Subcontract,34224.99,Other,HIST-P-1006-220700-5,Historical Specialty Systems cost
+JC-00107,J-23955,2026-05-26,2026-05,220800,Material,32121.11,Other,HIST-P-1006-220800-5,Historical Hangers / Supports cost
+JC-00108,J-23955,2026-05-26,2026-05,229900,Other,15697.29,Other,HIST-P-1006-229900-5,Historical Other Direct Cost cost
+JC-00109,J-23981,2026-05-26,2026-05,230300,Labor/Material,23290.89,Other,HIST-P-1002-230300-5,Historical Ductwork cost
+JC-00110,J-23981,2026-05-26,2026-05,230400,Labor/Material,54767.54,Other,HIST-P-1002-230400-5,Historical Hydronic Piping cost
+JC-00111,J-23981,2026-05-26,2026-05,230500,Equipment,90184.06,Other,HIST-P-1002-230500-5,Historical Air Handling Equipment cost
+JC-00112,J-23981,2026-05-26,2026-05,230600,Subcontract,53705.16,Other,HIST-P-1002-230600-5,Historical Controls cost
+JC-00113,J-23981,2026-05-26,2026-05,230700,Subcontract,7912.97,Other,HIST-P-1002-230700-5,Historical Insulation cost
+JC-00114,J-23981,2026-05-26,2026-05,230800,Material,15399.03,Other,HIST-P-1002-230800-5,Historical Sheet Metal Fabrication cost
+JC-00115,J-23981,2026-05-26,2026-05,230900,Subcontract,9306.67,Other,HIST-P-1002-230900-5,Historical Testing / Balancing cost
+JC-00116,J-24008,2026-05-26,2026-05,230300,Labor/Material,28034.71,Other,HIST-P-1005-230300-5,Historical Ductwork cost
+JC-00117,J-24008,2026-05-26,2026-05,230400,Labor/Material,2967.46,Other,HIST-P-1005-230400-5,Historical Hydronic Piping cost
+JC-00118,J-24008,2026-05-26,2026-05,230500,Equipment,46867.8,Other,HIST-P-1005-230500-5,Historical Air Handling Equipment cost
+JC-00119,J-24008,2026-05-26,2026-05,230600,Subcontract,7424.03,Other,HIST-P-1005-230600-5,Historical Controls cost
+JC-00120,J-24008,2026-05-26,2026-05,230700,Subcontract,1892.98,Other,HIST-P-1005-230700-5,Historical Insulation cost
+JC-00121,J-24008,2026-05-26,2026-05,230800,Material,12038.79,Other,HIST-P-1005-230800-5,Historical Sheet Metal Fabrication cost
+JC-00122,J-24008,2026-05-26,2026-05,230900,Subcontract,2516.52,Other,HIST-P-1005-230900-5,Historical Testing / Balancing cost
+JC-00123,J-24017,2026-05-26,2026-05,260300,Labor/Material,45818.88,Other,HIST-P-1001-260300-5,Historical Feeders & Distribution cost
+JC-00124,J-24017,2026-05-26,2026-05,260400,Labor/Material,6563.47,Other,HIST-P-1001-260400-5,Historical Branch Wiring cost
+JC-00125,J-24017,2026-05-26,2026-05,260500,Labor/Material,31121.97,Other,HIST-P-1001-260500-5,Historical Lighting cost
+JC-00126,J-24017,2026-05-26,2026-05,260600,Equipment,44950.11,Other,HIST-P-1001-260600-5,Historical Switchgear cost
+JC-00127,J-24017,2026-05-26,2026-05,260700,Subcontract,13122.83,Other,HIST-P-1001-260700-5,Historical Controls / Low Voltage cost
+JC-00128,J-24017,2026-05-26,2026-05,260800,Other,13239.15,Other,HIST-P-1001-260800-5,Historical Temporary Power cost
+JC-00129,J-24042,2026-05-26,2026-05,220300,Labor/Material,14325.45,Other,HIST-P-1003-220300-5,Historical Domestic Water Piping cost
+JC-00130,J-24042,2026-05-26,2026-05,220400,Labor/Material,22609.81,Other,HIST-P-1003-220400-5,Historical Sanitary / Storm Piping cost
+JC-00131,J-24042,2026-05-26,2026-05,220500,Material,9717.62,Other,HIST-P-1003-220500-5,Historical Fixtures cost
+JC-00132,J-24042,2026-05-26,2026-05,220600,Equipment,19766.69,Other,HIST-P-1003-220600-5,Historical Pumps / Equipment cost
+JC-00133,J-24042,2026-05-26,2026-05,220700,Subcontract,3887.73,Other,HIST-P-1003-220700-5,Historical Specialty Systems cost
+JC-00134,J-24042,2026-05-26,2026-05,220800,Material,4028.83,Other,HIST-P-1003-220800-5,Historical Hangers / Supports cost
+JC-00135,J-23874,2026-05-31,2026-05,260100,Labor,91691.2,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00136,J-23874,2026-05-31,2026-05,260200,Labor,316195.0,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00137,J-23874,2026-05-31,2026-05,260300,Labor/Material,70724.2,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00138,J-23874,2026-05-31,2026-05,260400,Labor/Material,95026.8,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00139,J-23874,2026-05-31,2026-05,260500,Labor/Material,55654.2,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00140,J-23874,2026-05-31,2026-05,260700,Subcontract,4142.4,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00141,J-23874,2026-05-31,2026-05,260800,Other,8889.9,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00142,J-23874,2026-05-31,2026-05,260900,Labor,61195.6,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00143,J-23874,2026-05-31,2026-05,269900,Other,8270.6,Payroll,PR-P-1004-2026-05,Monthly payroll allocation
+JC-00144,J-23955,2026-05-31,2026-05,220100,Labor,49817.2,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00145,J-23955,2026-05-31,2026-05,220200,Labor,197062.8,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00146,J-23955,2026-05-31,2026-05,220300,Labor/Material,62562.0,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00147,J-23955,2026-05-31,2026-05,220400,Labor/Material,52086.0,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00148,J-23955,2026-05-31,2026-05,220500,Material,10483.2,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00149,J-23955,2026-05-31,2026-05,220700,Subcontract,2831.6,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00150,J-23955,2026-05-31,2026-05,220800,Material,6220.8,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00151,J-23955,2026-05-31,2026-05,220900,Labor,25446.0,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00152,J-23955,2026-05-31,2026-05,229900,Other,3765.6,Payroll,PR-P-1006-2026-05,Monthly payroll allocation
+JC-00153,J-23981,2026-05-31,2026-05,230100,Labor,51243.2,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00154,J-23981,2026-05-31,2026-05,230200,Labor,163830.4,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00155,J-23981,2026-05-31,2026-05,230300,Labor/Material,56210.4,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00156,J-23981,2026-05-31,2026-05,230400,Labor/Material,55057.6,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00157,J-23981,2026-05-31,2026-05,230600,Subcontract,4492.8,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00158,J-23981,2026-05-31,2026-05,230700,Subcontract,2404.4,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00159,J-23981,2026-05-31,2026-05,230800,Material,11893.2,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00160,J-23981,2026-05-31,2026-05,230900,Subcontract,3456.0,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00161,J-23981,2026-05-31,2026-05,239900,Other,5112.0,Payroll,PR-P-1002-2026-05,Monthly payroll allocation
+JC-00162,J-24008,2026-05-31,2026-05,230100,Labor,28511.2,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00163,J-24008,2026-05-31,2026-05,230200,Labor,100364.4,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00164,J-24008,2026-05-31,2026-05,230300,Labor/Material,30752.0,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00165,J-24008,2026-05-31,2026-05,230400,Labor/Material,29724.8,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00166,J-24008,2026-05-31,2026-05,230600,Subcontract,2199.6,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00167,J-24008,2026-05-31,2026-05,230700,Subcontract,1591.2,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00168,J-24008,2026-05-31,2026-05,230800,Material,6462.4,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00169,J-24008,2026-05-31,2026-05,230900,Subcontract,1728.0,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00170,J-24008,2026-05-31,2026-05,239900,Other,2419.2,Payroll,PR-P-1005-2026-05,Monthly payroll allocation
+JC-00171,J-24017,2026-05-31,2026-05,260100,Labor,52425.4,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00172,J-24017,2026-05-31,2026-05,260200,Labor,160465.2,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00173,J-24017,2026-05-31,2026-05,260300,Labor/Material,30254.3,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00174,J-24017,2026-05-31,2026-05,260400,Labor/Material,46800.0,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00175,J-24017,2026-05-31,2026-05,260500,Labor/Material,26304.0,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00176,J-24017,2026-05-31,2026-05,260700,Subcontract,2117.4,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00177,J-24017,2026-05-31,2026-05,260800,Other,5072.1,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00178,J-24017,2026-05-31,2026-05,260900,Labor,28864.4,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00179,J-24017,2026-05-31,2026-05,269900,Other,3443.7,Payroll,PR-P-1001-2026-05,Monthly payroll allocation
+JC-00180,J-24042,2026-05-31,2026-05,220100,Labor,26886.4,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00181,J-24042,2026-05-31,2026-05,220200,Labor,87609.6,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00182,J-24042,2026-05-31,2026-05,220300,Labor/Material,23078.4,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00183,J-24042,2026-05-31,2026-05,220400,Labor/Material,20046.8,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00184,J-24042,2026-05-31,2026-05,220500,Material,3385.2,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00185,J-24042,2026-05-31,2026-05,220700,Subcontract,781.2,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00186,J-24042,2026-05-31,2026-05,220800,Material,2120.4,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00187,J-24042,2026-05-31,2026-05,220900,Labor,12686.4,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00188,J-24042,2026-05-31,2026-05,229900,Other,1599.6,Payroll,PR-P-1003-2026-05,Monthly payroll allocation
+JC-00189,J-23874,2026-06-26,2026-06,260300,Labor/Material,128708.48,Other,HIST-P-1004-260300-6,Historical Feeders & Distribution cost
+JC-00190,J-23874,2026-06-26,2026-06,260400,Labor/Material,59079.22,Other,HIST-P-1004-260400-6,Historical Branch Wiring cost
+JC-00191,J-23874,2026-06-26,2026-06,260500,Labor/Material,85061.23,Other,HIST-P-1004-260500-6,Historical Lighting cost
+JC-00192,J-23874,2026-06-26,2026-06,260600,Equipment,125312.54,Other,HIST-P-1004-260600-6,Historical Switchgear cost
+JC-00193,J-23874,2026-06-26,2026-06,260700,Subcontract,48536.6,Other,HIST-P-1004-260700-6,Historical Controls / Low Voltage cost
+JC-00194,J-23874,2026-06-26,2026-06,260800,Other,38178.79,Other,HIST-P-1004-260800-6,Historical Temporary Power cost
+JC-00195,J-23874,2026-06-26,2026-06,269900,Other,38184.77,Other,HIST-P-1004-269900-6,Historical Other Direct Cost cost
+JC-00196,J-23955,2026-06-26,2026-06,220300,Labor/Material,112945.43,Other,HIST-P-1006-220300-6,Historical Domestic Water Piping cost
+JC-00197,J-23955,2026-06-26,2026-06,220400,Labor/Material,29792.2,Other,HIST-P-1006-220400-6,Historical Sanitary / Storm Piping cost
+JC-00198,J-23955,2026-06-26,2026-06,220500,Material,27768.77,Other,HIST-P-1006-220500-6,Historical Fixtures cost
+JC-00199,J-23955,2026-06-26,2026-06,220600,Equipment,8865.12,Other,HIST-P-1006-220600-6,Historical Pumps / Equipment cost
+JC-00200,J-23955,2026-06-26,2026-06,220700,Subcontract,40642.17,Other,HIST-P-1006-220700-6,Historical Specialty Systems cost
+JC-00201,J-23955,2026-06-26,2026-06,220800,Material,38143.82,Other,HIST-P-1006-220800-6,Historical Hangers / Supports cost
+JC-00202,J-23955,2026-06-26,2026-06,229900,Other,18640.53,Other,HIST-P-1006-229900-6,Historical Other Direct Cost cost
+JC-00203,J-23981,2026-06-26,2026-06,230300,Labor/Material,27657.93,Other,HIST-P-1002-230300-6,Historical Ductwork cost
+JC-00204,J-23981,2026-06-26,2026-06,230400,Labor/Material,65036.45,Other,HIST-P-1002-230400-6,Historical Hydronic Piping cost
+JC-00205,J-23981,2026-06-26,2026-06,230500,Equipment,107093.57,Other,HIST-P-1002-230500-6,Historical Air Handling Equipment cost
+JC-00206,J-23981,2026-06-26,2026-06,230600,Subcontract,63774.88,Other,HIST-P-1002-230600-6,Historical Controls cost
+JC-00207,J-23981,2026-06-26,2026-06,230700,Subcontract,9396.65,Other,HIST-P-1002-230700-6,Historical Insulation cost
+JC-00208,J-23981,2026-06-26,2026-06,230800,Material,18286.35,Other,HIST-P-1002-230800-6,Historical Sheet Metal Fabrication cost
+JC-00209,J-23981,2026-06-26,2026-06,230900,Subcontract,11051.68,Other,HIST-P-1002-230900-6,Historical Testing / Balancing cost
+JC-00210,J-24008,2026-06-26,2026-06,230300,Labor/Material,33291.22,Other,HIST-P-1005-230300-6,Historical Ductwork cost
+JC-00211,J-24008,2026-06-26,2026-06,230400,Labor/Material,3523.86,Other,HIST-P-1005-230400-6,Historical Hydronic Piping cost
+JC-00212,J-24008,2026-06-26,2026-06,230500,Equipment,55655.52,Other,HIST-P-1005-230500-6,Historical Air Handling Equipment cost
+JC-00213,J-24008,2026-06-26,2026-06,230600,Subcontract,8816.03,Other,HIST-P-1005-230600-6,Historical Controls cost
+JC-00214,J-24008,2026-06-26,2026-06,230700,Subcontract,2247.91,Other,HIST-P-1005-230700-6,Historical Insulation cost
+JC-00215,J-24008,2026-06-26,2026-06,230800,Material,14296.06,Other,HIST-P-1005-230800-6,Historical Sheet Metal Fabrication cost
+JC-00216,J-24008,2026-06-26,2026-06,230900,Subcontract,2988.37,Other,HIST-P-1005-230900-6,Historical Testing / Balancing cost
+JC-00217,J-24017,2026-06-26,2026-06,260300,Labor/Material,54409.92,Other,HIST-P-1001-260300-6,Historical Feeders & Distribution cost
+JC-00218,J-24017,2026-06-26,2026-06,260400,Labor/Material,7794.13,Other,HIST-P-1001-260400-6,Historical Branch Wiring cost
+JC-00219,J-24017,2026-06-26,2026-06,260500,Labor/Material,36957.34,Other,HIST-P-1001-260500-6,Historical Lighting cost
+JC-00220,J-24017,2026-06-26,2026-06,260600,Equipment,53378.25,Other,HIST-P-1001-260600-6,Historical Switchgear cost
+JC-00221,J-24017,2026-06-26,2026-06,260700,Subcontract,15583.36,Other,HIST-P-1001-260700-6,Historical Controls / Low Voltage cost
+JC-00222,J-24017,2026-06-26,2026-06,260800,Other,15721.5,Other,HIST-P-1001-260800-6,Historical Temporary Power cost
+JC-00223,J-24042,2026-06-26,2026-06,220300,Labor/Material,17011.47,Other,HIST-P-1003-220300-6,Historical Domestic Water Piping cost
+JC-00224,J-24042,2026-06-26,2026-06,220400,Labor/Material,26849.15,Other,HIST-P-1003-220400-6,Historical Sanitary / Storm Piping cost
+JC-00225,J-24042,2026-06-26,2026-06,220500,Material,11539.67,Other,HIST-P-1003-220500-6,Historical Fixtures cost
+JC-00226,J-24042,2026-06-26,2026-06,220600,Equipment,23472.94,Other,HIST-P-1003-220600-6,Historical Pumps / Equipment cost
+JC-00227,J-24042,2026-06-26,2026-06,220700,Subcontract,4616.68,Other,HIST-P-1003-220700-6,Historical Specialty Systems cost
+JC-00228,J-24042,2026-06-26,2026-06,220800,Material,4784.24,Other,HIST-P-1003-220800-6,Historical Hangers / Supports cost
+JC-00229,J-23874,2026-06-30,2026-06,260100,Labor,94786.0,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00230,J-23874,2026-06-30,2026-06,260200,Labor,332417.5,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00231,J-23874,2026-06-30,2026-06,260300,Labor/Material,72326.3,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00232,J-23874,2026-06-30,2026-06,260400,Labor/Material,94661.0,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00233,J-23874,2026-06-30,2026-06,260500,Labor/Material,61169.6,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00234,J-23874,2026-06-30,2026-06,260700,Subcontract,4994.2,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00235,J-23874,2026-06-30,2026-06,260800,Other,11699.0,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00236,J-23874,2026-06-30,2026-06,260900,Labor,61535.0,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00237,J-23874,2026-06-30,2026-06,269900,Other,8618.1,Payroll,PR-P-1004-2026-06,Monthly payroll allocation
+JC-00238,J-23955,2026-06-30,2026-06,220100,Labor,53032.8,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00239,J-23955,2026-06-30,2026-06,220200,Labor,207150.4,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00240,J-23955,2026-06-30,2026-06,220300,Labor/Material,64223.6,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00241,J-23955,2026-06-30,2026-06,220400,Labor/Material,51642.8,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00242,J-23955,2026-06-30,2026-06,220500,Material,9496.0,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00243,J-23955,2026-06-30,2026-06,220700,Subcontract,2256.0,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00244,J-23955,2026-06-30,2026-06,220800,Material,5272.8,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00245,J-23955,2026-06-30,2026-06,220900,Labor,28916.8,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00246,J-23955,2026-06-30,2026-06,229900,Other,4240.4,Payroll,PR-P-1006-2026-06,Monthly payroll allocation
+JC-00247,J-23981,2026-06-30,2026-06,230100,Labor,53302.4,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00248,J-23981,2026-06-30,2026-06,230200,Labor,171092.8,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00249,J-23981,2026-06-30,2026-06,230300,Labor/Material,59116.8,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00250,J-23981,2026-06-30,2026-06,230400,Labor/Material,55501.6,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00251,J-23981,2026-06-30,2026-06,230600,Subcontract,4177.6,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00252,J-23981,2026-06-30,2026-06,230700,Subcontract,2380.8,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00253,J-23981,2026-06-30,2026-06,230800,Material,12241.6,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00254,J-23981,2026-06-30,2026-06,230900,Subcontract,3709.2,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00255,J-23981,2026-06-30,2026-06,239900,Other,5860.8,Payroll,PR-P-1002-2026-06,Monthly payroll allocation
+JC-00256,J-24008,2026-06-30,2026-06,230100,Labor,29810.0,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00257,J-24008,2026-06-30,2026-06,230200,Labor,106956.8,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00258,J-24008,2026-06-30,2026-06,230300,Labor/Material,32412.4,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00259,J-24008,2026-06-30,2026-06,230400,Labor/Material,28375.6,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00260,J-24008,2026-06-30,2026-06,230600,Subcontract,1881.6,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00261,J-24008,2026-06-30,2026-06,230700,Subcontract,1344.0,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00262,J-24008,2026-06-30,2026-06,230800,Material,5354.4,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00263,J-24008,2026-06-30,2026-06,230900,Subcontract,1466.4,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00264,J-24008,2026-06-30,2026-06,239900,Other,2059.2,Payroll,PR-P-1005-2026-06,Monthly payroll allocation
+JC-00265,J-24017,2026-06-30,2026-06,260100,Labor,54564.7,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00266,J-24017,2026-06-30,2026-06,260200,Labor,166841.4,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00267,J-24017,2026-06-30,2026-06,260300,Labor/Material,31860.8,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00268,J-24017,2026-06-30,2026-06,260400,Labor/Material,47770.8,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00269,J-24017,2026-06-30,2026-06,260500,Labor/Material,29459.1,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00270,J-24017,2026-06-30,2026-06,260700,Subcontract,2277.0,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00271,J-24017,2026-06-30,2026-06,260800,Other,6000.3,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00272,J-24017,2026-06-30,2026-06,260900,Labor,29375.2,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00273,J-24017,2026-06-30,2026-06,269900,Other,3039.8,Payroll,PR-P-1001-2026-06,Monthly payroll allocation
+JC-00274,J-24042,2026-06-30,2026-06,220100,Labor,27947.2,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00275,J-24042,2026-06-30,2026-06,220200,Labor,90894.8,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00276,J-24042,2026-06-30,2026-06,220300,Labor/Material,23929.6,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00277,J-24042,2026-06-30,2026-06,220400,Labor/Material,20801.6,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00278,J-24042,2026-06-30,2026-06,220500,Material,3534.0,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00279,J-24042,2026-06-30,2026-06,220700,Subcontract,781.2,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00280,J-24042,2026-06-30,2026-06,220800,Material,2232.0,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00281,J-24042,2026-06-30,2026-06,220900,Labor,13666.8,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00282,J-24042,2026-06-30,2026-06,229900,Other,1836.0,Payroll,PR-P-1003-2026-06,Monthly payroll allocation
+JC-00283,J-23874,2026-07-09,2026-07,269900,Other,23872.49,AP,INV-00100,Rental / miscellaneous field cost
+JC-00284,J-23955,2026-07-09,2026-07,229900,Other,10269.25,AP,INV-00106,Rental / miscellaneous field cost
+JC-00285,J-23981,2026-07-09,2026-07,239900,Other,12816.42,AP,INV-00094,Rental / miscellaneous field cost
+JC-00286,J-24008,2026-07-09,2026-07,239900,Other,18459.62,AP,INV-00103,Rental / miscellaneous field cost
+JC-00287,J-24017,2026-07-09,2026-07,269900,Other,9499.21,AP,INV-00091,Rental / miscellaneous field cost
+JC-00288,J-24042,2026-07-09,2026-07,229900,Other,18047.72,AP,INV-00097,Rental / miscellaneous field cost
+JC-00289,J-23874,2026-07-12,2026-07,260300,Labor/Material,165620.0,AP,INV-00045,Feeders & Distribution package
+JC-00290,J-23874,2026-07-12,2026-07,260400,Labor/Material,274560.0,AP,INV-00047,Branch Wiring package
+JC-00291,J-23874,2026-07-12,2026-07,260500,Labor/Material,153920.0,AP,INV-00049,Lighting package
+JC-00292,J-23874,2026-07-12,2026-07,260600,Equipment,131040.0,AP,INV-00051,Switchgear package
+JC-00293,J-23874,2026-07-12,2026-07,260700,Subcontract,121160.0,AP,INV-00053,Controls / Low Voltage package
+JC-00294,J-23874,2026-07-12,2026-07,260800,Other,51220.0,AP,INV-00055,Temporary Power package
+JC-00295,J-23874,2026-07-12,2026-07,269900,Other,51220.0,AP,INV-00057,Other Direct Cost package
+JC-00296,J-23955,2026-07-12,2026-07,220300,Labor/Material,113100.0,AP,INV-00075,Domestic Water Piping package
+JC-00297,J-23955,2026-07-12,2026-07,220400,Labor/Material,160680.0,AP,INV-00077,Sanitary / Storm Piping package
+JC-00298,J-23955,2026-07-12,2026-07,220500,Material,145340.0,AP,INV-00079,Fixtures package
+JC-00299,J-23955,2026-07-12,2026-07,220600,Equipment,127400.0,AP,INV-00081,Pumps / Equipment package
+JC-00300,J-23955,2026-07-12,2026-07,220700,Subcontract,65260.0,AP,INV-00083,Specialty Systems package
+JC-00301,J-23955,2026-07-12,2026-07,220800,Material,39780.0,AP,INV-00085,Hangers / Supports package
+JC-00302,J-23955,2026-07-12,2026-07,229900,Other,58760.0,AP,INV-00087,Other Direct Cost package
+JC-00303,J-23981,2026-07-12,2026-07,230300,Labor/Material,94900.0,AP,INV-00015,Ductwork package
+JC-00304,J-23981,2026-07-12,2026-07,230300,Labor/Material,187200.0,AP,INV-00019,Air Handling Equipment package
+JC-00305,J-23981,2026-07-12,2026-07,230400,Labor/Material,107380.0,AP,INV-00017,Hydronic Piping package
+JC-00306,J-23981,2026-07-12,2026-07,230600,Subcontract,80860.0,AP,INV-00021,Controls package
+JC-00307,J-23981,2026-07-12,2026-07,230700,Subcontract,79560.0,AP,INV-00023,Insulation package
+JC-00308,J-23981,2026-07-12,2026-07,230800,Material,85020.0,AP,INV-00025,Sheet Metal Fabrication package
+JC-00309,J-23981,2026-07-12,2026-07,230900,Subcontract,69680.0,AP,INV-00027,Testing / Balancing package
+JC-00310,J-23981,2026-07-12,2026-07,239900,Other,85280.0,AP,INV-00029,Other Direct Cost package
+JC-00311,J-24008,2026-07-12,2026-07,230300,Labor/Material,90740.0,AP,INV-00059,Ductwork package
+JC-00312,J-24008,2026-07-12,2026-07,230400,Labor/Material,109720.0,AP,INV-00061,Hydronic Piping package
+JC-00313,J-24008,2026-07-12,2026-07,230500,Equipment,156000.0,AP,INV-00063,Air Handling Equipment package
+JC-00314,J-24008,2026-07-12,2026-07,230600,Subcontract,62140.0,AP,INV-00065,Controls package
+JC-00315,J-24008,2026-07-12,2026-07,230700,Subcontract,49920.0,AP,INV-00067,Insulation package
+JC-00316,J-24008,2026-07-12,2026-07,230800,Material,46800.0,AP,INV-00069,Sheet Metal Fabrication package
+JC-00317,J-24008,2026-07-12,2026-07,230900,Subcontract,30160.0,AP,INV-00071,Testing / Balancing package
+JC-00318,J-24008,2026-07-12,2026-07,239900,Other,40040.0,AP,INV-00073,Other Direct Cost package
+JC-00319,J-24017,2026-07-12,2026-07,260300,Labor/Material,75920.0,AP,INV-00001,Feeders & Distribution package
+JC-00320,J-24017,2026-07-12,2026-07,260400,Labor/Material,131040.0,AP,INV-00003,Branch Wiring package
+JC-00321,J-24017,2026-07-12,2026-07,260500,Labor/Material,61360.0,AP,INV-00005,Lighting package
+JC-00322,J-24017,2026-07-12,2026-07,260600,Equipment,65000.0,AP,INV-00007,Switchgear package
+JC-00323,J-24017,2026-07-12,2026-07,260700,Subcontract,65780.0,AP,INV-00009,Controls / Low Voltage package
+JC-00324,J-24017,2026-07-12,2026-07,260800,Other,26780.0,AP,INV-00011,Temporary Power package
+JC-00325,J-24017,2026-07-12,2026-07,269900,Other,46540.0,AP,INV-00013,Other Direct Cost package
+JC-00326,J-24042,2026-07-12,2026-07,220300,Labor/Material,74100.0,AP,INV-00031,Domestic Water Piping package
+JC-00327,J-24042,2026-07-12,2026-07,220400,Labor/Material,53560.0,AP,INV-00033,Sanitary / Storm Piping package
+JC-00328,J-24042,2026-07-12,2026-07,220500,Material,61880.0,AP,INV-00035,Fixtures package
+JC-00329,J-24042,2026-07-12,2026-07,220600,Equipment,28600.0,AP,INV-00037,Pumps / Equipment package
+JC-00330,J-24042,2026-07-12,2026-07,220700,Subcontract,53900.0,AP,INV-00039,Specialty Systems package
+JC-00331,J-24042,2026-07-12,2026-07,220800,Material,26260.0,AP,INV-00041,Hangers / Supports package
+JC-00332,J-24042,2026-07-12,2026-07,229900,Other,40040.0,AP,INV-00043,Other Direct Cost package
+JC-00333,J-23874,2026-07-16,2026-07,269900,Other,23754.89,AP,INV-00101,Rental / miscellaneous field cost
+JC-00334,J-23955,2026-07-16,2026-07,229900,Other,11134.32,AP,INV-00107,Rental / miscellaneous field cost
+JC-00335,J-23981,2026-07-16,2026-07,239900,Other,21461.22,AP,INV-00095,Rental / miscellaneous field cost
+JC-00336,J-24008,2026-07-16,2026-07,239900,Other,16584.07,AP,INV-00104,Rental / miscellaneous field cost
+JC-00337,J-24017,2026-07-16,2026-07,269900,Other,11367.47,AP,INV-00092,Rental / miscellaneous field cost
+JC-00338,J-24042,2026-07-16,2026-07,229900,Other,9387.46,AP,INV-00098,Rental / miscellaneous field cost
+JC-00339,J-23874,2026-07-17,2026-07,260300,Labor/Material,152880.0,AP,INV-00046,Feeders & Distribution package
+JC-00340,J-23874,2026-07-17,2026-07,260400,Labor/Material,253440.0,AP,INV-00048,Branch Wiring package
+JC-00341,J-23874,2026-07-17,2026-07,260500,Labor/Material,142080.0,AP,INV-00050,Lighting package
+JC-00342,J-23874,2026-07-17,2026-07,260600,Equipment,120960.0,AP,INV-00052,Switchgear package
+JC-00343,J-23874,2026-07-17,2026-07,260700,Subcontract,111840.0,AP,INV-00054,Controls / Low Voltage package
+JC-00344,J-23874,2026-07-17,2026-07,260800,Other,47280.0,AP,INV-00056,Temporary Power package
+JC-00345,J-23874,2026-07-17,2026-07,269900,Other,47280.0,AP,INV-00058,Other Direct Cost package
+JC-00346,J-23955,2026-07-17,2026-07,220300,Labor/Material,104400.0,AP,INV-00076,Domestic Water Piping package
+JC-00347,J-23955,2026-07-17,2026-07,220400,Labor/Material,148320.0,AP,INV-00078,Sanitary / Storm Piping package
+JC-00348,J-23955,2026-07-17,2026-07,220500,Material,134160.0,AP,INV-00080,Fixtures package
+JC-00349,J-23955,2026-07-17,2026-07,220600,Equipment,117600.0,AP,INV-00082,Pumps / Equipment package
+JC-00350,J-23955,2026-07-17,2026-07,220700,Subcontract,60240.0,AP,INV-00084,Specialty Systems package
+JC-00351,J-23955,2026-07-17,2026-07,220800,Material,36720.0,AP,INV-00086,Hangers / Supports package
+JC-00352,J-23955,2026-07-17,2026-07,229900,Other,54240.0,AP,INV-00088,Other Direct Cost package
+JC-00353,J-23981,2026-07-17,2026-07,230300,Labor/Material,87600.0,AP,INV-00016,Ductwork package
+JC-00354,J-23981,2026-07-17,2026-07,230400,Labor/Material,99120.0,AP,INV-00018,Hydronic Piping package
+JC-00355,J-23981,2026-07-17,2026-07,230500,Equipment,172800.0,AP,INV-00020,Air Handling Equipment package
+JC-00356,J-23981,2026-07-17,2026-07,230600,Subcontract,74640.0,AP,INV-00022,Controls package
+JC-00357,J-23981,2026-07-17,2026-07,230700,Subcontract,73440.0,AP,INV-00024,Insulation package
+JC-00358,J-23981,2026-07-17,2026-07,230800,Material,78480.0,AP,INV-00026,Sheet Metal Fabrication package
+JC-00359,J-23981,2026-07-17,2026-07,230900,Subcontract,64320.0,AP,INV-00028,Testing / Balancing package
+JC-00360,J-23981,2026-07-17,2026-07,239900,Other,78720.0,AP,INV-00030,Other Direct Cost package
+JC-00361,J-24008,2026-07-17,2026-07,230300,Labor/Material,83760.0,AP,INV-00060,Ductwork package
+JC-00362,J-24008,2026-07-17,2026-07,230400,Labor/Material,101280.0,AP,INV-00062,Hydronic Piping package
+JC-00363,J-24008,2026-07-17,2026-07,230600,Subcontract,57360.0,AP,INV-00066,Controls package
+JC-00364,J-24008,2026-07-17,2026-07,230700,Subcontract,46080.0,AP,INV-00068,Insulation package
+JC-00365,J-24008,2026-07-17,2026-07,230800,Material,43200.0,AP,INV-00070,Sheet Metal Fabrication package
+JC-00366,J-24008,2026-07-17,2026-07,230900,Subcontract,27840.0,AP,INV-00072,Testing / Balancing package
+JC-00367,J-24008,2026-07-17,2026-07,239900,Other,36960.0,AP,INV-00074,Other Direct Cost package
+JC-00368,J-24017,2026-07-17,2026-07,260300,Labor/Material,70080.0,AP,INV-00002,Feeders & Distribution package
+JC-00369,J-24017,2026-07-17,2026-07,260400,Labor/Material,120960.0,AP,INV-00004,Branch Wiring package
+JC-00370,J-24017,2026-07-17,2026-07,260500,Labor/Material,56640.0,AP,INV-00006,Lighting package
+JC-00371,J-24017,2026-07-17,2026-07,260600,Equipment,60000.0,AP,INV-00008,Switchgear package
+JC-00372,J-24017,2026-07-17,2026-07,260700,Subcontract,60720.0,AP,INV-00010,Controls / Low Voltage package
+JC-00373,J-24017,2026-07-17,2026-07,260800,Other,24720.0,AP,INV-00012,Temporary Power package
+JC-00374,J-24017,2026-07-17,2026-07,269900,Other,42960.0,AP,INV-00014,Other Direct Cost package
+JC-00375,J-24042,2026-07-17,2026-07,220300,Labor/Material,68400.0,AP,INV-00032,Domestic Water Piping package
+JC-00376,J-24042,2026-07-17,2026-07,220400,Labor/Material,49440.0,AP,INV-00034,Sanitary / Storm Piping package
+JC-00377,J-24042,2026-07-17,2026-07,220500,Material,57120.0,AP,INV-00036,Fixtures package
+JC-00378,J-24042,2026-07-17,2026-07,220600,Equipment,26400.0,AP,INV-00038,Pumps / Equipment package
+JC-00379,J-24042,2026-07-17,2026-07,220700,Subcontract,44100.0,AP,INV-00040,Specialty Systems package
+JC-00380,J-24042,2026-07-17,2026-07,220800,Material,24240.0,AP,INV-00042,Hangers / Supports package
+JC-00381,J-24042,2026-07-17,2026-07,229900,Other,36960.0,AP,INV-00044,Other Direct Cost package
+JC-00382,J-23874,2026-07-23,2026-07,269900,Other,16767.47,AP,INV-00102,Rental / miscellaneous field cost
+JC-00383,J-23955,2026-07-23,2026-07,229900,Other,13450.22,AP,INV-00108,Rental / miscellaneous field cost
+JC-00384,J-23981,2026-07-23,2026-07,239900,Other,17040.29,AP,INV-00096,Rental / miscellaneous field cost
+JC-00385,J-24008,2026-07-23,2026-07,239900,Other,10830.32,AP,INV-00105,Rental / miscellaneous field cost
+JC-00386,J-24017,2026-07-23,2026-07,269900,Other,21456.94,AP,INV-00093,Rental / miscellaneous field cost
+JC-00387,J-24042,2026-07-23,2026-07,229900,Other,15553.26,AP,INV-00099,Rental / miscellaneous field cost
+JC-00388,J-24008,2026-07-27,2026-07,239777,Other,38500.0,AP,UNMAPPED-COST-01,Unmapped controls material
+JC-00389,J-23874,2026-07-31,2026-07,260100,Labor,112906.2,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00390,J-23874,2026-07-31,2026-07,260200,Labor,364088.2,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00391,J-23874,2026-07-31,2026-07,260300,Labor/Material,86038.5,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00392,J-23874,2026-07-31,2026-07,260400,Labor/Material,113889.2,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00393,J-23874,2026-07-31,2026-07,260500,Labor/Material,68102.8,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00394,J-23874,2026-07-31,2026-07,260700,Subcontract,6447.6,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00395,J-23874,2026-07-31,2026-07,260800,Other,10834.8,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00396,J-23874,2026-07-31,2026-07,260900,Labor,69123.6,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00397,J-23874,2026-07-31,2026-07,269900,Other,8397.3,Payroll,PR-P-1004-2026-07,Monthly payroll allocation
+JC-00398,J-23955,2026-07-31,2026-07,220100,Labor,65666.4,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00399,J-23955,2026-07-31,2026-07,220200,Labor,237185.6,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00400,J-23955,2026-07-31,2026-07,220300,Labor/Material,73336.8,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00401,J-23955,2026-07-31,2026-07,220400,Labor/Material,58235.2,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00402,J-23955,2026-07-31,2026-07,220500,Material,10704.0,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00403,J-23955,2026-07-31,2026-07,220700,Subcontract,2988.0,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00404,J-23955,2026-07-31,2026-07,220800,Material,7254.0,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00405,J-23955,2026-07-31,2026-07,220900,Labor,37379.2,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00406,J-23955,2026-07-31,2026-07,229900,Other,5385.6,Payroll,PR-P-1006-2026-07,Monthly payroll allocation
+JC-00407,J-23981,2026-07-31,2026-07,230100,Labor,62168.4,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00408,J-23981,2026-07-31,2026-07,230200,Labor,196912.0,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00409,J-23981,2026-07-31,2026-07,230300,Labor/Material,69582.0,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00410,J-23981,2026-07-31,2026-07,230400,Labor/Material,60097.6,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00411,J-23981,2026-07-31,2026-07,230600,Subcontract,5000.0,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00412,J-23981,2026-07-31,2026-07,230700,Subcontract,2664.0,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00413,J-23981,2026-07-31,2026-07,230800,Material,13299.2,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00414,J-23981,2026-07-31,2026-07,230900,Subcontract,3907.2,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00415,J-23981,2026-07-31,2026-07,239900,Other,6566.4,Payroll,PR-P-1002-2026-07,Monthly payroll allocation
+JC-00416,J-24008,2026-07-31,2026-07,230100,Labor,38461.6,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00417,J-24008,2026-07-31,2026-07,230200,Labor,121049.6,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00418,J-24008,2026-07-31,2026-07,230300,Labor/Material,38827.2,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00419,J-24008,2026-07-31,2026-07,230400,Labor/Material,30323.2,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00420,J-24008,2026-07-31,2026-07,230600,Subcontract,2325.6,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00421,J-24008,2026-07-31,2026-07,230700,Subcontract,1672.8,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00422,J-24008,2026-07-31,2026-07,230800,Material,6843.2,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00423,J-24008,2026-07-31,2026-07,230900,Subcontract,1944.0,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00424,J-24008,2026-07-31,2026-07,239900,Other,2736.0,Payroll,PR-P-1005-2026-07,Monthly payroll allocation
+JC-00425,J-24017,2026-07-31,2026-07,260100,Labor,63197.1,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00426,J-24017,2026-07-31,2026-07,260200,Labor,191460.3,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00427,J-24017,2026-07-31,2026-07,260300,Labor/Material,36839.6,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00428,J-24017,2026-07-31,2026-07,260400,Labor/Material,58895.8,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00429,J-24017,2026-07-31,2026-07,260500,Labor/Material,33644.0,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00430,J-24017,2026-07-31,2026-07,260700,Subcontract,2556.8,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00431,J-24017,2026-07-31,2026-07,260800,Other,6284.4,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00432,J-24017,2026-07-31,2026-07,260900,Labor,30550.4,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00433,J-24017,2026-07-31,2026-07,269900,Other,3156.2,Payroll,PR-P-1001-2026-07,Monthly payroll allocation
+JC-00434,J-24042,2026-07-31,2026-07,220100,Labor,32076.0,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00435,J-24042,2026-07-31,2026-07,220200,Labor,104427.2,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00436,J-24042,2026-07-31,2026-07,220300,Labor/Material,27543.2,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00437,J-24042,2026-07-31,2026-07,220400,Labor/Material,24644.0,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00438,J-24042,2026-07-31,2026-07,220500,Material,4488.0,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00439,J-24042,2026-07-31,2026-07,220700,Subcontract,1020.0,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00440,J-24042,2026-07-31,2026-07,220800,Material,2815.2,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00441,J-24042,2026-07-31,2026-07,220900,Labor,12711.2,Payroll,PR-P-1003-2026-07,Monthly payroll allocation
+JC-00442,J-24042,2026-07-31,2026-07,229900,Other,1715.2,Payroll,PR-P-1003-2026-07,Monthly payroll allocation

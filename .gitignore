@@ -1,0 +1,7 @@
+CLAUDE.local.md
+Personal Notes on Product Update.docx
+.next/
+node_modules/
+.env*
+out/
+*.tsbuildinfo

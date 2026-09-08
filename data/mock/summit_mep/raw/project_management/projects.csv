@@ -1,0 +1,8 @@
+pm_project_id,project_name,project_manager_person_id,overall_physical_progress_pct,last_progress_update,status
+PC-7712,Riverside Office Tower,PERS-PM1,64,2026-07-29,active
+PC-7633,St. Catherine Hospital Expansion,PERS-PM2,55,2026-07-29,active
+PC-7791,Atlas Data Center,PERS-PM3,53,2026-07-29,active
+PC-7480,Central University Science Lab,PERS-PM4,71,2026-07-29,active
+PC-7688,Metro Grand Hotel Renovation,PERS-PM5,48,2026-07-29,active
+PC-7588,City Water Treatment Upgrade,PERS-PM6,69,2026-07-29,active
+PC-UNKNOWN-88,Unmapped Small Service Project,PERS-PM7,35,2026-07-27,active

@@ -1,0 +1,8 @@
+canonical_project_id,erp_job_id,pm_project_id,mapping_confidence,mapping_method
+P-1001,J-24017,PC-7712,1.00,seeded_master_mapping
+P-1002,J-23981,PC-7633,1.00,seeded_master_mapping
+P-1003,J-24042,PC-7791,1.00,seeded_master_mapping
+P-1004,J-23874,PC-7480,1.00,seeded_master_mapping
+P-1005,J-24008,PC-7688,1.00,seeded_master_mapping
+P-1006,J-23955,PC-7588,1.00,seeded_master_mapping
+,,PC-UNKNOWN-88,0.00,unmapped
