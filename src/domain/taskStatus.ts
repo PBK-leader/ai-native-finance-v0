@@ -12,7 +12,7 @@
  * status untouched. Rejection happens on the write path, where the user can be told why.
  */
 
-import { isSettled, TRANSITIONS, waitingStateFor } from './workflow';
+import { isSettled, roleForWaitingState, TRANSITIONS, waitingStateFor } from './workflow';
 import type {
   ExceptionId, ProjectId,
 } from './ids';
@@ -113,6 +113,7 @@ export function taskStatusFor(
   let status: TaskStatus = waitingStateFor(ownerRole);
   const ignoredDecisionIds: string[] = [];
   let lastDecisionAt: IsoDate | null = null;
+  let settledWaitingRole: Role | null = null;
 
   for (const decision of decisions) {
     const rejection = checkTransition(status, decision, closeDate) ?? isEligible(decision);
@@ -120,11 +121,15 @@ export function taskStatusFor(
       ignoredDecisionIds.push(decision.id);
       continue;
     }
+    const before = status;
     status = nextStatus(status, decision);
     lastDecisionAt = decision.effectiveDate;
+    // Remember who held it at the moment it settled, so a settled task is attributed to them rather than
+    // reverting to whoever the rule originally routed it to.
+    if (isSettled(status) && !isSettled(before)) settledWaitingRole = roleForWaitingState(before);
   }
 
-  return { status, ignoredDecisionIds, lastDecisionAt };
+  return { status, ignoredDecisionIds, lastDecisionAt, settledWaitingRole };
 }
 
 /**
@@ -165,6 +170,7 @@ export function buildResolutionIndex(
         status: waitingStateFor(r.ownerRole),
         ignoredDecisionIds: [],
         lastDecisionAt: null,
+        settledWaitingRole: null,
       });
     }
   }

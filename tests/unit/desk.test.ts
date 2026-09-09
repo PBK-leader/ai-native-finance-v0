@@ -12,9 +12,12 @@ import { openTasks, openTasksForPerson, replay, waitingOnByPerson } from '@/work
 import { demoCloseP1004, demoLaborDeterioration } from '@/workflows/demos';
 import { GUIDE } from '@/workflows/demoScript';
 import { PERSONAS, isPersonaId } from '@/workflows/personas';
+import { AGENTS } from '@/agents/agents';
+import { isSettled } from '@/domain/workflow';
 import type { CanonicalModel } from '@/domain/entities';
-import type { DecisionProjection } from '@/domain/workflow';
+import type { DecisionProjection, ReviewDecision } from '@/domain/workflow';
 import { describeThreshold, hasThresholdLabel } from '@/components/thresholdLabels';
+import { needsControllerDecision } from '@/components/desk/ControllerDesk';
 
 const { model, reconciliationKeys } = getNormalized();
 const buildView = (m: CanonicalModel, projection: DecisionProjection) =>
@@ -87,6 +90,21 @@ describe('what is on each desk', () => {
     expect(sam[0]!.id).toBe(holding[0]!.id);
   });
 
+  it('never routes work to the CFO, who consumes rather than acts', () => {
+    // `roleForWaitingState` collapses CFO into Controller, which is only safe while nothing routes there.
+    for (const agent of AGENTS) expect(agent.routesTo, agent.id).not.toContain('CFO');
+    for (const exception of state.current.exceptions) expect(exception.ownerRole).not.toBe('CFO');
+  });
+
+  it('describes each persona exactly as the canonical model does', () => {
+    for (const [id, persona] of Object.entries(PERSONAS)) {
+      const person = model.index.personById.get(persona.personId);
+      expect(person, id).toBeDefined();
+      expect(person!.name).toBe(persona.name);
+      expect(person!.role).toBe(persona.role);
+    }
+  });
+
   it('moves an escalated item to the Controller’s desk and off the escalator’s', () => {
     // The close-P-1004 script has the accountant escalate the PO-0023 overrun before the Controller
     // accepts the risk. Replay up to and including the escalation only.
@@ -108,6 +126,57 @@ describe('what is on each desk', () => {
     // The exception still records where the rule routed it — that is how the desk knows it was handed up.
     const exception = state.current.exceptions.find((e) => e.id === escalation.exceptionId)!;
     expect(exception.ownerRole).toBe('Project Accountant');
+    expect(needsControllerDecision(task, exception.ownerRole)).toBe(true);
+
+    // And the Command Center agrees: it is listed against Sam, not the accountant who escalated it.
+    const waiting = waitingOnByPerson(state, model);
+    const samsEntry = waiting.find((e) => e.person?.id === PERSONAS.controller.personId);
+    expect(samsEntry?.tasks.map((t) => t.id)).toContain(task.id);
+    const escalatorEntry = waiting.find((e) => e.person?.id === escalation.actor.personId);
+    expect(escalatorEntry?.tasks.map((t) => t.id) ?? []).not.toContain(task.id);
+  });
+
+  it('keeps a settled item attributed to whoever actually settled it', () => {
+    // The Controller accepts the risk on the item the accountant escalated. Once settled it must stay with
+    // the Controller — reverting to the original routing would contradict the ledger, the work queue's
+    // settled view and the graph's "assigned to" edge.
+    const state = replay(model, buildView, V0_CONFIG, demoCloseP1004);
+    const escalation = demoCloseP1004.find((d) => d.payload.type === 'ESCALATE')!;
+    const settled = state.current.tasks.find((t) => t.exceptionId === escalation.exceptionId)!;
+
+    expect(isSettled(settled.status)).toBe(true);
+    expect(settled.ownerRole).toBe('Controller');
+    expect(settled.ownerPersonId).toBe(PERSONAS.controller.personId);
+
+    // A task settled by the person it was routed to is unaffected.
+    const direct = state.current.tasks.find(
+      (t) => isSettled(t.status) && t.exceptionId !== escalation.exceptionId,
+    )!;
+    const directException = state.current.exceptions.find((e) => e.id === direct.exceptionId)!;
+    expect(direct.ownerRole).toBe(directException.ownerRole);
+  });
+
+  it('leaves a PM’s desk when the PM escalates', () => {
+    // The accountant path is covered above; this is the other transition row into the Controller.
+    const question = state.current.tasks.find((t) => t.status === 'WAITING_FOR_PM')!;
+    const pm = model.people.find((p) => p.id === question.ownerPersonId)!;
+    const exception = state.current.exceptions.find((e) => e.id === question.exceptionId)!;
+    const decision: ReviewDecision = {
+      id: 'DEC-PM-ESCALATE',
+      exceptionId: question.exceptionId,
+      subject: { projectId: question.projectId, canonicalId: exception.subjectId },
+      actor: { personId: pm.id, role: 'Project Manager' },
+      effectiveDate: V0_CONFIG.closeDate,
+      recordedAt: `${V0_CONFIG.closeDate}T09:00:00.000Z`,
+      payload: { type: 'ESCALATE', reason: 'Needs a call from finance.' },
+    };
+    const escalated = replay(model, buildView, V0_CONFIG, [decision]);
+
+    expect(escalated.ignored).toHaveLength(0);
+    const moved = escalated.current.tasks.find((t) => t.exceptionId === question.exceptionId)!;
+    expect(moved.ownerPersonId).toBe(PERSONAS.controller.personId);
+    expect(openTasksForPerson(escalated, pm.id).map((t) => t.id)).not.toContain(moved.id);
+    expect(openTasksForPerson(escalated, PERSONAS.controller.personId).map((t) => t.id)).toContain(moved.id);
   });
 });
 

@@ -134,6 +134,7 @@ export function ExceptionCard({
                 exception={exception}
                 forecastTargets={forecastTargets}
                 viewer={actor}
+                ownerName={ownerName}
               />
             )}
           </div>

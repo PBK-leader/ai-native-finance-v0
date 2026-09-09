@@ -29,10 +29,12 @@ function adjustmentTypeFor(ruleId: string): 'RNI' | 'AP_UNPOSTED' | 'UNPOSTED_LA
 }
 
 export function ResolveForm({
-  task, exception, forecastTargets = [], viewer,
+  task, exception, forecastTargets = [], viewer, ownerName,
 }: {
   task: Task;
   exception: ExceptionRecord;
+  /** The person it is waiting on, so "step in on their behalf" can name them rather than their role. */
+  ownerName?: string;
   /**
    * Who is acting, resolved on the server from the same cookie the API will check. Read as a prop rather
    * than from `document.cookie` during render, so the server-rendered and browser-rendered forms agree.
@@ -104,10 +106,14 @@ export function ResolveForm({
 
   if (options.length === 0) {
     return (
-      <p className="mt-3 text-xs text-[var(--color-muted)]">
-        Only the {actingRole.toLowerCase()} can act on this. In this demo, use &quot;Acting as&quot; at the top
-        right to sit in their chair.
-      </p>
+      <div className="mt-3 space-y-2">
+        {done && <Recorded />}
+        <p className="text-xs text-[var(--color-muted)]">
+          {done ? 'It is now with' : 'Only'} the {actingRole.toLowerCase()}
+          {done ? '.' : ' can act on this.'} In this demo, use &quot;Acting as&quot; at the top right to sit in
+          their chair.
+        </p>
+      </div>
     );
   }
 
@@ -115,15 +121,11 @@ export function ResolveForm({
     <div className="mt-3 space-y-3">
       {!isMine && (
         <p className="text-xs text-[var(--color-muted)]">
-          This is waiting on the {actingRole.toLowerCase()}. As {viewer.role}, you can step in on their behalf;
-          the question itself stays with them.
+          This is waiting on {ownerName ?? `the ${actingRole.toLowerCase()}`}. As {viewer.role}, you can step
+          in on their behalf; the question itself stays with them.
         </p>
       )}
-      {done && (
-        <p className="rounded border border-green-200 bg-green-50 px-3 py-2 text-xs text-[var(--color-ok)]">
-          Recorded. Every number that depends on this has been recalculated.
-        </p>
-      )}
+      {done && <Recorded />}
       <div className="flex flex-wrap gap-2">
         {options.map((option) => (
           <button
@@ -393,6 +395,15 @@ function Textarea({
         className="mt-0.5 w-full rounded border border-[var(--color-line)] px-2 py-1.5 text-sm"
       />
     </label>
+  );
+}
+
+/** Shown after a decision lands — including when it hands the task to someone else and the form disappears. */
+function Recorded() {
+  return (
+    <p className="rounded border border-green-200 bg-green-50 px-3 py-2 text-xs text-[var(--color-ok)]">
+      Recorded. Every number that depends on this has been recalculated.
+    </p>
   );
 }
 

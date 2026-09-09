@@ -186,13 +186,18 @@ export function replay(
   const rejectionById = new Map<string, string>();
   const routedByException = new Map<string, RoutedException>();
 
+  // How each exception was *routed*, which is where its status reduction has to start. Read from the
+  // exception rather than the task: a task's owner follows its current waiting state, so an escalated task
+  // would otherwise seed the index with the Controller and make the reducer reject the escalation on the
+  // next replay. The exception's `ownerRole` is the rule's routing and never moves.
   const recordRouting = (from: Snapshot): void => {
+    const ownerByException = new Map(from.exceptions.map((e) => [e.id, e.ownerRole]));
     for (const task of from.tasks) {
       if (!routedByException.has(task.exceptionId)) {
         routedByException.set(task.exceptionId, {
           exceptionId: task.exceptionId,
           projectId: task.projectId,
-          ownerRole: task.ownerRole,
+          ownerRole: ownerByException.get(task.exceptionId) ?? task.ownerRole,
           createdAt: task.createdAt,
         });
       }

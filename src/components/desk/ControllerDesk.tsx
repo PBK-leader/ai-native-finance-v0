@@ -6,7 +6,7 @@
  */
 
 import Link from 'next/link';
-import type { CanonicalModel } from '@/domain/entities';
+import type { CanonicalModel, Role } from '@/domain/entities';
 import type { Task } from '@/domain/workflow';
 import type { EngineState } from '@/workflows/replay';
 import { ruleDescription } from '@/workflows/replay';
@@ -17,6 +17,17 @@ import { usd } from '@/components/format';
 import type { Persona } from '@/components/persona';
 import { CommandCenter } from './CommandCenter';
 import { tabFor } from './TaskDesk';
+
+/**
+ * Does this item need the Controller to decide something, or is it just theirs to watch?
+ *
+ * Status cannot answer it — every Controller-routed task carries `WAITING_FOR_CONTROLLER`. Two things can:
+ * the item holds the close, or somebody handed it up (the rule routed it elsewhere and an escalation brought
+ * it here). Exported as a pure function so the split is testable without rendering.
+ */
+export function needsControllerDecision(task: Task, routedTo: Role | undefined): boolean {
+  return task.blocking || (routedTo !== undefined && routedTo !== 'Controller');
+}
 
 export function ControllerDesk({
   persona, tasks, state, model,
@@ -29,12 +40,10 @@ export function ControllerDesk({
 }) {
   const firstName = persona.name.split(' ')[0];
   const exceptionById = new Map(state.current.exceptions.map((e) => [e.id, e]));
-  // Every Controller-routed task carries the "waiting for Controller" status, so status cannot tell a
-  // decision from a watch item. Two things can: it holds the close (a Controller review, a blocking rule),
-  // or someone handed it up — the rule routed it elsewhere and an escalation brought it here.
-  const handedUp = (t: Task) => exceptionById.get(t.exceptionId)?.ownerRole !== 'Controller';
-  const signOff = tasks.filter((t) => t.blocking || handedUp(t));
-  const review = tasks.filter((t) => !t.blocking && !handedUp(t));
+  const needsDecision = (t: Task) =>
+    needsControllerDecision(t, exceptionById.get(t.exceptionId)?.ownerRole);
+  const signOff = tasks.filter(needsDecision);
+  const review = tasks.filter((t) => !needsDecision(t));
 
   return (
     <div className="space-y-8">

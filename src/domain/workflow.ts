@@ -235,6 +235,15 @@ export type ResolutionEntry = {
   /** Decisions the reducer or the eligibility check refused to act on. They must not move any number. */
   ignoredDecisionIds: string[];
   lastDecisionAt: IsoDate | null;
+  /**
+   * The role the task was waiting on immediately before it settled, so a settled task stays attributed to
+   * whoever actually held it. Without this, an item an accountant escalated and a Controller then approved
+   * would revert to the accountant the moment it settled — the audit ledger would still name the Controller,
+   * but the task, the work queue's settled view and the graph's `ASSIGNED_TO` edge would all disagree with it.
+   * Null while the task is still open (the status names the role) and for a task settled without ever
+   * waiting on anyone.
+   */
+  settledWaitingRole: Role | null;
 };
 
 export type ResolutionIndex = ReadonlyMap<ExceptionId, ResolutionEntry>;
@@ -280,6 +289,10 @@ export function waitingStateFor(role: Role): TaskStatus {
  * The inverse of `waitingStateFor`: who a task in this state is waiting on. `null` once it is settled.
  * An escalation moves a task to `WAITING_FOR_CONTROLLER`; whoever it was routed to originally is no longer
  * the person it is waiting on, and every "on my desk" question must follow the status, not the routing.
+ *
+ * Lossy in one direction only: `waitingStateFor('CFO')` is `WAITING_FOR_CONTROLLER`, which comes back as
+ * `Controller`. No rule routes to the CFO — the CFO consumes portfolio insight and holds no tasks — so the
+ * collapse is correct rather than merely tolerable.
  */
 export function roleForWaitingState(status: TaskStatus): Role | null {
   switch (status) {
