@@ -15,10 +15,10 @@ import { projectId as toProjectId } from '@/domain/ids';
 import type { ExceptionId, ProjectId } from '@/domain/ids';
 import { PERSONAS, isPersonaId } from '@/workflows/personas';
 import { canonical, buildView, engineState } from '@/workflows/engine';
-import { decisionStore } from '@/workflows/decisionStore';
 import { projectDecisions } from '@/workflows/projectDecisions';
 import { checkEligibility } from '@/workflows/eligibility';
-import { currentSessionId } from '@/components/sessionServer';
+import { currentLedger } from '@/components/ledgerServer';
+import { withLedger } from '../ledgerResponse';
 import { validateDecisionPayload } from '../validateBody';
 
 type Body = {
@@ -49,8 +49,8 @@ export async function POST(request: Request) {
 
   const persona = PERSONAS[body.persona];
   // Read once and reuse: the state validated against and the ledger appended to must be the same visitor's.
-  const sessionId = await currentSessionId();
-  const state = engineState(sessionId);
+  const ledger = await currentLedger();
+  const state = engineState(ledger);
   const task = state.current.tasks.find((t) => t.exceptionId === body.exceptionId);
 
   if (!task) {
@@ -87,6 +87,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ reason: eligibilityProblem.reason }, { status: 422 });
   }
 
-  decisionStore(sessionId).append(decision);
-  return NextResponse.json({ ok: true, decisionId: decision.id });
+  // Append-only, and the new ledger goes straight back to the browser that owns it.
+  return withLedger({ ok: true, decisionId: decision.id }, [...ledger, decision]);
 }

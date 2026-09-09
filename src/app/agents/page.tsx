@@ -11,13 +11,12 @@
  */
 
 import { AGENTS } from '@/agents/agents';
-import { CLOSE_CONTROLLER_REVIEW } from '@/domain/ids';
 import type { AgentActionType } from '@/domain/workflow';
 import { engineState } from '@/workflows/engine';
 import { ruleDescription } from '@/workflows/replay';
 import { Card } from '@/components/ui';
 import { agentActionLabel, count } from '@/components/format';
-import { currentSessionId } from '@/components/sessionServer';
+import { currentLedger } from '@/components/ledgerServer';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,7 +33,7 @@ function ruleLabel(ruleId: string): string {
 }
 
 export default async function AgentsPage() {
-  const state = engineState(await currentSessionId());
+  const state = engineState(await currentLedger());
 
   return (
     <div className="space-y-6">

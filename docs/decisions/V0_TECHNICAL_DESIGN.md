@@ -756,11 +756,24 @@ would disagree — and in this architecture the ledger is the source of truth.
 `closeReady(project) = no unresolved blocking task`, where unresolved means not in `{RESOLVED, ACCEPTED_RISK}`.
 Severity and blocking remain separate concepts.
 
-### 9.6 Decision store
+### 9.6 Decision ledger
 
-`src/workflows/decisionStore.ts` exports a `DecisionStore` interface with an in-memory implementation pinned on
-`globalThis` so it survives Next dev HMR. It is **injected into** `replay`, never imported by it, so tests pass a
-plain array. `/api/reset` clears it for repeatable demos.
+The ledger is **carried by the browser**, not held on the server. `src/workflows/ledgerCodec.ts` encodes the
+decision list as gzipped base64url in the `mep-ledger` cookie; the three write routes set it, and pages read it
+through `src/components/ledgerServer.ts` and pass it into `engineState`. It is **injected into** `replay`, never
+imported by it, so tests pass a plain array. `/api/reset` writes an empty ledger for repeatable demos.
+
+This replaced a module-level in-memory store, which worked on one machine and could not work once the prototype
+was hosted: on a serverless host the request that records a decision and the request that renders the next screen
+run in different processes, so every answer was accepted and then silently lost. Keeping the ledger with the
+viewer makes the server genuinely stateless — which is what the derived-state design was already claiming — and
+gives each visitor to a shared link their own portfolio.
+
+Two consequences are deliberate. A cookie is finite, so `withLedger` refuses a write that no longer fits rather
+than dropping the oldest decisions and quietly un-answering a question a human already answered; at current
+payload sizes a six-decision demo encodes to about 1.5KB against a 3.5KB budget. And a cookie is
+client-controlled, so `decodeLedger` shape-checks every entry and treats anything unexpected as an empty ledger —
+a decode that threw would take every page down with no way for the visitor to recover.
 
 ---
 

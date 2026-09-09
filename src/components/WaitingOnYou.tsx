@@ -8,11 +8,11 @@ import Link from 'next/link';
 import { engineState } from '@/workflows/engine';
 import { openTasksForPerson } from '@/workflows/replay';
 import { currentPersona } from './personaServer';
-import { currentSessionId } from './sessionServer';
+import { currentLedger } from './ledgerServer';
 
 export async function WaitingOnYou() {
   const { persona } = await currentPersona();
-  const tasks = openTasksForPerson(engineState(await currentSessionId()), persona.personId);
+  const tasks = openTasksForPerson(engineState(await currentLedger()), persona.personId);
   const blocking = tasks.filter((t) => t.blocking).length;
 
   if (tasks.length === 0) {

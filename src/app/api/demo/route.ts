@@ -8,8 +8,7 @@
 
 import { NextResponse } from 'next/server';
 import { DEMOS, type DemoId } from '@/workflows/demos';
-import { decisionStore } from '@/workflows/decisionStore';
-import { currentSessionId } from '@/components/sessionServer';
+import { withLedger } from '../ledgerResponse';
 
 export async function POST(request: Request) {
   let id: DemoId;
@@ -25,6 +24,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ reason: `Unknown demo ${id}.` }, { status: 400 });
   }
 
-  decisionStore(await currentSessionId()).replaceAll(demo.decisions);
-  return NextResponse.json({ ok: true, loaded: demo.decisions.length });
+  // Replaces rather than appends: a demo is a scripted starting point, not something to stack on whatever
+  // the visitor had already answered.
+  return withLedger({ ok: true, loaded: demo.decisions.length }, demo.decisions);
 }

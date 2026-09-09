@@ -6,11 +6,8 @@
  * repeatable.
  */
 
-import { NextResponse } from 'next/server';
-import { decisionStore } from '@/workflows/decisionStore';
-import { currentSessionId } from '@/components/sessionServer';
+import { withLedger } from '../ledgerResponse';
 
 export async function POST() {
-  decisionStore(await currentSessionId()).reset();
-  return NextResponse.json({ ok: true });
+  return withLedger({ ok: true }, []);
 }

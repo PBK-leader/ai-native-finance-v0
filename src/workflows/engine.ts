@@ -16,7 +16,7 @@ import { AGENTS } from '@/agents/agents';
 import type { GraphIndex } from '@/graph/core';
 import type { CanonicalModel } from '@/domain/entities';
 import type { DecisionProjection } from '@/domain/workflow';
-import { decisionStore } from './decisionStore';
+import type { ReviewDecision } from '@/domain/workflow';
 import { replay, type EngineState } from './replay';
 
 export function buildView(model: CanonicalModel, projection: DecisionProjection) {
@@ -26,12 +26,13 @@ export function buildView(model: CanonicalModel, projection: DecisionProjection)
 /**
  * The current engine state, derived from the canonical model and the decision ledger.
  *
- * The session is a parameter rather than something read here, so this layer keeps no framework dependency and
- * stays a pure function of (model, ledger). The app layer resolves the cookie and passes the id down.
+ * The ledger is a parameter rather than something fetched here, so this layer holds no state and needs no
+ * request: the same call with the same decisions gives the same answer on a laptop, in a test, or on a
+ * serverless host that threw the last process away. The app layer reads the cookie and passes it down.
  */
-export function engineState(sessionId: string): EngineState {
+export function engineState(decisions: readonly ReviewDecision[]): EngineState {
   const { model } = getNormalized();
-  return replay(model, buildView, V0_CONFIG, decisionStore(sessionId).all());
+  return replay(model, buildView, V0_CONFIG, decisions);
 }
 
 /** The Client Operating Graph for the current state. */
