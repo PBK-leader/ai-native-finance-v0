@@ -42,16 +42,28 @@ export function resolveOwner(
   return byRole[index]!.id;
 }
 
+/**
+ * Who a task belongs to, given where it has got to.
+ *
+ * The one place this rule is expressed. A task belongs to whoever it is waiting on *now* — the rule routed it
+ * to a role, but an escalation hands it to the Controller, and it must then appear on the Controller's desk
+ * and vanish from the escalator's. Once settled it keeps the role that held it at settlement, so the record
+ * does not revert to the original routing; the exception still carries that, and the desk uses the difference
+ * to spot a hand-up.
+ */
+export function ownerRoleFor(
+  status: TaskStatus,
+  resolution: { settledWaitingRole: Role | null } | undefined,
+  routedTo: Role,
+): Role {
+  return roleForWaitingState(status) ?? resolution?.settledWaitingRole ?? routedTo;
+}
+
 /** Turn an exception into a task, carrying whatever status the ledger has already established. */
 export function taskFor(ctx: AgentRunContext, exception: ExceptionRecord): Task {
   const resolution = ctx.resolutionIndex.get(exception.id);
   const status: TaskStatus = resolution?.status ?? waitingStateFor(exception.ownerRole);
-  // The task belongs to whoever it is waiting on *now*. The rule routed it to a role; an escalation hands it
-  // to the Controller, and it must appear on the Controller's desk and vanish from the escalator's. Once
-  // settled it keeps the role that actually settled it, so the record does not revert to the original
-  // routing — the exception still carries that, and the desk uses the difference to spot a hand-up.
-  const ownerRole =
-    roleForWaitingState(status) ?? resolution?.settledWaitingRole ?? exception.ownerRole;
+  const ownerRole = ownerRoleFor(status, resolution, exception.ownerRole);
 
   return {
     id: `TASK-${exception.id}`,

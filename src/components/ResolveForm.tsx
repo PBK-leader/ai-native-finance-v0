@@ -101,7 +101,9 @@ export function ResolveForm({
   );
 
   // Who can act follows the status, not the original routing: an escalated item waits on the Controller.
-  const actingRole = roleForWaitingState(task.status) ?? task.ownerRole;
+  // Never null here — the card renders no form for a settled task, and every unsettled status is a waiting
+  // state. Falling back to `task.ownerRole` would quietly reintroduce "owner means the rule's routing".
+  const actingRole = roleForWaitingState(task.status) ?? viewer.role;
   const isMine = task.ownerPersonId === viewer.personId;
 
   if (options.length === 0) {

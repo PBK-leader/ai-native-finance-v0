@@ -14,6 +14,8 @@ import { GUIDE } from '@/workflows/demoScript';
 import { PERSONAS, isPersonaId } from '@/workflows/personas';
 import { AGENTS } from '@/agents/agents';
 import { isSettled } from '@/domain/workflow';
+import { taskStatusFor } from '@/domain/taskStatus';
+import { exceptionId, projectId } from '@/domain/ids';
 import type { CanonicalModel } from '@/domain/entities';
 import type { DecisionProjection, ReviewDecision } from '@/domain/workflow';
 import { describeThreshold, hasThresholdLabel } from '@/components/thresholdLabels';
@@ -177,6 +179,70 @@ describe('what is on each desk', () => {
     expect(moved.ownerPersonId).toBe(PERSONAS.controller.personId);
     expect(openTasksForPerson(escalated, pm.id).map((t) => t.id)).not.toContain(moved.id);
     expect(openTasksForPerson(escalated, PERSONAS.controller.personId).map((t) => t.id)).toContain(moved.id);
+  });
+});
+
+describe('who holds a task when it settles', () => {
+  // Reducer-level, so every settling row is pinned rather than only the ones a demo happens to walk.
+  const close = V0_CONFIG.closeDate;
+  const decide = (
+    role: 'Project Manager' | 'Project Accountant' | 'Controller',
+    payload: ReviewDecision['payload'],
+    id = `DEC-${role}`,
+  ): ReviewDecision => ({
+    id,
+    exceptionId: exceptionId('AP_RNI', projectId('P-1001'), 'CMT-PO-0004'),
+    subject: { projectId: projectId('P-1001'), canonicalId: 'CMT-PO-0004' },
+    actor: { personId: PERSONAS.controller.personId, role },
+    effectiveDate: close,
+    recordedAt: `${close}T09:00:00.000Z`,
+    payload,
+  });
+
+  const settledRoleAfter = (routedTo: 'Project Manager' | 'Project Accountant', ds: ReviewDecision[]) =>
+    taskStatusFor(routedTo, ds, close).settledWaitingRole;
+
+  it('records the accountant when the accountant resolves their own item', () => {
+    const entry = taskStatusFor(
+      'Project Accountant',
+      [decide('Project Accountant', { type: 'REJECT_ADJUSTMENT', reason: 'Invoice arrived; no cutoff.' })],
+      close,
+    );
+    expect(entry.status).toBe('RESOLVED');
+    expect(entry.settledWaitingRole).toBe('Project Accountant');
+  });
+
+  it('records the PM when the PM answers their own question', () => {
+    expect(settledRoleAfter('Project Manager', [decide('Project Manager', { type: 'PM_ANSWER', answer: 'Done.' })]))
+      .toBe('Project Manager');
+  });
+
+  it('records the Controller once an item has been escalated to them', () => {
+    const entry = taskStatusFor(
+      'Project Accountant',
+      [
+        decide('Project Accountant', { type: 'ESCALATE', reason: 'Needs a judgement.' }, 'DEC-ESC'),
+        decide('Controller', { type: 'ACCEPT_RISK', rationale: 'Accepted for this close.' }, 'DEC-RISK'),
+      ],
+      close,
+    );
+    expect(entry.status).toBe('ACCEPTED_RISK');
+    expect(entry.settledWaitingRole).toBe('Controller');
+  });
+
+  it('records custody, not authorship, when a Controller settles someone else’s open item', () => {
+    // A Controller may accept a risk on anything. The task then stays with the person who held it; who
+    // decided is the ledger's business, and the card renders it from `ReviewDecision.actor`.
+    expect(settledRoleAfter('Project Accountant', [
+      decide('Controller', { type: 'ACCEPT_RISK', rationale: 'Immaterial; closing.' }),
+    ])).toBe('Project Accountant');
+  });
+
+  it('is null while the task is still open', () => {
+    expect(settledRoleAfter('Project Accountant', [])).toBeNull();
+    expect(settledRoleAfter('Project Accountant', [
+      decide('Project Accountant', { type: 'ESCALATE', reason: 'Over to you.' }),
+    ])).toBeNull();
   });
 });
 

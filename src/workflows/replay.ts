@@ -191,16 +191,16 @@ export function replay(
   // would otherwise seed the index with the Controller and make the reducer reject the escalation on the
   // next replay. The exception's `ownerRole` is the rule's routing and never moves.
   const recordRouting = (from: Snapshot): void => {
-    const ownerByException = new Map(from.exceptions.map((e) => [e.id, e.ownerRole]));
-    for (const task of from.tasks) {
-      if (!routedByException.has(task.exceptionId)) {
-        routedByException.set(task.exceptionId, {
-          exceptionId: task.exceptionId,
-          projectId: task.projectId,
-          ownerRole: ownerByException.get(task.exceptionId) ?? task.ownerRole,
-          createdAt: task.createdAt,
-        });
-      }
+    const taskByException = new Map(from.tasks.map((t) => [t.exceptionId, t]));
+    for (const exception of from.exceptions) {
+      const task = taskByException.get(exception.id);
+      if (!task || routedByException.has(exception.id)) continue;
+      routedByException.set(exception.id, {
+        exceptionId: exception.id,
+        projectId: exception.projectId,
+        ownerRole: exception.ownerRole,
+        createdAt: task.createdAt,
+      });
     }
   };
   recordRouting(snapshot);

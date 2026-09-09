@@ -10,7 +10,6 @@
 import { NextResponse } from 'next/server';
 import { V0_CONFIG } from '@/config/v0Config';
 import { checkTransition } from '@/domain/taskStatus';
-import { waitingStateFor } from '@/domain/workflow';
 import type { DecisionPayload, ReviewDecision } from '@/domain/workflow';
 import { projectId as toProjectId } from '@/domain/ids';
 import type { ExceptionId, ProjectId } from '@/domain/ids';
@@ -73,8 +72,7 @@ export async function POST(request: Request) {
     payload: payload.value,
   };
 
-  const currentStatus = task.status ?? waitingStateFor(task.ownerRole);
-  const transitionProblem = checkTransition(currentStatus, decision, V0_CONFIG.closeDate);
+  const transitionProblem = checkTransition(task.status, decision, V0_CONFIG.closeDate);
   if (transitionProblem) {
     return NextResponse.json({ reason: transitionProblem.reason }, { status: 422 });
   }

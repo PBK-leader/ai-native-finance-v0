@@ -236,12 +236,15 @@ export type ResolutionEntry = {
   ignoredDecisionIds: string[];
   lastDecisionAt: IsoDate | null;
   /**
-   * The role the task was waiting on immediately before it settled, so a settled task stays attributed to
-   * whoever actually held it. Without this, an item an accountant escalated and a Controller then approved
-   * would revert to the accountant the moment it settled — the audit ledger would still name the Controller,
-   * but the task, the work queue's settled view and the graph's `ASSIGNED_TO` edge would all disagree with it.
-   * Null while the task is still open (the status names the role) and for a task settled without ever
-   * waiting on anyone.
+   * Who had **custody** of the task when it settled — the role it was waiting on immediately before the
+   * settling decision — so a settled task stays with whoever actually held it rather than reverting to the
+   * rule's original routing. Without it, an item an accountant escalated and a Controller then approved would
+   * flip back to the accountant on settlement, and the task, the work queue's settled view and the graph's
+   * `ASSIGNED_TO` edge would all contradict the ledger.
+   *
+   * Custody, not **authorship**. A Controller may settle a task still waiting on a PM (they can accept a risk
+   * on anything), and this then records the PM. Who decided is the ledger's job: `ReviewDecision.actor`, which
+   * the card and the activity trail both render. Null while the task is open — the status names the role.
    */
   settledWaitingRole: Role | null;
 };

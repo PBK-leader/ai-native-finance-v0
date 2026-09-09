@@ -13,7 +13,7 @@ import { isSettled, waitingStateFor } from '@/domain/workflow';
 import type { ExceptionRecord, Task, Workstream } from '@/domain/workflow';
 import { actionEmitter, type Agent, type AgentRunContext, type AgentRunResult, type CloseReadiness } from './types';
 import { computeMovement } from '@/calculations/projectMetrics';
-import { resolveOwner, runDetectionAgent } from './detectionAgent';
+import { ownerRoleFor, resolveOwner, runDetectionAgent } from './detectionAgent';
 
 export const costControlAgent: Agent = {
   id: 'COST_CONTROL',
@@ -134,15 +134,19 @@ export const closeOrchestrator: Agent = {
         ...previous,
         currentlyTriggering: !isSettled(resolution?.status ?? waitingStateFor('Controller')),
       });
+      // Derived, not asserted: today a review can only wait on or be settled by the Controller, but the rule
+      // for who owns a task lives in one place so a future send-back transition cannot leave this behind.
+      const carriedStatus = resolution?.status ?? waitingStateFor('Controller');
+      const carriedOwner = ownerRoleFor(carriedStatus, resolution, 'Controller');
       tasks.push({
         id: `TASK-${previous.id}`,
         exceptionId: previous.id,
         projectId: previous.projectId,
         workstream: previous.workstream,
-        ownerRole: 'Controller',
-        ownerPersonId: resolveOwner(ctx, 'Controller', previous.projectId),
+        ownerRole: carriedOwner,
+        ownerPersonId: resolveOwner(ctx, carriedOwner, previous.projectId),
         blocking: previous.blocking,
-        status: resolution?.status ?? waitingStateFor('Controller'),
+        status: carriedStatus,
         title: previous.title,
         requestedAction: previous.recommendedAction,
         evidence: previous.evidence,
@@ -228,15 +232,17 @@ export const closeOrchestrator: Agent = {
             exceptions.push(review);
 
             const resolution = ctx.resolutionIndex.get(id);
+            const reviewStatus = resolution?.status ?? waitingStateFor('Controller');
+            const reviewOwner = ownerRoleFor(reviewStatus, resolution, 'Controller');
             tasks.push({
               id: `TASK-${id}`,
               exceptionId: id,
               projectId,
               workstream: 'Forecast',
-              ownerRole: 'Controller',
-              ownerPersonId: resolveOwner(ctx, 'Controller', projectId),
+              ownerRole: reviewOwner,
+              ownerPersonId: resolveOwner(ctx, reviewOwner, projectId),
               blocking: true,
-              status: resolution?.status ?? waitingStateFor('Controller'),
+              status: reviewStatus,
               title: review.title,
               requestedAction: review.recommendedAction,
               evidence: review.evidence,
