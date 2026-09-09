@@ -28,7 +28,7 @@ import { EMPTY_PROJECTION, isSettled, waitingStateFor } from '@/domain/workflow'
 import { computeAllProjectMetrics } from '@/calculations/projectMetrics';
 import { detectExceptions } from '@/exceptions/engine';
 import { ALL_RULES } from '@/exceptions/engine';
-import { AGENTS } from '@/agents/agents';
+import { AGENTS, CLOSE_REVIEW_RULE } from '@/agents/agents';
 import type { CloseReadiness, PortfolioReadiness, Snapshot } from '@/domain/engine';
 import { projectDecisions } from './projectDecisions';
 import { checkEligibility } from './eligibility';
@@ -369,7 +369,23 @@ export function topBlockingException(state: EngineState, projectId: ProjectId): 
   return candidates.reduce((best, e) => ((e.impact ?? 0) > (best.impact ?? 0) ? e : best));
 }
 
-/** Rule metadata, for explaining in the UI what a rule looks for. */
+/**
+ * What a rule looks for and how it gets there, for the screens that have to explain a finding.
+ *
+ * `EXPLAINABLE` is the detection rules plus the Close Orchestrator's Controller review, which is raised by an
+ * agent rather than by a rule and so is not in `ALL_RULES`. Without it, the one finding that gates accounting
+ * sign-off would be the one finding that could not explain itself.
+ */
+const EXPLAINABLE: readonly { id: string; description: string; method: readonly string[] }[] = [
+  ...ALL_RULES,
+  CLOSE_REVIEW_RULE,
+];
+
 export function ruleDescription(ruleId: string): string {
-  return ALL_RULES.find((rule) => rule.id === ruleId)?.description ?? '';
+  return EXPLAINABLE.find((rule) => rule.id === ruleId)?.description ?? '';
+}
+
+/** The steps a rule takes to reach its finding, for the reader who asks "how do you know that". */
+export function ruleMethod(ruleId: string): readonly string[] {
+  return EXPLAINABLE.find((rule) => rule.id === ruleId)?.method ?? [];
 }

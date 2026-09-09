@@ -10,19 +10,30 @@
 
 import Link from 'next/link';
 import { isSettled } from '@/domain/workflow';
+import type { SourceRef } from '@/domain/entities';
 import type { ExceptionRecord, ReviewDecision, Task } from '@/domain/workflow';
 import type { ForecastTarget } from '@/workflows/forecastTargets';
 import { measure, statusLabel, usd } from './format';
 import { PERSONAS, type Persona } from './persona';
-import { describeThreshold } from './thresholdLabels';
+import { describeThreshold, thresholdOutcome } from './thresholdLabels';
+import { fieldList, recordKind, systemLabel } from './sourceVocabulary';
 import { BlockingTag, SeverityTag, StatusTag } from './ui';
 import { ResolveForm } from './ResolveForm';
+
+/**
+ * How many source records to name before summarising the rest.
+ *
+ * Some findings cite hundreds — every posting on an unmapped cost code, every late timecard. Naming twelve
+ * and counting the remainder is what a person can actually read; the full list is a scroll bar, not evidence.
+ */
+const RECORD_LIMIT = 12;
 
 export function ExceptionCard({
   exception,
   task,
   decisions,
   ruleDescription,
+  ruleMethod,
   projectName,
   ownerName,
   viewer,
@@ -34,6 +45,8 @@ export function ExceptionCard({
   task?: Task;
   decisions: ReviewDecision[];
   ruleDescription: string;
+  /** The rule's own account of how it reaches a finding, step by step. */
+  ruleMethod: readonly string[];
   projectName?: string;
   /** The person the task is routed to, so the card can say "waiting on Jamie" rather than a role. */
   ownerName?: string;
@@ -49,6 +62,11 @@ export function ExceptionCard({
   // The form must render for the same person on the server and in the browser, or React reports a
   // hydration mismatch; the server default is the accountant, so that is the fallback here too.
   const actor = viewer ?? PERSONAS.accountant;
+
+  // One line per record. A rule that cites the same document twice — once for the fields it compared and once
+  // for the fields it summed — is one record a reader has to look at, not two.
+  const records = dedupeByRecord(exception.evidence.sourceRefs);
+  const sourceFiles = [...new Set(exception.evidence.sourceRefs.map((ref) => ref.file))];
 
   return (
     <article
@@ -158,79 +176,137 @@ export function ExceptionCard({
         {/* 4 & 7. What proves it, and how serious the rule considers it */}
         <details className="group text-xs">
           <summary className="cursor-pointer select-none text-[var(--color-accent)] hover:underline">
-            Show the evidence
+            How we worked this out
           </summary>
-          <div className="mt-3 space-y-3 rounded border border-[var(--color-line)] bg-[var(--color-canvas)] px-4 py-3">
+          <div className="mt-3 space-y-4 rounded border border-[var(--color-line)] bg-[var(--color-canvas)] px-4 py-3">
+            {ruleMethod.length > 0 && (
+              <Section title="The steps we took">
+                <ol className="space-y-1.5">
+                  {ruleMethod.map((step, i) => (
+                    // Position, not text: two steps that happen to read alike would collide as keys.
+                    <li key={i} className="flex gap-2.5">
+                      <span className="tabular mt-px shrink-0 text-[var(--color-muted)]">{i + 1}.</span>
+                      <span className="leading-relaxed">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </Section>
+            )}
+
             {exception.evidence.measured.length > 0 && (
-              <dl className="grid grid-cols-2 gap-x-6 gap-y-1 sm:grid-cols-3 lg:grid-cols-4">
-                {exception.evidence.measured.map((m) => (
-                  <div key={m.label}>
-                    <dt className="text-xs text-[var(--color-muted)]">{m.label}</dt>
-                    <dd className="tabular text-sm font-medium">{measure(m.value, m.unit)}</dd>
-                  </div>
-                ))}
-              </dl>
+              <Section title="What that came to">
+                <dl className="grid grid-cols-2 gap-x-6 gap-y-1 sm:grid-cols-3 lg:grid-cols-4">
+                  {exception.evidence.measured.map((m) => (
+                    <div key={m.label}>
+                      <dt className="text-xs text-[var(--color-muted)]">{m.label}</dt>
+                      <dd className="tabular text-sm font-medium">{measure(m.value, m.unit)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Section>
             )}
 
             {exception.evidence.thresholds.length > 0 && (
-              <div>
-                <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
-                  The test that fired
-                </h4>
-                <div className="mt-1 flex flex-wrap gap-2 text-[11px]">
-                  {exception.evidence.thresholds.map((t) => (
-                    <span
-                      key={t.name}
-                      className={`rounded px-1.5 py-0.5 ring-1 ring-inset ${
-                        t.met
-                          ? 'bg-red-50 text-[var(--color-high)] ring-red-200'
-                          : 'bg-slate-50 text-[var(--color-muted)] ring-slate-200'
-                      }`}
-                      title={`${t.name} — ${t.met ? 'breached' : 'not breached'}`}
-                    >
-                      {describeThreshold(t)}
-                      {t.met ? ' ✓' : ''}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <Section title="Why that was enough to raise it">
+                <ul className="space-y-1">
+                  {exception.evidence.thresholds.map((t) => {
+                    // A tolerance is breached when it is *not* met, so the tick follows the finding rather
+                    // than the flag.
+                    const triggered = t.comparator === 'LTE' || t.comparator === 'LT' ? !t.met : t.met;
+                    return (
+                      <li key={t.name} className="flex gap-2">
+                        <span className={triggered ? 'text-[var(--color-high)]' : 'text-[var(--color-muted)]'}>
+                          {triggered ? '✓' : '—'}
+                        </span>
+                        <span>
+                          {describeThreshold(t)}
+                          <span className="text-[var(--color-muted)]">
+                            {' — '}
+                            {thresholdOutcome(t.comparator, t.met)}
+                          </span>
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Section>
             )}
 
-            {exception.evidence.sourceRefs.length > 0 && (
-              <div>
-                <h4 className="text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
-                  Source records ({exception.evidence.sourceRefs.length})
-                </h4>
-                <ul className="mt-1 max-h-48 space-y-1 overflow-y-auto">
-                  {exception.evidence.sourceRefs.slice(0, 60).map((ref, i) => (
-                    <li key={`${ref.recordId}-${i}`} className="flex flex-wrap gap-2 text-[var(--color-muted)]">
-                      <span className="rounded bg-[var(--color-surface)] px-1 font-medium text-[var(--color-ink)]">
-                        {ref.recordId}
+            {records.length > 0 && (
+              <Section title={records.length === 1 ? 'The record we read' : `The ${records.length} records we read`}>
+                <ul className="max-h-56 space-y-1.5 overflow-y-auto">
+                  {records.slice(0, RECORD_LIMIT).map((ref) => (
+                    <li key={`${ref.file}-${ref.recordId}`}>
+                      <span className="font-medium text-[var(--color-ink)]">
+                        {recordKind(ref.file)} {ref.recordId}
                       </span>
-                      <span>{ref.system}</span>
-                      <span className="font-mono">{ref.file}</span>
-                      {ref.fields && <span>({ref.fields.join(', ')})</span>}
+                      <span className="text-[var(--color-muted)]"> — from {systemLabel(ref.system)}</span>
+                      {ref.fields && ref.fields.length > 0 && (
+                        <span className="text-[var(--color-muted)]">
+                          . We read {fieldList(ref.fields)}.
+                        </span>
+                      )}
                     </li>
                   ))}
-                  {exception.evidence.sourceRefs.length > 60 && (
+                  {records.length > RECORD_LIMIT && (
                     <li className="text-[var(--color-muted)]">
-                      …and {exception.evidence.sourceRefs.length - 60} more
+                      …and {records.length - RECORD_LIMIT} more of the same kind.
                     </li>
                   )}
                 </ul>
-              </div>
+              </Section>
             )}
 
-            <div className="flex flex-wrap items-center gap-2 border-t border-[var(--color-line)] pt-2 text-[11px] text-[var(--color-muted)]">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-[var(--color-line)] pt-2 text-[11px] text-[var(--color-muted)]">
               <SeverityTag severity={exception.severity} />
-              <span>Rule: {ruleDescription}</span>
-              <code>{exception.ruleId}</code>
+              <span>{ruleDescription}</span>
+              <span title="The internal name of this check, and the files it read — for anyone auditing the software rather than the finding.">
+                <code>{exception.ruleId}</code>
+                {sourceFiles.length > 0 && <> · {sourceFiles.join(', ')}</>}
+              </span>
             </div>
           </div>
         </details>
       </div>
     </article>
   );
+}
+
+/** A labelled step in the derivation. The heading is a plain sentence fragment, not a category name. */
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h4 className="mb-1.5 text-[11px] font-medium text-[var(--color-muted)]">{title}</h4>
+      {children}
+    </div>
+  );
+}
+
+/**
+ * One entry per underlying document, merging the fields cited across every reference to it.
+ *
+ * Several rules push the same record twice — a change order appears once for the comparison and again as part
+ * of a project roll-up. Listing it twice makes the evidence look padded and invites the reader to think two
+ * documents are involved when only one is.
+ */
+function dedupeByRecord(refs: readonly SourceRef[]): SourceRef[] {
+  const byKey = new Map<string, SourceRef>();
+
+  for (const ref of refs) {
+    const key = `${ref.file}|${ref.recordId}`;
+    const seen = byKey.get(key);
+
+    if (!seen) {
+      byKey.set(key, ref);
+      continue;
+    }
+
+    if (ref.fields && ref.fields.length > 0) {
+      byKey.set(key, { ...seen, fields: [...new Set([...(seen.fields ?? []), ...ref.fields])] });
+    }
+  }
+
+  return [...byKey.values()];
 }
 
 function decisionTitle(decision: ReviewDecision): string {

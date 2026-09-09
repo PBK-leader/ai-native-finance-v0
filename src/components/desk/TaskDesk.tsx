@@ -10,7 +10,7 @@ import Link from 'next/link';
 import type { CanonicalModel } from '@/domain/entities';
 import type { Task, Workstream } from '@/domain/workflow';
 import type { EngineState } from '@/workflows/replay';
-import { ruleDescription } from '@/workflows/replay';
+import { ruleDescription, ruleMethod } from '@/workflows/replay';
 import { forecastTargetsFor } from '@/workflows/forecastTargets';
 import { dollarExposure } from '@/calculations/portfolio';
 import { Card, Empty } from '@/components/ui';
@@ -79,6 +79,7 @@ export function TaskDesk({
             task={first}
             decisions={state.decisions.filter((d) => d.exceptionId === firstException.id)}
             ruleDescription={ruleDescription(firstException.ruleId)}
+            ruleMethod={ruleMethod(firstException.ruleId)}
             forecastTargets={
               firstException.projectId
                 ? forecastTargetsFor(state.current.metricsByProject.get(firstException.projectId)!, firstException)

@@ -18,6 +18,12 @@ export const coLargeAging: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'A large change order has been pending for too long.',
+  method: [
+    'Take every change order still marked pending that was submitted on or before the close date.',
+    'Count the days from the date it was submitted to the close date.',
+    'Flag it only when it is both large enough and old enough to matter — a big change order raised last ' +
+      'week is normal, and a small one left open is not worth anyone\'s time.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const { pendingCoDollar, pendingCoDays } = ctx.config.thresholds;
     const found: DetectedException[] = [];
@@ -70,6 +76,14 @@ export const coUnapprovedCost: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'Material cost has been spent on change work that is not approved.',
+  method: [
+    'Take every change order still marked pending that was submitted on or before the close date.',
+    'Read the cost already booked against it.',
+    'Flag it when that spend passes the threshold, and work out what margin rides on approval by ' +
+      'subtracting the cost spent from the value being asked for.',
+    'Rejected change orders are left out: there is nothing left to negotiate, so the money is simply cost ' +
+      'on the job rather than an open commercial question.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.unapprovedCoIncurredCostDollar;
     const found: DetectedException[] = [];
@@ -125,6 +139,15 @@ export const coMissingSov: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'An approved change order has no line on the schedule of values.',
+  method: [
+    'Take every change order the client approved on or before the close date.',
+    'Look for a matching line on the schedule of values — the breakdown the client is actually invoiced ' +
+      'against.',
+    'Flag any approved change order with no line, because the revenue counts towards the contract but ' +
+      'cannot be billed until it appears on the schedule.',
+    'The match is looked up rather than stored, so a line an accountant records here clears this the next ' +
+      'time the numbers are recomputed.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const found: DetectedException[] = [];
 
@@ -138,7 +161,7 @@ export const coMissingSov: Rule = {
         projectId: co.projectId,
         subjectId: co.id,
         severity: 'HIGH',
-        title: `Approved change order ${formatUsd(co.approvedValue)} is missing from the SOV`,
+        title: `Approved change order ${formatUsd(co.approvedValue)} is missing from the schedule of values`,
         explanation:
           `"${co.description}" was approved on ${co.approvalDate} for ${formatUsd(co.approvedValue)}, but ` +
           'no matching line exists on the schedule of values. The revenue is in the contract and is not ' +
@@ -171,6 +194,14 @@ export const coApprovedUnbilled: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'An approved change order has been billable for a while and is still unbilled.',
+  method: [
+    'Take every change order the client approved on or before the close date.',
+    'Find its line on the schedule of values and add up everything billed against that line.',
+    'Subtract what has been billed from the approved value to get what is still uninvoiced.',
+    'Flag it when that unbilled amount is large enough and enough days have passed since approval.',
+    'A change order with no schedule line counts as entirely unbilled, but stays quiet while the missing ' +
+      'line is being fixed — so you are not asked to bill something that has nowhere to be billed from.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const { approvedCoUnbilledDollar, approvedCoUnbilledDays } = ctx.config.thresholds;
     const found: DetectedException[] = [];
@@ -235,6 +266,18 @@ export const billUnderbilling: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'The project has earned materially more than it has billed.',
+  method: [
+    'Work out draft earned revenue: the revised contract multiplied by percent complete, where percent ' +
+      'complete is cost to date over forecast final cost. It is a cost-based management figure, not a ' +
+      'measure of physical progress and not GAAP revenue.',
+    'Subtract what has actually been billed from that.',
+    'Keep only projects that have billed less than they have earned. Billing ahead of the work is a ' +
+      'different question and is deliberately not raised here.',
+    'Flag it when the shortfall is large in dollars, or large as a share of the contract. Either test on ' +
+      'its own is enough, because a small contract can be badly underbilled without reaching a dollar bar.',
+    'A project whose billing position cannot be worked out is absent from this check rather than passing ' +
+      'it. That is a data-quality problem and is raised as one.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const { underbillingDollar, underbillingPctContract } = ctx.config.thresholds;
     const found: DetectedException[] = [];
@@ -306,6 +349,15 @@ export const billSovMismatch: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'The schedule of values does not reconcile to the revised contract.',
+  method: [
+    'Add up every active line on the schedule of values and compare the total to the revised contract — the ' +
+      'original contract plus every approved change order.',
+    'Flag any project where the two differ by more than the rounding tolerance. They are meant to be the ' +
+      'same number described two ways.',
+    'Then look for approved change orders on that project with no schedule line, and add up their value.',
+    'Only claim those account for the gap when their total actually matches it. Where they explain part of ' +
+      'it, say how much is left, because the rest is a different break and will still be there afterwards.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const tolerance = ctx.config.thresholds.sovToleranceDollar;
     const found: DetectedException[] = [];
@@ -325,6 +377,13 @@ export const billSovMismatch: Rule = {
       );
       const explained = missingFromSov.reduce((total, co) => total + co.approvedValue, 0);
 
+      // Whether those change orders account for the *whole* gap, not merely whether any exist. Telling an
+      // accountant that adding the missing lines clears the reconciliation, when it would leave part of the
+      // break standing, stops them looking for the rest — so the claim is only made when it is true.
+      const fullyExplained = missingFromSov.length > 0
+        && withinTolerance(explained - Math.abs(variance), tolerance);
+      const unexplained = Math.abs(variance) - explained;
+
       found.push({
         projectId,
         subjectId: projectId,
@@ -333,17 +392,24 @@ export const billSovMismatch: Rule = {
         explanation:
           `The schedule of values totals ${formatUsd(metrics.sovTotal)} against a revised contract of ` +
           `${formatUsd(metrics.revisedContractValue)}. ` +
-          (missingFromSov.length > 0
+          (fullyExplained
             ? `${missingFromSov.length} approved change order${missingFromSov.length > 1 ? 's' : ''} worth ` +
               `${formatUsd(explained)} ${missingFromSov.length > 1 ? 'are' : 'is'} missing from the schedule, ` +
               'which accounts for the difference. Fixing those resolves this.'
-            : 'No missing approved change order explains the difference, so the schedule itself needs review.'),
+            : missingFromSov.length > 0
+              ? `${missingFromSov.length} approved change order${missingFromSov.length > 1 ? 's' : ''} worth ` +
+                `${formatUsd(explained)} ${missingFromSov.length > 1 ? 'are' : 'is'} missing from the ` +
+                `schedule, but that leaves ${formatUsd(Math.abs(unexplained))} of the difference unaccounted ` +
+                'for. Adding those lines will not fully reconcile this.'
+              : 'No missing approved change order explains the difference, so the schedule itself needs review.'),
         impact: Math.abs(variance),
         impactUnit: 'USD',
         recommendedAction:
-          missingFromSov.length > 0
+          fullyExplained
             ? 'Resolve the missing change-order lines; this reconciliation clears once they are added.'
-            : 'Reconcile the schedule of values line by line against the contract and approved changes.',
+            : missingFromSov.length > 0
+              ? 'Add the missing change-order lines, then reconcile the remaining difference line by line.'
+              : 'Reconcile the schedule of values line by line against the contract and approved changes.',
         evidence: {
           nodeIds: [projectId, ...missingFromSov.map((co) => co.id)],
           sourceRefs: missingFromSov.flatMap((co) => co.sourceRefs),
@@ -351,7 +417,7 @@ export const billSovMismatch: Rule = {
             { label: 'Schedule of values total', value: metrics.sovTotal, unit: 'USD' },
             { label: 'Revised contract', value: metrics.revisedContractValue, unit: 'USD' },
             { label: 'Variance', value: variance, unit: 'USD' },
-            { label: 'Approved COs missing from SOV', value: missingFromSov.length, unit: 'COUNT' },
+            { label: 'Approved change orders missing from the schedule', value: missingFromSov.length, unit: 'COUNT' },
           ],
           thresholds: [{ name: 'sovToleranceDollar', value: tolerance, comparator: 'LTE', met: false }],
         },
@@ -369,6 +435,13 @@ export const billRetainage: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'Retainage held does not match the schedule-of-values rate.',
+  method: [
+    'For each billing, take the amount billed to date and multiply it by the retainage rate its schedule ' +
+      'of values line specifies. That is what the client should be holding back.',
+    'Compare that against the retainage actually held.',
+    'Flag any billing where the two differ by more than the rounding tolerance — the client is either ' +
+      'holding money they are not entitled to, or releasing money too early.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const tolerance = ctx.config.thresholds.retainageToleranceDollar;
     const found: DetectedException[] = [];

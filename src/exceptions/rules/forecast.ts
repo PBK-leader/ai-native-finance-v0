@@ -19,6 +19,16 @@ export const fcMarginFade: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'Projected margin has fallen materially below the original estimate.',
+  method: [
+    'Take the margin the job was bid at, from the original estimate.',
+    'Take the margin it is now forecast to finish at, using the current forecast of final cost against the ' +
+      'revised contract.',
+    'Subtract one from the other to get the fade, in percentage points.',
+    'Flag it once the fade passes the threshold, and translate it back into dollars against the current ' +
+      'contract so the size of the profit movement is legible.',
+    'A project whose margin cannot be worked out — no contract value, or cost with no forecast — is absent ' +
+      'from this check rather than passing it. That is a data-quality problem and is raised as one.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.marginFadePercentagePoints;
     const found: DetectedException[] = [];
@@ -71,6 +81,18 @@ export const fcEacDeterioration: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'Forecast final cost has risen materially since the prior close.',
+  method: [
+    'Rebuild the forecast of final cost as it stood at the prior close, from the activity and forecasts ' +
+      'that existed on that date.',
+    'Compare it with the forecast today, and keep only projects where the number has risen.',
+    'Flag it when the increase is large in dollars, or large as a share of the contract. Either test alone ' +
+      'is enough.',
+    'Because the prior figure is recalculated the same way rather than read from a stored report, the ' +
+      'movement is not an artefact of changing how the number is worked out.',
+    'Read the size as directional rather than exact. Only invoices relieve a purchase order in this ' +
+      'prototype, so the prior figure still carries full commitment balances alongside cost already posted ' +
+      'against the same codes, which overstates it.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const { eacDeteriorationDollar, eacDeteriorationPctContract } = ctx.config.thresholds;
     const found: DetectedException[] = [];
@@ -100,8 +122,9 @@ export const fcEacDeterioration: Rule = {
           `Estimate at completion for ${project?.name ?? projectId} has moved from ` +
           `${formatUsd(prior.eac)} at ${prior.asOfDate} to ${formatUsd(metrics.eac)} — an increase of ` +
           `${formatUsd(change)}. The prior figure is reconstructed from activity and forecasts as they ` +
-          'stood at that date, so this is a genuine month-over-month movement rather than a change in how ' +
-          'the number is calculated.',
+          'stood at that date, so the direction is a genuine month-over-month movement rather than a change ' +
+          'in how the number is calculated. Treat the exact size as indicative: prior-period commitment ' +
+          'relief is not modelled, so the starting figure runs high.',
         impact: change,
         impactUnit: 'USD',
         recommendedAction:
@@ -111,8 +134,8 @@ export const fcEacDeterioration: Rule = {
           nodeIds: [projectId],
           sourceRefs: project?.sourceRefs ?? [],
           measured: [
-            { label: `EAC at ${prior.asOfDate}`, value: prior.eac, unit: 'USD' },
-            { label: `EAC at ${metrics.asOfDate}`, value: metrics.eac, unit: 'USD' },
+            { label: `Forecast final cost at ${prior.asOfDate}`, value: prior.eac, unit: 'USD' },
+            { label: `Forecast final cost at ${metrics.asOfDate}`, value: metrics.eac, unit: 'USD' },
             { label: 'Increase', value: change, unit: 'USD' },
             { label: 'Share of contract', value: pctOfContract === null ? null : pctOfContract * 100, unit: 'PCT' },
           ],
@@ -140,6 +163,15 @@ export const fcCostCodeOverrun: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'A cost code is forecast to finish materially over its current budget.',
+  method: [
+    'For each cost code, build the forecast of final cost: what has been spent, plus what is still ' +
+      'committed on purchase orders, plus the remaining cost the project manager expects on top of that.',
+    'Compare it against the current budget, which already includes any approved budget revision.',
+    'Flag it when the forecast is over budget by more than the allowed percentage, and treat a larger ' +
+      'overrun as more serious.',
+    'A code with no budget at all is skipped, because there is nothing to compare against. That is a ' +
+      'coding problem, reported separately — though only once the cost on it is large enough to raise.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.costCodeOverrunPct;
     const found: DetectedException[] = [];
@@ -195,6 +227,15 @@ export const fcLaborBurn: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'Labour hours are being consumed faster than physical progress.',
+  method: [
+    'For each cost code, add up the approved hours the crew has booked and express them as a percentage of ' +
+      'the budgeted hours. Time still awaiting approval is left out.',
+    'Take the physical progress the project manager has reported for the same cost code.',
+    'Subtract progress from hours consumed. A positive gap means the hours are going faster than the work.',
+    'Flag it once that gap passes the threshold, measured in percentage points.',
+    'Cost codes with no budgeted hours are skipped rather than divided by zero — no budget is not a ' +
+      'productivity finding.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.laborBurnAheadProgressPercentagePoints;
     const found: DetectedException[] = [];
@@ -239,7 +280,7 @@ export const fcLaborBurn: Rule = {
               { label: 'Hours consumed', value: costCode.hoursConsumedPct, unit: 'PCT' },
               { label: 'Physical progress', value: costCode.physicalProgressPct, unit: 'PCT' },
               { label: 'Gap', value: gap, unit: 'PP' },
-              { label: 'PM remaining hours', value: costCode.pmRemainingLaborHours, unit: 'HOURS' },
+              { label: 'Hours the project manager still expects', value: costCode.pmRemainingLaborHours, unit: 'HOURS' },
             ],
             thresholds: [{
               name: 'laborBurnAheadProgressPercentagePoints',
@@ -263,6 +304,17 @@ export const fcPmChangeNoExplanation: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'A material forecast movement has no written explanation.',
+  method: [
+    'Take the latest forecast on each cost code and keep the ones whose comment is blank.',
+    'Find the forecast for the same cost code as it stood at the prior close, read from source history ' +
+      'with no human answers layered on. The answer is the thing being judged, so it cannot also be the ' +
+      'baseline it is judged against.',
+    'Subtract the old remaining cost from the new one to get the movement.',
+    'Flag it when that movement is large in dollars, or large as a share of the previous figure. With no ' +
+      'previous figure to divide into, the dollar test stands alone.',
+    'A comment written last month does not explain a change made this month, which is why only the current ' +
+      'comment counts.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const { pmChangeCommentDollar, pmChangeCommentPct } = ctx.config.thresholds;
     const found: DetectedException[] = [];
@@ -340,6 +392,20 @@ export const fcProfitRiskConcentration: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'Cost already spent on unapproved change work is material against projected profit.',
+  method: [
+    'Add up the cost already spent on change orders that are still pending a client decision. Money spent ' +
+      'is what is genuinely at risk; the value being asked for is only a negotiating position.',
+    'Divide that exposure by the profit the project is currently forecast to make.',
+    'Flag it once the exposure is a large enough share of that profit.',
+    'The contract carries none of this revenue, because a pending change order adds nothing to contract ' +
+      'value until it is approved.',
+    'Whether the forecast already carries the cost is taken from the change order record and is not checked ' +
+      'against the job-cost ledger — there is no key linking the two. Confirm it is in cost to date before ' +
+      'relying on the profit figure below: if it is not, forecast cost is understated by this amount and the ' +
+      'exposure is the smaller of the two problems.',
+    'Where the project is not forecast to make a profit at all, there is nothing to divide into and the ' +
+      'exposure is treated as material on its own.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.pendingCoCostPctProjectedProfit;
     const found: DetectedException[] = [];
@@ -372,8 +438,10 @@ export const fcProfitRiskConcentration: Rule = {
             : `${formatUsd(exposure)} of unrecovered cost on unapproved change work, ${(share * 100).toFixed(1)}% of projected profit`,
         explanation:
           `${project?.name ?? projectId} has spent ${formatUsd(exposure)} performing change work the client ` +
-          'has not approved. That cost is already in the forecast, but the revenue is not: pending change ' +
-          'orders do not increase contract value until they are approved. ' +
+          'has not approved, according to the change orders themselves. The revenue is certainly not in the ' +
+          'contract: pending change orders do not increase contract value until they are approved. Whether ' +
+          'the cost has reached the job-cost ledger is not something this prototype can confirm, so check ' +
+          'that before treating the profit figure as complete. ' +
           (share === null
             ? 'The project is not currently forecast to make a profit, so any amount that goes unrecovered ' +
               'deepens the loss directly.'
@@ -390,7 +458,7 @@ export const fcProfitRiskConcentration: Rule = {
           nodeIds: [projectId, ...pendingCos.map((co) => co.id)],
           sourceRefs: pendingCos.flatMap((co) => co.sourceRefs),
           measured: [
-            { label: 'Cost incurred on pending COs', value: exposure, unit: 'USD' },
+            { label: 'Spent on unapproved change work', value: exposure, unit: 'USD' },
             { label: 'Value requested if approved', value: requestedValue, unit: 'USD' },
             { label: 'Projected profit (already bearing this cost)', value: profit, unit: 'USD' },
             { label: 'Exposure share', value: share === null ? null : share * 100, unit: 'PCT' },
@@ -414,6 +482,13 @@ export const fcCompleteCodeRemaining: Rule = {
   blocking: false,
   blockingScope: 'CLOSE',
   description: 'A cost code reported complete still carries remaining forecast cost.',
+  method: [
+    'Find the cost codes the project manager has reported as finished, or as good as finished.',
+    'Check whether the forecast for those same codes still expects more money to be spent.',
+    'Flag it when both hold at once and the remaining forecast is large enough to matter.',
+    'The two statements contradict each other: either the work is not actually done, or the leftover ' +
+      'forecast should be released back into the project.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const { completeCostCodeProgressPct, completeCostCodeRemainingForecastDollar } = ctx.config.thresholds;
     const found: DetectedException[] = [];

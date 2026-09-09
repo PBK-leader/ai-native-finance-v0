@@ -16,6 +16,14 @@ export const dqProjectMap: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'A source project cannot be mapped to a canonical project.',
+  method: [
+    'Read the mapping table that ties each project in the project-management system to its job in the ' +
+      'accounting system.',
+    'Report any source project the table leaves unmapped. The confidence score it carries is shown as ' +
+      'evidence but is not itself tested — a project either has a mapping or it does not.',
+    'Nothing can be measured for it: cost, labour and billing recorded against that project are invisible ' +
+      'to every close calculation until a human says which job it belongs to.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     return ctx.model.unmappedSources.map((unmapped) => ({
       // No canonical project exists for this record — that is precisely the problem being reported.
@@ -51,6 +59,16 @@ export const dqUnmappedCostCode: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'Material cost is posted to a cost code that is not in the project budget.',
+  method: [
+    'Go through each project\'s cost codes and pick out the ones carrying charges that do not appear in ' +
+      'the approved budget at all.',
+    'Add up what has been charged to each, and flag it once that passes the threshold.',
+    'List the posted transactions behind it, so the charge can be traced rather than just counted. The ' +
+      'total also includes any adjustment a human has accepted on this code, which has no posting to show.',
+    'The money is still included in the project total under an unmapped heading — nothing is dropped ' +
+      'because its classification is unresolved — but it cannot be compared against a budget until it is ' +
+      'coded properly.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.unmappedCostCodeDollar;
     const found: DetectedException[] = [];
@@ -109,6 +127,13 @@ export const dqUnbudgetedCost: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'A budgeted cost code carries material cost against a zero budget.',
+  method: [
+    'Look only at cost codes that do exist in the budget structure. A code missing entirely is a different ' +
+      'problem, reported separately.',
+    'Keep the ones whose current budget is zero but which are carrying real charges.',
+    'Flag it once those charges pass the threshold. Either the budget was never loaded, or the charges ' +
+      'belong to another code.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.unbudgetedCostDollar;
     const found: DetectedException[] = [];
@@ -158,6 +183,13 @@ export const fcStale: Rule = {
   // Narrower than a full close block: a stale forecast invalidates forecast/WIP, not AP or billing.
   blockingScope: 'FORECAST_WIP',
   description: 'The PM forecast has not been refreshed recently enough to rely on.',
+  method: [
+    'For each project, find the date of the most recent forecast on every cost code that has one.',
+    'Take the oldest of those dates. A project\'s forecast is only as current as its stalest line, so ' +
+      'refreshing one code out of ten does not make the forecast fresh.',
+    'Count the days from that date to the close, and flag it once that exceeds the staleness limit.',
+    'Cost codes with no forecast at all are skipped, or they would register as infinitely old.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.forecastStaleDays;
     const found: DetectedException[] = [];
@@ -188,9 +220,10 @@ export const fcStale: Rule = {
         severity: 'MEDIUM',
         title: `PM forecast is ${age} days old`,
         explanation:
-          `The most recent forecast for ${project?.name ?? projectId} dates from ${oldest}, ${age} days ` +
-          `before the close. Estimate at completion, projected margin and the draft WIP position all rest ` +
-          'on assumptions the project manager has not confirmed for over three weeks.',
+          `The stalest cost code on ${project?.name ?? projectId} was last forecast on ${oldest}, ${age} ` +
+          'days before the close, and a forecast is only as current as its oldest line. Forecast final ' +
+          'cost, projected margin and the draft work-in-progress position all rest on assumptions the ' +
+          `project manager has not confirmed in ${age} days.`,
         impact: age,
         impactUnit: 'DAYS',
         recommendedAction:

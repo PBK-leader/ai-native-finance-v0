@@ -8,7 +8,7 @@
 
 import Link from 'next/link';
 import { canonical, engineState } from '@/workflows/engine';
-import { compareByUrgency, ruleDescription } from '@/workflows/replay';
+import { compareByUrgency, ruleDescription, ruleMethod } from '@/workflows/replay';
 import { forecastTargetsFor } from '@/workflows/forecastTargets';
 import { isSettled } from '@/domain/workflow';
 import type { Role } from '@/domain/entities';
@@ -146,6 +146,7 @@ export default async function WorkQueue({
                 task={task}
                 decisions={state.decisions.filter((d) => d.exceptionId === exception.id)}
                 ruleDescription={ruleDescription(exception.ruleId)}
+                ruleMethod={ruleMethod(exception.ruleId)}
                 ownerName={task.ownerPersonId ? model.index.personById.get(task.ownerPersonId)?.name : undefined}
                 viewer={viewer}
                 forecastTargets={

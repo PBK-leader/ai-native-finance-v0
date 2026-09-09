@@ -16,6 +16,10 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { ALL_RULES } from '@/exceptions/engine';
+import { CLOSE_REVIEW_RULE } from '@/agents/agents';
+import { SOURCE_FILES } from '@/data/raw/rawTypes';
+import { hasFieldLabel, hasRecordKind } from '@/components/sourceVocabulary';
 
 const SRC = join(process.cwd(), 'src');
 
@@ -43,8 +47,21 @@ const files = sourceFiles(SRC);
 const rel = (file: string) => relative(SRC, file).split(sep).join('/');
 
 describe('reconciled relationships live in exactly one place', () => {
-  // The raw column names, for the layers that are allowed nowhere near them.
-  const RAW_KEYS = /\b(commitment_id|source_doc_id|approved_co_id|sov_item_id|erp_job_id|pm_project_id)\b/;
+  /**
+   * The raw column names, for the layers that are allowed nowhere near them.
+   *
+   * `(?!\s*:)` excludes one syntactic form: the key of an object literal. Naming a column is not using it,
+   * and something has to name them — `SourceRef.fields` carries raw column names all the way to the screen,
+   * so a dictionary turning `approved_co_id` into "which change order it came from" is the difference
+   * between evidence and a database schema. Every form that could actually re-join still trips this:
+   * `row.commitment_id`, `const { commitment_id } = row`, `f(commitment_id)`, `{ x: invoice.commitment_id }`.
+   *
+   * This replaced a per-file exemption. A path allowlist would have let the *whole* file do anything,
+   * defended only by a proxy for the hazard; excluding the one harmless form instead keeps the rule applying
+   * to every file, including the dictionary itself.
+   */
+  const RAW_KEYS =
+    /\b(commitment_id|source_doc_id|approved_co_id|sov_item_id|erp_job_id|pm_project_id)\b(?!\s*:)/;
 
   // Only these modules may read a raw counterparty key.
   const ALLOWED = ['data/raw/', 'data/normalize/', 'reconciliation/'];
@@ -56,6 +73,13 @@ describe('reconciled relationships live in exactly one place', () => {
       .map(rel);
 
     expect(offenders).toEqual([]);
+  });
+
+  it('still catches a read dressed up next to a key of the same name', () => {
+    // A guard on the guard: the lookahead must exempt the key and still catch the value beside it.
+    expect(RAW_KEYS.test('const x = { commitment_id: row.commitment_id };')).toBe(true);
+    expect(RAW_KEYS.test('const x = { commitment_id: "a purchase order" };')).toBe(false);
+    expect(RAW_KEYS.test('const { sov_item_id } = billing;')).toBe(true);
   });
 
   it('canonical entities carry no reconciled counterparty ids', () => {
@@ -198,6 +222,93 @@ describe('module layering', () => {
     }
 
     expect(violations).toEqual([]);
+  });
+});
+
+describe('every rule can explain itself', () => {
+  /**
+   * `CLAUDE.md`'s evidence rule requires each exception to show the rule that triggered it. A rule id and a
+   * one-line summary satisfy that literally while still leaving the reader unable to check the finding — the
+   * question people actually ask is "how did you get that number". `method` is the answer, and a rule that
+   * ships without one would present a conclusion with no working.
+   */
+  // Every finding a screen can show, including the Controller review the Close Orchestrator raises, which is
+  // not a detection rule and would otherwise be the one finding nothing checks.
+  const EXPLAINABLE = [...ALL_RULES, CLOSE_REVIEW_RULE];
+
+  it('states its method in plain steps', () => {
+    // Length, not mere presence: `method: ['']` and `method: ['TODO']` are how this check gets satisfied
+    // without anything being explained.
+    const missing = EXPLAINABLE.filter(
+      (rule) => rule.method.length === 0 || rule.method.some((step) => step.trim().length < 20),
+    ).map((rule) => rule.id);
+
+    expect(missing).toEqual([]);
+  });
+
+  it('writes those steps for a reader who will never see the code', () => {
+    // Raw identifiers are the specific failure this is guarding: a step that says `costIncurredToDate` has
+    // described the variable rather than the reasoning. Two humps, so a product name with a single intercap
+    // — QuickBooks, eSUB — is still allowed to appear in prose.
+    const IDENTIFIER = /_[a-z]|\.csv|\b[a-z]+[A-Z][a-z]*[A-Z]/;
+
+    const offenders = EXPLAINABLE.flatMap((rule) =>
+      rule.method.filter((step) => IDENTIFIER.test(step)).map((step) => `${rule.id}: ${step}`),
+    );
+
+    expect(offenders).toEqual([]);
+  });
+});
+
+describe('evidence names every kind of record it can cite', () => {
+  /**
+   * `recordKind` falls back to the word "Record", which reads as a placeholder rather than a name. The worst
+   * case is not a source file but the decision ledger: a human's own answer is the most consequential entry
+   * in an audit trail, and it reaches the evidence panel through overlaid forecast snapshots.
+   */
+  it('names every source file and every record this application produces', () => {
+    const applicationOrigins = ['decision-ledger', 'src/agents/agents.ts'];
+    const unnamed = [...Object.values(SOURCE_FILES), ...applicationOrigins]
+      .filter((file) => !hasRecordKind(file))
+      .sort();
+
+    expect(unnamed).toEqual([]);
+  });
+});
+
+describe('evidence names its source fields in English', () => {
+  /**
+   * `SourceRef.fields` is how a finding says which part of a record it relied on, and it carries raw column
+   * names all the way to the screen. A field with no plain-English name falls back to its raw form, so the
+   * panel quietly shows a database column to a finance team — the exact failure this vocabulary exists to
+   * prevent, and one nobody notices until it is in front of a customer.
+   */
+  it('every field a rule can cite has a plain-English name', () => {
+    const cited = new Set<string>();
+
+    // Two shapes reach `SourceRef.fields`: a named `fields:` property, and the trailing array argument of
+    // normalization's `ref(collection, id, [...])` helper. Reading only the first is how this test passed
+    // vacuously on five fields while twenty-three others went unlabelled. The record-id group allows commas
+    // so a computed id — `ref('x', key(a, b), [...])` — does not silently drop that call's fields.
+    const LISTS = [/fields:\s*\[([^\]]*)\]/g, /\bref\(\s*'[A-Za-z]+'\s*,[^[]+,\s*\[([^\]]*)\]/g];
+
+    // Every source file, not a hand-listed few: `SourceRef` is a plain type and any module may build one, so
+    // naming three producers would quietly stop covering the fourth.
+    for (const file of files) {
+      const source = readFileSync(file, 'utf8');
+      for (const pattern of LISTS) {
+        for (const list of source.matchAll(pattern)) {
+          // Only quoted literals. A field built at runtime — a cost code, say — is data, not a column name.
+          for (const name of list[1]!.matchAll(/'([A-Za-z_][A-Za-z0-9_]*)'/g)) cited.add(name[1]!);
+        }
+      }
+    }
+
+    // A guard on the guard: if the extraction silently stops matching, the test must fail rather than pass
+    // vacuously on an empty set.
+    expect(cited.size).toBeGreaterThan(15);
+
+    expect([...cited].filter((field) => !hasFieldLabel(field)).sort()).toEqual([]);
   });
 });
 

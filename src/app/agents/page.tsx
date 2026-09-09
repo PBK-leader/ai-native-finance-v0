@@ -27,9 +27,9 @@ const LOOP_STAGES = [
 ];
 
 function ruleLabel(ruleId: string): string {
-  if (ruleId === CLOSE_CONTROLLER_REVIEW) {
-    return 'Controller review — raised only after a human decision moves the forecast materially';
-  }
+  // The Controller review used to be special-cased here with a second, differently worded description. One
+  // finding described two ways on two screens is the sort of thing a Controller notices and nobody can
+  // resolve; `ruleDescription` now covers it from the same source as every other rule.
   return ruleDescription(ruleId) || ruleId;
 }
 

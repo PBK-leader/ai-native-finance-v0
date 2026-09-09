@@ -21,6 +21,15 @@ export const apDuplicate: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'The same vendor invoice number appears more than once.',
+  method: [
+    'Group every invoice by vendor and invoice number. Two records sharing both are the same document ' +
+      'entered twice.',
+    'Keep the earliest record in each group and set the later one aside, so the purchase order is not ' +
+      'reduced twice and cost is not doubled.',
+    'Report the set-aside record dated on or before the close, with another copy alongside it, because ' +
+      'that exclusion is a judgement the software made and a human needs to confirm it. Where a number ' +
+      'appears three or more times, the copy shown may not be the one that was kept.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const found: DetectedException[] = [];
 
@@ -76,6 +85,14 @@ export const apCommitmentOverrun: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'Cumulative approved invoicing exceeds the purchase order.',
+  method: [
+    'For each purchase order, add up every invoice matched to it that was approved on or before the close ' +
+      'date, ignoring invoices still pending and any duplicate already set aside.',
+    'Subtract the committed amount of the purchase order from that total.',
+    'Flag it when the excess passes the threshold.',
+    'The test is cumulative rather than invoice by invoice: a single large invoice is only an overrun once ' +
+      'you count everything already billed against the same purchase order.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.commitmentOverrunDollar;
     const found: DetectedException[] = [];
@@ -135,6 +152,13 @@ export const apCostCodeMismatch: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'An invoice is coded to a different cost code than its purchase order.',
+  method: [
+    'Take every invoice that counts for this close — approved on or before the close date, and not a ' +
+      'duplicate already set aside.',
+    'Find the purchase order it is matched to and compare the cost code on each.',
+    'Flag any pair that disagrees. One of the two is wrong, so at least one cost code is reporting the ' +
+      'wrong position against its budget.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const found: DetectedException[] = [];
 
@@ -183,6 +207,18 @@ export const apMissingPosting: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'An approved invoice has not reached the job-cost ledger.',
+  method: [
+    'Take every invoice approved on or before the close date. An invoice still pending is not late — ' +
+      'nobody has approved it yet.',
+    'Look for a matching entry in the job-cost ledger, the record of what the project has actually been ' +
+      'charged.',
+    'Where there is none, count the days since approval and flag it once that exceeds the allowed posting ' +
+      'lag.',
+    'The full invoice amount is the impact: cost to date is understated by exactly that, which flatters ' +
+      'both margin and the billing position.',
+    'An invoice already raised as a duplicate, or held because it would breach its purchase order, is left ' +
+      'to that finding instead — so this list is shorter than the filter above on its own would suggest.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.apPostingLagDays;
     const found: DetectedException[] = [];
@@ -242,6 +278,15 @@ export const apRni: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'Material has been received but not yet invoiced.',
+  method: [
+    'For each purchase order, add up the value of everything physically received on or before the close ' +
+      'date.',
+    'Add up the invoices against the same purchase order that were approved on or before the close date, ' +
+      'ignoring any duplicate already set aside. Excluding those makes the gap larger, not smaller.',
+    'Subtract the invoiced total from the received total. What is left is material the company has taken ' +
+      'delivery of and owes for, but has not been billed for yet.',
+    'Flag it once that gap passes the threshold, and treat a larger gap as more serious.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const { rniMediumDollar, rniHighDollar } = ctx.config.thresholds;
     const found: DetectedException[] = [];
@@ -270,8 +315,9 @@ export const apRni: Rule = {
         explanation:
           `${formatUsd(received)} of material has been received against this purchase order but only ` +
           `${formatUsd(invoiced)} has been invoiced and approved. The company owes ${formatUsd(gap)} that ` +
-          'does not yet appear in cost to date, so the project looks more profitable and less complete than ' +
-          'it is.',
+          'sits in remaining commitment instead of cost to date, so the project looks less complete than it ' +
+          'is and the billing position is understated. Forecast final cost already includes it, so accepting ' +
+          'the cutoff moves the money without changing projected profit.',
         impact: gap,
         impactUnit: 'USD',
         recommendedAction:
@@ -310,6 +356,16 @@ export const laborMissingPosting: Rule = {
   blocking: true,
   blockingScope: 'CLOSE',
   description: 'Approved time has not reached payroll or job cost.',
+  method: [
+    'Group approved timecards by project and cost code, and keep the entries the timekeeping system says ' +
+      'never reached payroll. That flag is the only posting signal the source provides.',
+    'Within each group, keep only the days that are genuinely late — worked on or before the close date, ' +
+      'and older than the allowed posting lag.',
+    'Add up the hours and cost on those days, using each crew member\'s own rate with the configured ' +
+      'overtime multiplier.',
+    'Age the finding from the oldest late day, so one timecard entered yesterday cannot make forty ' +
+      'three-week-old ones look current.',
+  ],
   evaluate(ctx: RuleContext): DetectedException[] {
     const threshold = ctx.config.thresholds.laborPostingLagDays;
     const found: DetectedException[] = [];

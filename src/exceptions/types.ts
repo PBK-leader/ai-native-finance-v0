@@ -59,6 +59,15 @@ export type Rule = {
   blockingScope: 'CLOSE' | 'FORECAST_WIP';
   /** One-line statement of what the rule looks for, shown in the UI. */
   description: string;
+  /**
+   * How the finding is reached, one step per entry, for someone who will never read the code.
+   *
+   * It lives beside `evaluate` rather than in a table in the UI so the two cannot drift: a reviewer changing
+   * what the rule tests has the sentence describing that test directly under their cursor. Steps describe
+   * the actual sequence — which records are taken, what is compared, what makes it fire — because "show me
+   * the evidence" is really the question "how did you get here", and a list of numbers does not answer it.
+   */
+  readonly method: readonly string[];
   evaluate(ctx: RuleContext): DetectedException[];
 };
 

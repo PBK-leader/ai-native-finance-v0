@@ -9,7 +9,7 @@ import Link from 'next/link';
 import type { CanonicalModel, Role } from '@/domain/entities';
 import type { Task } from '@/domain/workflow';
 import type { EngineState } from '@/workflows/replay';
-import { ruleDescription } from '@/workflows/replay';
+import { ruleDescription, ruleMethod } from '@/workflows/replay';
 import { forecastTargetsFor } from '@/workflows/forecastTargets';
 import { Card } from '@/components/ui';
 import { ExceptionCard } from '@/components/ExceptionCard';
@@ -72,6 +72,7 @@ export function ControllerDesk({
               task={task}
               decisions={state.decisions.filter((d) => d.exceptionId === exception.id)}
               ruleDescription={ruleDescription(exception.ruleId)}
+              ruleMethod={ruleMethod(exception.ruleId)}
               forecastTargets={
                 exception.projectId
                   ? forecastTargetsFor(state.current.metricsByProject.get(exception.projectId)!, exception)

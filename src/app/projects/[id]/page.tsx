@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { V0_CONFIG } from '@/config/v0Config';
 import { canonical, engineState } from '@/workflows/engine';
-import { ruleDescription } from '@/workflows/replay';
+import { ruleDescription, ruleMethod } from '@/workflows/replay';
 import { forecastTargetsFor } from '@/workflows/forecastTargets';
 import { computeMovement } from '@/calculations/projectMetrics';
 import { AGENTS } from '@/agents/agents';
@@ -89,6 +89,7 @@ export default async function Project360({
               task={task}
               decisions={state.decisions.filter((d) => d.exceptionId === exception.id)}
               ruleDescription={ruleDescription(exception.ruleId)}
+              ruleMethod={ruleMethod(exception.ruleId)}
               forecastTargets={forecastTargetsFor(metrics, exception)}
               ownerName={task?.ownerPersonId ? model.index.personById.get(task.ownerPersonId)?.name : undefined}
               viewer={viewer}

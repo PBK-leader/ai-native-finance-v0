@@ -91,9 +91,32 @@ export const billingAgent: Agent = {
  * attach to. It is deliberately excluded from the seeded rule-count oracle, because it can only exist after
  * a human decision and the oracle describes the pre-decision baseline.
  */
+/**
+ * The Controller review's own description and method, in the module that raises it.
+ *
+ * Every detection rule states how it reaches a finding beside its `evaluate`, so the two cannot drift. This
+ * escalation has no `evaluate` — the agent below raises it — and putting its prose anywhere else would break
+ * exactly the rule that co-location exists to enforce. Exported so the workflow layer and every screen read
+ * one sentence rather than each keeping a copy.
+ */
+export const CLOSE_REVIEW_RULE = {
+  id: CLOSE_CONTROLLER_REVIEW,
+  description: 'A human answer moved a project enough to need Controller sign-off.',
+  method: [
+    'Watch what happens after each human answer, rather than checking the project against the baseline.',
+    'Recompute forecast final cost and projected margin, and compare them against the step immediately ' +
+      'before that answer, so every response is judged on its own effect.',
+    'Raise a review when either the cost movement or the margin movement passes the level the Controller ' +
+      'has asked to see.',
+    'This is the one finding nobody caused by making a mistake. It exists because something moved by enough ' +
+      'that a second pair of eyes is required before the project can close.',
+  ],
+} as const;
+
 export const closeOrchestrator: Agent = {
   id: 'CLOSE_ORCHESTRATOR',
   name: 'Close Orchestrator',
+  // See CLOSE_REVIEW_RULE below for the plain-English account of the escalation this agent raises.
   goal:
     'Decide whether each project is ready to close, and make sure no material change reaches the books ' +
     'without a Controller looking at it.',
@@ -204,9 +227,9 @@ export const closeOrchestrator: Agent = {
                 nodeIds: [projectId],
                 sourceRefs: project?.sourceRefs ?? [],
                 measured: [
-                  { label: 'EAC before', value: previous.eac, unit: 'USD' },
-                  { label: 'EAC after', value: current.eac, unit: 'USD' },
-                  { label: 'EAC movement', value: eacChange, unit: 'USD' },
+                  { label: 'Forecast final cost before', value: previous.eac, unit: 'USD' },
+                  { label: 'Forecast final cost after', value: current.eac, unit: 'USD' },
+                  { label: 'How much it moved', value: eacChange, unit: 'USD' },
                   { label: 'Margin movement', value: marginMove, unit: 'PP' },
                 ],
                 thresholds: [

@@ -345,7 +345,7 @@ function availableActions(
       options.push({ mode: 'accept', label: 'Accept adjustment' });
       options.push({ mode: 'reject', label: 'No adjustment needed' });
     } else if (ruleId === 'CO_MISSING_SOV') {
-      options.push({ mode: 'sov', label: 'Add SOV line' });
+      options.push({ mode: 'sov', label: 'Add the schedule of values line' });
       options.push({ mode: 'reject', label: 'No correction needed' });
     } else {
       options.push({ mode: 'reject', label: 'Resolve with note' });

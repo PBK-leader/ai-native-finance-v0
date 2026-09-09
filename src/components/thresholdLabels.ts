@@ -32,8 +32,10 @@ const THRESHOLDS: Record<keyof V0Config['thresholds'], { label: string; unit: Th
   approvedCoUnbilledDays: { label: 'Approved change work unbilled for', unit: 'DAYS' },
   underbillingDollar: { label: 'Underbilled', unit: 'USD' },
   underbillingPctContract: { label: 'Underbilled, as a share of contract', unit: 'PCT_FRACTION' },
-  sovToleranceDollar: { label: 'Schedule of values off by more than', unit: 'USD' },
-  retainageToleranceDollar: { label: 'Retainage off by more than', unit: 'USD' },
+  // Both of these are tolerances rather than bars: the rule fires when the test is *not* met. Their labels
+  // have to read correctly against "≤", or the panel says "off by more than ≤ $100", which is not a sentence.
+  sovToleranceDollar: { label: 'Gap between the schedule of values and the contract', unit: 'USD' },
+  retainageToleranceDollar: { label: 'Gap between retainage held and the agreed rate', unit: 'USD' },
   pmChangeCommentDollar: { label: 'Forecast change needing an explanation', unit: 'USD' },
   pmChangeCommentPct: { label: 'Forecast change needing an explanation, as a share', unit: 'PCT_FRACTION' },
   controllerEacChangeDollar: { label: 'Forecast movement needing Controller sign-off', unit: 'USD' },
@@ -63,6 +65,19 @@ function formatThreshold(value: number, unit: ThresholdUnit): string {
 }
 
 const COMPARATOR: Record<'GTE' | 'LTE' | 'GT' | 'LT', string> = { GTE: '≥', LTE: '≤', GT: '>', LT: '<' };
+
+/**
+ * What a threshold's result means, said the way round the threshold is written.
+ *
+ * A threshold pointing upwards is a bar the finding had to clear. One pointing downwards is a tolerance it
+ * was supposed to stay inside, and those rules fire precisely when `met` is false — so a single "met / not
+ * met" wording tells the reader the opposite of the truth on half of them.
+ */
+export function thresholdOutcome(comparator: 'GTE' | 'LTE' | 'GT' | 'LT', met: boolean): string {
+  const isTolerance = comparator === 'LTE' || comparator === 'LT';
+  if (isTolerance) return met ? 'inside this tolerance' : 'outside this tolerance, which is why this was raised';
+  return met ? 'this was passed' : 'not passed on its own';
+}
 
 /** "Hours used ahead of progress ≥ 10 pts" — the rule's test, in words, with the configured number. */
 export function describeThreshold(t: {

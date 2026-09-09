@@ -18,6 +18,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { GraphLink, GraphNode, NodeType } from '@/domain/graph';
 import { measure } from './format';
 import { CLOSE_STORY_DEPTH, FILTERABLE, TYPE_COLOR, edgeLabel, typeLabel } from './graphVocabulary';
+import { recordKind, systemLabel } from './sourceVocabulary';
 import {
   CARD_W, COLUMN_HEADER_H, DEFAULT_COLLAPSE_AT, autoExpandFor, layoutLineage, type LaidEdge,
 } from './lineageLayout';
@@ -643,20 +644,27 @@ export function GraphExplorer({
 
             <div>
               <h4 className="text-xs font-medium text-[var(--color-muted)]">
-                Source records ({focusNode.sourceRefs.length})
+                Where this came from
               </h4>
               {focusNode.sourceRefs.length === 0 ? (
                 <p className="mt-1 text-[11px] text-[var(--color-muted)]">
-                  Derived by the application — no raw source row of its own.
+                  Worked out by this application. There is no record of it in any source system.
                 </p>
               ) : (
                 <ul className="mt-1 max-h-56 space-y-1 overflow-y-auto text-[11px]">
                   {focusNode.sourceRefs.slice(0, 25).map((ref, i) => (
-                    <li key={`${ref.recordId}-${i}`}>
-                      <span className="rounded bg-[var(--color-canvas)] px-1 font-medium">{ref.recordId}</span>{' '}
-                      <span className="text-[var(--color-muted)]">{ref.file}</span>
+                    <li key={`${ref.recordId}-${i}`} title={ref.file}>
+                      <span className="rounded bg-[var(--color-canvas)] px-1 font-medium">
+                        {recordKind(ref.file)} {ref.recordId}
+                      </span>{' '}
+                      <span className="text-[var(--color-muted)]">from {systemLabel(ref.system)}</span>
                     </li>
                   ))}
+                  {focusNode.sourceRefs.length > 25 && (
+                    <li className="text-[var(--color-muted)]">
+                      …and {focusNode.sourceRefs.length - 25} more.
+                    </li>
+                  )}
                 </ul>
               )}
             </div>
