@@ -9,6 +9,7 @@
 import { NextResponse } from 'next/server';
 import { DEMOS, type DemoId } from '@/workflows/demos';
 import { decisionStore } from '@/workflows/decisionStore';
+import { currentSessionId } from '@/components/sessionServer';
 
 export async function POST(request: Request) {
   let id: DemoId;
@@ -24,6 +25,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ reason: `Unknown demo ${id}.` }, { status: 400 });
   }
 
-  decisionStore().replaceAll(demo.decisions);
+  decisionStore(await currentSessionId()).replaceAll(demo.decisions);
   return NextResponse.json({ ok: true, loaded: demo.decisions.length });
 }

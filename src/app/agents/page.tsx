@@ -17,6 +17,7 @@ import { engineState } from '@/workflows/engine';
 import { ruleDescription } from '@/workflows/replay';
 import { Card } from '@/components/ui';
 import { agentActionLabel, count } from '@/components/format';
+import { currentSessionId } from '@/components/sessionServer';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,8 +33,8 @@ function ruleLabel(ruleId: string): string {
   return ruleDescription(ruleId) || ruleId;
 }
 
-export default function AgentsPage() {
-  const state = engineState();
+export default async function AgentsPage() {
+  const state = engineState(await currentSessionId());
 
   return (
     <div className="space-y-6">

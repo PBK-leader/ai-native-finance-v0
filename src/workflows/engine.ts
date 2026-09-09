@@ -23,10 +23,15 @@ export function buildView(model: CanonicalModel, projection: DecisionProjection)
   return buildReconciledView(model, getNormalized().reconciliationKeys, projection);
 }
 
-/** The current engine state, derived from the canonical model and the decision ledger. */
-export function engineState(): EngineState {
+/**
+ * The current engine state, derived from the canonical model and the decision ledger.
+ *
+ * The session is a parameter rather than something read here, so this layer keeps no framework dependency and
+ * stays a pure function of (model, ledger). The app layer resolves the cookie and passes the id down.
+ */
+export function engineState(sessionId: string): EngineState {
   const { model } = getNormalized();
-  return replay(model, buildView, V0_CONFIG, decisionStore().all());
+  return replay(model, buildView, V0_CONFIG, decisionStore(sessionId).all());
 }
 
 /** The Client Operating Graph for the current state. */

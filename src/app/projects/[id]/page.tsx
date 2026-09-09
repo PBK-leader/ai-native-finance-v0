@@ -21,6 +21,7 @@ import { ExceptionCard } from '@/components/ExceptionCard';
 import { ActivityTrail } from '@/components/ActivityTrail';
 import { pct, ratioPct, signedUsd, usd } from '@/components/format';
 import { currentPersona } from '@/components/personaServer';
+import { currentSessionId } from '@/components/sessionServer';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,7 +46,7 @@ export default async function Project360({
   const tab: Tab = (TABS.find((t) => t.id === rawTab)?.id ?? 'overview') as Tab;
   const { persona: viewer } = await currentPersona();
 
-  const state = engineState();
+  const state = engineState(await currentSessionId());
   const model = canonical();
   const projectId = toProjectId(id);
   const project = model.index.projectById.get(projectId);

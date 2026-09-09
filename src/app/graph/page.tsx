@@ -15,6 +15,7 @@ import type { NodeType } from '@/domain/graph';
 import { linksFor, neighbourhood, otherEnd } from '@/graph/core';
 import { Card, Empty } from '@/components/ui';
 import { GraphExplorer } from '@/components/GraphExplorer';
+import { currentSessionId } from '@/components/sessionServer';
 import {
   CLOSE_STORY_TYPES, DEFAULT_TYPES, FILTERABLE, PORTFOLIO_HUBS, isNodeType,
 } from '@/components/graphVocabulary';
@@ -27,7 +28,7 @@ export default async function GraphPage({
   searchParams: Promise<{ project?: string; depth?: string; types?: string; focus?: string }>;
 }) {
   const params = await searchParams;
-  const state = engineState();
+  const state = engineState(await currentSessionId());
   const model = canonical();
   const graph = currentGraph(state);
 

@@ -10,6 +10,7 @@
 import { canonical, engineState } from '@/workflows/engine';
 import { openTasksForPerson } from '@/workflows/replay';
 import { currentPersona } from '@/components/personaServer';
+import { currentSessionId } from '@/components/sessionServer';
 import { CommandCenter } from '@/components/desk/CommandCenter';
 import { ControllerDesk } from '@/components/desk/ControllerDesk';
 import { TaskDesk } from '@/components/desk/TaskDesk';
@@ -18,7 +19,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const { persona } = await currentPersona();
-  const state = engineState();
+  const state = engineState(await currentSessionId());
   const model = canonical();
   const tasks = openTasksForPerson(state, persona.personId);
 

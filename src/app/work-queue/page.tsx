@@ -18,6 +18,7 @@ import { ExceptionCard } from '@/components/ExceptionCard';
 import { dollarExposure } from '@/calculations/portfolio';
 import { usd } from '@/components/format';
 import { currentPersona } from '@/components/personaServer';
+import { currentSessionId } from '@/components/sessionServer';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +40,7 @@ export default async function WorkQueue({
   const status = (params.status ?? 'open') as (typeof STATUSES)[number];
 
   const { persona: viewer } = await currentPersona();
-  const state = engineState();
+  const state = engineState(await currentSessionId());
   const model = canonical();
   const exceptionById = new Map(state.current.exceptions.map((e) => [e.id, e]));
 

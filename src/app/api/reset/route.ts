@@ -8,8 +8,9 @@
 
 import { NextResponse } from 'next/server';
 import { decisionStore } from '@/workflows/decisionStore';
+import { currentSessionId } from '@/components/sessionServer';
 
 export async function POST() {
-  decisionStore().reset();
+  decisionStore(await currentSessionId()).reset();
   return NextResponse.json({ ok: true });
 }
