@@ -8,7 +8,7 @@
 
 import Link from 'next/link';
 import { canonical, engineState } from '@/workflows/engine';
-import { ruleDescription } from '@/workflows/replay';
+import { compareByUrgency, ruleDescription } from '@/workflows/replay';
 import { forecastTargetsFor } from '@/workflows/forecastTargets';
 import { isSettled } from '@/domain/workflow';
 import type { Role } from '@/domain/entities';
@@ -53,17 +53,11 @@ export default async function WorkQueue({
     return true;
   });
 
-  const sorted = [...tasks].sort((a, b) => {
-    const ea = exceptionById.get(a.exceptionId);
-    const eb = exceptionById.get(b.exceptionId);
-    const openA = isSettled(a.status) ? 1 : 0;
-    const openB = isSettled(b.status) ? 1 : 0;
-    return (
-      openA - openB ||
-      Number(b.blocking) - Number(a.blocking) ||
-      (eb?.impact ?? 0) - (ea?.impact ?? 0)
-    );
-  });
+  // Open before settled, then the one shared definition of urgency the desks use.
+  const impactOf = (task: (typeof tasks)[number]) => exceptionById.get(task.exceptionId)?.impact ?? 0;
+  const sorted = [...tasks].sort(
+    (a, b) => Number(isSettled(a.status)) - Number(isSettled(b.status)) || compareByUrgency(a, b, impactOf),
+  );
 
   const exposure = dollarExposure(
     sorted.map((task) => exceptionById.get(task.exceptionId)).filter((e) => e !== undefined),

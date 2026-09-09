@@ -7,7 +7,6 @@
  * authentication — and every number on every version is the calculation layer's, never the view's.
  */
 
-import { personId as toPersonId } from '@/domain/ids';
 import { canonical, engineState } from '@/workflows/engine';
 import { openTasksForPerson } from '@/workflows/replay';
 import { currentPersona } from '@/components/personaServer';
@@ -21,11 +20,11 @@ export default async function Home() {
   const { persona } = await currentPersona();
   const state = engineState();
   const model = canonical();
-  const tasks = openTasksForPerson(state, toPersonId(persona.personId));
+  const tasks = openTasksForPerson(state, persona.personId);
 
   switch (persona.role) {
     case 'Project Manager': {
-      const managed = model.projects.filter((p) => p.projectManagerId === toPersonId(persona.personId));
+      const managed = model.projects.filter((p) => p.projectManagerId === persona.personId);
       return (
         <TaskDesk
           persona={persona}
@@ -54,5 +53,10 @@ export default async function Home() {
       return <ControllerDesk persona={persona} tasks={tasks} state={state} model={model} />;
     case 'CFO':
       return <CommandCenter state={state} model={model} />;
+    default: {
+      // A new role must choose a desk; a blank page is not an acceptable default.
+      const exhaustive: never = persona.role;
+      return exhaustive;
+    }
   }
 }

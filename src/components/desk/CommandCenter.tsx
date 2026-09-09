@@ -9,8 +9,9 @@ import Link from 'next/link';
 import { V0_CONFIG } from '@/config/v0Config';
 import type { CanonicalModel } from '@/domain/entities';
 import { isSettled } from '@/domain/workflow';
-import type { EngineState } from '@/workflows/replay';
+import { waitingOnByPerson, type EngineState } from '@/workflows/replay';
 import { computePortfolioMetrics } from '@/calculations/portfolio';
+import { computeMovement } from '@/calculations/projectMetrics';
 import { Card, CloseReadyTag, Empty, Metric, ProjectLink, Td, Th } from '@/components/ui';
 import { DemoBar } from '@/components/DemoBar';
 import { pct, signedUsd, usd } from '@/components/format';
@@ -31,21 +32,8 @@ export function CommandCenter({
   const blockingTasks = openTasks.filter((task) => task.blocking);
   const readyCount = [...state.current.closeReadiness.values()].filter((r) => r.ready).length;
 
-  // Who the company is actually waiting on, which is the operational question.
-  const waitingOn = new Map<string, { name: string; role: string; tasks: number; blocking: number }>();
-  for (const task of openTasks) {
-    const person = task.ownerPersonId ? model.index.personById.get(task.ownerPersonId) : null;
-    const key = person?.id ?? `role:${task.ownerRole}`;
-    const entry = waitingOn.get(key) ?? {
-      name: person?.name ?? task.ownerRole,
-      role: task.ownerRole,
-      tasks: 0,
-      blocking: 0,
-    };
-    entry.tasks += 1;
-    if (task.blocking) entry.blocking += 1;
-    waitingOn.set(key, entry);
-  }
+  // Who the company is actually waiting on — the same selector each person's desk is built from.
+  const waitingOn = waitingOnByPerson(state, model);
 
   const rniCandidates = state.current.exceptions.filter(
     (e) => e.ruleId === 'AP_RNI' && e.currentlyTriggering && e.suppressedBy === null,
@@ -124,10 +112,9 @@ export function CommandCenter({
                   const project = model.index.projectById.get(m.projectId)!;
                   const prior = state.prior.get(m.projectId);
                   const readiness = state.current.closeReadiness.get(m.projectId);
-                  const marginMove =
-                    prior?.projectedMarginPct != null && m.projectedMarginPct != null
-                      ? m.projectedMarginPct - prior.projectedMarginPct
-                      : null;
+                  // The same movement the Close Orchestrator escalates on, so this column and a Controller
+                  // review's evidence can never show two different numbers.
+                  const marginMove = prior ? computeMovement(m, prior).marginMovementPercentagePoints : null;
                   const open = state.current.tasks.filter(
                     (t) => t.projectId === m.projectId && !isSettled(t.status),
                   );
@@ -180,28 +167,30 @@ export function CommandCenter({
 
         <div className="space-y-6">
           <Card title="Who we are waiting on" subtitle={`${openTasks.length} open items, ${blockingTasks.length} blocking`}>
-            {waitingOn.size === 0 ? (
+            {waitingOn.length === 0 ? (
               <Empty>Nothing outstanding. Every item has been resolved or explicitly accepted.</Empty>
             ) : (
               <ul className="space-y-2">
-                {[...waitingOn.values()]
-                  .sort((a, b) => b.blocking - a.blocking || b.tasks - a.tasks)
-                  .map((entry) => (
-                    <li key={entry.name} className="flex items-baseline justify-between gap-3 text-sm">
+                {waitingOn.map((entry) => {
+                  const blocking = entry.tasks.filter((t) => t.blocking).length;
+                  return (
+                    <li
+                      key={entry.person?.id ?? `role:${entry.role}`}
+                      className="flex items-baseline justify-between gap-3 text-sm"
+                    >
                       <span>
-                        {entry.name}
+                        {entry.person?.name ?? `Unassigned ${entry.role}`}
                         <span className="ml-1 text-xs text-[var(--color-muted)]">{entry.role}</span>
                       </span>
                       <span className="tabular text-xs">
-                        {entry.tasks}
-                        {entry.blocking > 0 && (
-                          <span className="ml-1 text-[var(--color-blocking)]">
-                            ({entry.blocking} blocking)
-                          </span>
+                        {entry.tasks.length}
+                        {blocking > 0 && (
+                          <span className="ml-1 text-[var(--color-blocking)]">({blocking} blocking)</span>
                         )}
                       </span>
                     </li>
-                  ))}
+                  );
+                })}
               </ul>
             )}
             <Link

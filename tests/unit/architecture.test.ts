@@ -104,7 +104,8 @@ describe('financial arithmetic stays in the calculation layer', () => {
   const MONEY_FIELD =
     '(revisedContractValue|eac|projectedProfit|adjustedCostToDate|postedCost|remainingCommitment|' +
     'billedToDate|billingPosition|draftEarnedRevenue|currentBudget|budgetedLaborHours|impact|' +
-    'pendingChangeOrderIncurredCost|acceptedRni|acceptedApUnposted|acceptedUnpostedLabor)';
+    'pendingChangeOrderIncurredCost|acceptedRni|acceptedApUnposted|acceptedUnpostedLabor|' +
+    'projectedMarginPct|originalMarginPct|percentCompletePct)';
 
   const presentation = files.filter(
     (file) => rel(file).startsWith('components/') || rel(file).startsWith('app/'),

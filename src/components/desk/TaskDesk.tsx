@@ -71,7 +71,10 @@ export function TaskDesk({
           <h2 className="mb-2 text-[11px] font-medium uppercase tracking-wide text-[var(--color-muted)]">
             Start here
           </h2>
+          {/* Keyed by task: after a submit the next task takes this slot, and its form must start fresh
+              rather than inherit the previous task's prefilled amount, forecast lines and "Recorded" note. */}
           <ExceptionCard
+            key={first.id}
             exception={firstException}
             task={first}
             decisions={state.decisions.filter((d) => d.exceptionId === firstException.id)}

@@ -9,6 +9,7 @@
  */
 
 import type { DemoId } from './demos';
+import type { PersonaId } from './personas';
 
 export type GuideStep = {
   /** Short label for the progress rail. */
@@ -28,12 +29,8 @@ export type GuideStep = {
    * "leave the ledger alone", used for steps that only change which screen you are looking at.
    */
   load?: DemoId | 'reset';
-  /**
-   * Whose chair to sit in for this beat — a persona id from `components/persona.ts`. Home is cut per person,
-   * so the story has to say who is looking. Typed as a string here because this layer cannot import the UI's
-   * persona list; the guide validates it before use.
-   */
-  persona?: string;
+  /** Whose chair to sit in for this beat. Home is cut per person, so the story has to say who is looking. */
+  persona?: PersonaId;
 };
 
 export const GUIDE: GuideStep[] = [
@@ -90,8 +87,8 @@ export const GUIDE: GuideStep[] = [
       "rule that fired.",
     lookFor: [
       '19 blocking items, $2.4M of value affected',
-      'Every card shows evidence, an owner, and a next action',
-      'Click "Source records" on any card to see the underlying rows',
+      'Every card leads with what is at stake, who owns it, and the next step',
+      'Open "Show the evidence" on any card to see the test that fired and the underlying rows',
     ],
     soWhat:
       'This is the difference from a dashboard. A dashboard tells you the number is wrong. This tells you ' +
@@ -163,14 +160,15 @@ export const GUIDE: GuideStep[] = [
       "a human signs off. No AI decided anything. It gathered the evidence and put a named person in front " +
       "of the decision.",
     lookFor: [
-      'A Controller review that did not exist a moment ago',
-      'Evidence shows EAC before, EAC after, and the movement',
+      "Sam's desk: one item now needs a decision before close — it did not exist a moment ago",
+      'Open "Show the evidence": forecast cost before, after, and the movement',
       'The project cannot close until this is approved or the risk is explicitly accepted',
     ],
     soWhat:
       'This is the answer to "are you letting an AI touch our books?" No. It prepares the work and stops at ' +
       'the judgement.',
-    href: '/work-queue?role=Controller',
+    href: '/',
+    persona: 'controller',
   },
   {
     label: 'No double counting',

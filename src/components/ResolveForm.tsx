@@ -14,6 +14,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
+import { roleForWaitingState } from '@/domain/workflow';
 import type { ExceptionRecord, Task } from '@/domain/workflow';
 import type { ForecastTarget } from '@/workflows/forecastTargets';
 import { readPersonaCookie, type Persona } from './persona';
@@ -97,10 +98,14 @@ export function ResolveForm({
     task, viewer.role, adjustmentType !== null, exception.ruleId, forecastTargets.length > 0,
   );
 
+  // Who can act follows the status, not the original routing: an escalated item waits on the Controller.
+  const actingRole = roleForWaitingState(task.status) ?? task.ownerRole;
+  const isMine = task.ownerPersonId === viewer.personId;
+
   if (options.length === 0) {
     return (
       <p className="mt-3 text-xs text-[var(--color-muted)]">
-        Only the {task.ownerRole.toLowerCase()} can act on this. In this demo, use &quot;Acting as&quot; at the top
+        Only the {actingRole.toLowerCase()} can act on this. In this demo, use &quot;Acting as&quot; at the top
         right to sit in their chair.
       </p>
     );
@@ -108,6 +113,12 @@ export function ResolveForm({
 
   return (
     <div className="mt-3 space-y-3">
+      {!isMine && (
+        <p className="text-xs text-[var(--color-muted)]">
+          This is waiting on the {actingRole.toLowerCase()}. As {viewer.role}, you can step in on their behalf;
+          the question itself stays with them.
+        </p>
+      )}
       {done && (
         <p className="rounded border border-green-200 bg-green-50 px-3 py-2 text-xs text-[var(--color-ok)]">
           Recorded. Every number that depends on this has been recalculated.

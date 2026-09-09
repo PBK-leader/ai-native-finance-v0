@@ -30,10 +30,11 @@ export function ControllerDesk({
   const firstName = persona.name.split(' ')[0];
   const exceptionById = new Map(state.current.exceptions.map((e) => [e.id, e]));
   // Every Controller-routed task carries the "waiting for Controller" status, so status cannot tell a
-  // sign-off from a watch item. Blocking can: a Controller review holds the close; a margin-fade warning
-  // does not.
-  const signOff = tasks.filter((t) => t.blocking);
-  const review = tasks.filter((t) => !t.blocking);
+  // decision from a watch item. Two things can: it holds the close (a Controller review, a blocking rule),
+  // or someone handed it up — the rule routed it elsewhere and an escalation brought it here.
+  const handedUp = (t: Task) => exceptionById.get(t.exceptionId)?.ownerRole !== 'Controller';
+  const signOff = tasks.filter((t) => t.blocking || handedUp(t));
+  const review = tasks.filter((t) => !t.blocking && !handedUp(t));
 
   return (
     <div className="space-y-8">

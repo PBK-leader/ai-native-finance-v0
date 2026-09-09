@@ -16,7 +16,7 @@
  */
 
 import type { V0Config } from '@/config/v0Config';
-import type { CanonicalModel } from '@/domain/entities';
+import type { CanonicalModel, Person, Role } from '@/domain/entities';
 import type { PersonId, ProjectId } from '@/domain/ids';
 import type { ProjectMetrics } from '@/domain/metrics';
 import type { ReconciledView } from '@/domain/reconciliation';
@@ -280,19 +280,61 @@ export function tasksForProject(state: EngineState, projectId: ProjectId): Task[
 }
 
 /**
- * What is on one named person's desk, most urgent first: anything blocking a close before anything that is
- * not, then by dollar impact. One definition, so the header count, the desk and the Command Center's
- * "waiting on" list can never disagree about how many things Jamie has to do.
+ * The one ordering of "what matters most": anything blocking a close before anything that is not, then by
+ * dollar impact. Every list of tasks a person reads — a desk, the work queue — sorts with this.
+ */
+export function compareByUrgency(a: Task, b: Task, impactOf: (task: Task) => number): number {
+  return Number(b.blocking) - Number(a.blocking) || impactOf(b) - impactOf(a);
+}
+
+function impactLookup(state: EngineState): (task: Task) => number {
+  const byException = new Map(state.current.exceptions.map((e) => [e.id, e.impact ?? 0]));
+  return (task) => byException.get(task.exceptionId) ?? 0;
+}
+
+/**
+ * What is on one named person's desk, most urgent first. One definition, so the header count, the desk and
+ * the Command Center's "waiting on" list can never disagree about how many things Jamie has to do.
+ *
+ * A task belongs to whoever it is waiting on now (see `taskFor`), so an item an accountant escalated sits
+ * on the Controller's desk, not the accountant's.
  */
 export function openTasksForPerson(state: EngineState, personId: PersonId): Task[] {
-  const impactByException = new Map(state.current.exceptions.map((e) => [e.id, e.impact ?? 0]));
+  const impactOf = impactLookup(state);
   return state.current.tasks
     .filter((task) => task.ownerPersonId === personId && !isSettled(task.status))
-    .sort(
-      (a, b) =>
-        Number(b.blocking) - Number(a.blocking) ||
-        (impactByException.get(b.exceptionId) ?? 0) - (impactByException.get(a.exceptionId) ?? 0),
-    );
+    .sort((a, b) => compareByUrgency(a, b, impactOf));
+}
+
+export type WaitingOn = {
+  /** `null` when a task is routed to a role nobody in `people.csv` holds; it is then listed under the role. */
+  person: Person | null;
+  role: Role;
+  tasks: Task[];
+};
+
+/**
+ * Everyone the company is waiting on, most-blocked first — the Command Center's list, built from the same
+ * per-person selector the desks use so the two can only ever show the same numbers.
+ */
+export function waitingOnByPerson(state: EngineState, model: CanonicalModel): WaitingOn[] {
+  const entries: WaitingOn[] = [];
+  for (const person of model.people) {
+    const tasks = openTasksForPerson(state, person.id);
+    if (tasks.length > 0) entries.push({ person, role: person.role, tasks });
+  }
+
+  // Anything with no named owner is still work; it is shown under its role rather than lost.
+  const impactOf = impactLookup(state);
+  const unowned = openTasks(state).filter((task) => task.ownerPersonId === null);
+  const byRole = new Map<Role, Task[]>();
+  for (const task of unowned) byRole.set(task.ownerRole, [...(byRole.get(task.ownerRole) ?? []), task]);
+  for (const [role, tasks] of byRole) {
+    entries.push({ person: null, role, tasks: [...tasks].sort((a, b) => compareByUrgency(a, b, impactOf)) });
+  }
+
+  const blocking = (e: WaitingOn) => e.tasks.filter((t) => t.blocking).length;
+  return entries.sort((a, b) => blocking(b) - blocking(a) || b.tasks.length - a.tasks.length);
 }
 
 export function exceptionById(state: EngineState, id: string): ExceptionRecord | undefined {

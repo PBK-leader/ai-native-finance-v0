@@ -9,7 +9,7 @@
  */
 
 import Link from 'next/link';
-import { personId as toPersonId } from '@/domain/ids';
+import { isSettled } from '@/domain/workflow';
 import type { ExceptionRecord, ReviewDecision, Task } from '@/domain/workflow';
 import type { ForecastTarget } from '@/workflows/forecastTargets';
 import { measure, statusLabel, usd } from './format';
@@ -43,9 +43,8 @@ export function ExceptionCard({
   suppressedByTitle?: string;
   forecastTargets?: ForecastTarget[];
 }) {
-  const settled = task ? task.status === 'RESOLVED' || task.status === 'ACCEPTED_RISK' : false;
-  // The persona carries the raw people.csv id; the task carries the canonical (branded) one.
-  const isMine = !!task && !!viewer && task.ownerPersonId === toPersonId(viewer.personId);
+  const settled = task ? isSettled(task.status) : false;
+  const isMine = !!task && !!viewer && task.ownerPersonId === viewer.personId;
   const owner = ownerName ?? task?.ownerRole;
   // The form must render for the same person on the server and in the browser, or React reports a
   // hydration mismatch; the server default is the accountant, so that is the fallback here too.
@@ -129,7 +128,13 @@ export function ExceptionCard({
             <p className="mt-1 text-sm">{task.requestedAction}</p>
 
             {showResolve && !settled && (
-              <ResolveForm task={task} exception={exception} forecastTargets={forecastTargets} viewer={actor} />
+              <ResolveForm
+                key={task.id}
+                task={task}
+                exception={exception}
+                forecastTargets={forecastTargets}
+                viewer={actor}
+              />
             )}
           </div>
         )}

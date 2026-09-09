@@ -5,14 +5,13 @@
  */
 
 import Link from 'next/link';
-import { personId as toPersonId } from '@/domain/ids';
 import { engineState } from '@/workflows/engine';
 import { openTasksForPerson } from '@/workflows/replay';
 import { currentPersona } from './personaServer';
 
 export async function WaitingOnYou() {
   const { persona } = await currentPersona();
-  const tasks = openTasksForPerson(engineState(), toPersonId(persona.personId));
+  const tasks = openTasksForPerson(engineState(), persona.personId);
   const blocking = tasks.filter((t) => t.blocking).length;
 
   if (tasks.length === 0) {

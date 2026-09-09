@@ -1,30 +1,19 @@
 /**
- * Demo personas — the people whose chairs you can sit in.
+ * The persona cookie — how the browser says whose chair it is sitting in.
  *
- * These map to real rows in `master_data/people.csv`, so a decision made here is attributed to someone who
- * exists in the client's operating graph. Not authentication: V0 has no auth and does not pretend to.
+ * The personas themselves are workflow data (`src/workflows/personas.ts`); this file only owns the cookie
+ * that carries the choice. Not authentication.
  */
 
-import type { Role } from '@/domain/entities';
+import { isPersonaId, type PersonaId } from '@/workflows/personas';
 
-export type PersonaId = 'pm-alex' | 'pm-morgan' | 'accountant' | 'accountant-2' | 'controller' | 'cfo';
-
-export type Persona = { personId: string; name: string; role: Role };
-
-export const PERSONAS: Record<PersonaId, Persona> = {
-  accountant: { personId: 'PERS-PA1', name: 'Jamie Nguyen', role: 'Project Accountant' },
-  'accountant-2': { personId: 'PERS-PA2', name: 'Priya Shah', role: 'Project Accountant' },
-  'pm-alex': { personId: 'PERS-PM1', name: 'Alex Morgan', role: 'Project Manager' },
-  'pm-morgan': { personId: 'PERS-PM4', name: 'Morgan Chen', role: 'Project Manager' },
-  controller: { personId: 'PERS-CTRL', name: 'Sam Carter', role: 'Controller' },
-  cfo: { personId: 'PERS-CFO', name: 'Dana Ruiz', role: 'CFO' },
-};
+export { PERSONAS, isPersonaId } from '@/workflows/personas';
+export type { Persona, PersonaId } from '@/workflows/personas';
 
 export const PERSONA_COOKIE = 'mep-persona';
 
-export function isPersonaId(value: string): value is PersonaId {
-  return value in PERSONAS;
-}
+/** Fired on `window` whenever the cookie is written, so the switcher can follow a change it did not make. */
+export const PERSONA_CHANGED_EVENT = 'mep-persona-changed';
 
 export function readPersonaCookie(): PersonaId {
   if (typeof document === 'undefined') return 'accountant';
@@ -35,4 +24,5 @@ export function readPersonaCookie(): PersonaId {
 
 export function writePersonaCookie(id: PersonaId): void {
   document.cookie = `${PERSONA_COOKIE}=${id}; path=/; max-age=86400; samesite=lax`;
+  window.dispatchEvent(new Event(PERSONA_CHANGED_EVENT));
 }

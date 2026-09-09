@@ -12,7 +12,7 @@
 
 import type { Role } from '@/domain/entities';
 import type { PersonId, ProjectId } from '@/domain/ids';
-import { waitingStateFor } from '@/domain/workflow';
+import { roleForWaitingState, waitingStateFor } from '@/domain/workflow';
 import type { ExceptionRecord, Task, TaskStatus } from '@/domain/workflow';
 import { actionEmitter, type Agent, type AgentRunContext, type AgentRunResult } from './types';
 
@@ -46,14 +46,18 @@ export function resolveOwner(
 export function taskFor(ctx: AgentRunContext, exception: ExceptionRecord): Task {
   const resolution = ctx.resolutionIndex.get(exception.id);
   const status: TaskStatus = resolution?.status ?? waitingStateFor(exception.ownerRole);
+  // The task belongs to whoever it is waiting on *now*. The rule routed it to a role; an escalation hands
+  // it to the Controller, and it must appear on the Controller's desk and vanish from the escalator's. Once
+  // settled, it stays attributed to the original owner for the record.
+  const ownerRole = roleForWaitingState(status) ?? exception.ownerRole;
 
   return {
     id: `TASK-${exception.id}`,
     exceptionId: exception.id,
     projectId: exception.projectId,
     workstream: exception.workstream,
-    ownerRole: exception.ownerRole,
-    ownerPersonId: resolveOwner(ctx, exception.ownerRole, exception.projectId),
+    ownerRole,
+    ownerPersonId: resolveOwner(ctx, ownerRole, exception.projectId),
     blocking: exception.blocking,
     status,
     title: exception.title,

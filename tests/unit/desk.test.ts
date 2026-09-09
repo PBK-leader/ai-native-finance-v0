@@ -1,18 +1,19 @@
 /**
  * The desk is only useful if it is exactly right: the header count, the desk list and the Command Center's
- * "waiting on" list must all be the same numbers, and every threshold a rule cites must have words.
+ * "waiting on" list must all be the same numbers, an escalation must move an item to the desk it is now
+ * waiting on, and every threshold a rule cites must have words.
  */
 
 import { describe, expect, it } from 'vitest';
 import { V0_CONFIG } from '@/config/v0Config';
 import { getNormalized } from '@/data/normalize/model';
 import { buildReconciledView } from '@/reconciliation/buildReconciledView';
-import { openTasks, openTasksForPerson, replay } from '@/workflows/replay';
-import { demoLaborDeterioration } from '@/workflows/demos';
-import { personId as toPersonId } from '@/domain/ids';
+import { openTasks, openTasksForPerson, replay, waitingOnByPerson } from '@/workflows/replay';
+import { demoCloseP1004, demoLaborDeterioration } from '@/workflows/demos';
+import { GUIDE } from '@/workflows/demoScript';
+import { PERSONAS, isPersonaId } from '@/workflows/personas';
 import type { CanonicalModel } from '@/domain/entities';
 import type { DecisionProjection } from '@/domain/workflow';
-import { PERSONAS } from '@/components/persona';
 import { describeThreshold, hasThresholdLabel } from '@/components/thresholdLabels';
 
 const { model, reconciliationKeys } = getNormalized();
@@ -36,21 +37,29 @@ describe('what is on each desk', () => {
     }
   });
 
-  it('matches the "waiting on" figures the Command Center shows at baseline', () => {
+  it('shows the Command Center exactly what each desk shows', () => {
+    // Structural parity: the "waiting on" list is built from the per-person selector, so it cannot drift.
+    const waiting = waitingOnByPerson(state, model);
+    for (const entry of waiting) {
+      if (!entry.person) continue;
+      expect(entry.tasks.map((t) => t.id)).toEqual(openTasksForPerson(state, entry.person.id).map((t) => t.id));
+    }
+    expect(waiting.reduce((n, e) => n + e.tasks.length, 0)).toBe(openTasks(state).length);
+  });
+
+  it('matches the figures the demo narrates at baseline', () => {
     // These are the numbers a founder reads off the screen; if they drift, the demo lies.
-    const jamie = openTasksForPerson(state, toPersonId(PERSONAS.accountant.personId));
+    const jamie = openTasksForPerson(state, PERSONAS.accountant.personId);
     expect(jamie).toHaveLength(11);
     expect(jamie.filter((t) => t.blocking)).toHaveLength(9);
 
-    const sam = openTasksForPerson(state, toPersonId(PERSONAS.controller.personId));
+    const sam = openTasksForPerson(state, PERSONAS.controller.personId);
     expect(sam).toHaveLength(6);
     // Six things on the Controller's radar, none holding the close: nothing needs a decision until a human
-    // answer has moved the numbers. (Status cannot express this — every Controller-routed task is
-    // "waiting for Controller" — so the desk splits on `blocking`, and so does this test.)
+    // answer has moved the numbers.
     expect(sam.filter((t) => t.blocking)).toHaveLength(0);
 
-    const dana = openTasksForPerson(state, toPersonId(PERSONAS.cfo.personId));
-    expect(dana).toHaveLength(0);
+    expect(openTasksForPerson(state, PERSONAS.cfo.personId)).toHaveLength(0);
   });
 
   it('puts blocking items first, then the biggest dollars', () => {
@@ -69,14 +78,44 @@ describe('what is on each desk', () => {
     }
   });
 
-  it('puts a Controller sign-off on the Controller’s desk once a material answer lands', () => {
+  it('puts a Controller review on the Controller’s desk, on top, once a material answer lands', () => {
     const after = replay(model, buildView, V0_CONFIG, demoLaborDeterioration);
-    const sam = openTasksForPerson(after, toPersonId(PERSONAS.controller.personId));
-    const signOff = sam.filter((t) => t.blocking);
-    expect(signOff).toHaveLength(1);
-    // It is the orchestrator's review of the PM's material answer, and it goes to the top of the desk.
-    expect(signOff[0]!.exceptionId.startsWith('CLOSE_CONTROLLER_REVIEW')).toBe(true);
-    expect(sam[0]!.id).toBe(signOff[0]!.id);
+    const sam = openTasksForPerson(after, PERSONAS.controller.personId);
+    const holding = sam.filter((t) => t.blocking);
+    expect(holding).toHaveLength(1);
+    expect(holding[0]!.exceptionId.startsWith('CLOSE_CONTROLLER_REVIEW')).toBe(true);
+    expect(sam[0]!.id).toBe(holding[0]!.id);
+  });
+
+  it('moves an escalated item to the Controller’s desk and off the escalator’s', () => {
+    // The close-P-1004 script has the accountant escalate the PO-0023 overrun before the Controller
+    // accepts the risk. Replay up to and including the escalation only.
+    const escalationIndex = demoCloseP1004.findIndex((d) => d.payload.type === 'ESCALATE');
+    expect(escalationIndex).toBeGreaterThan(-1);
+    const escalation = demoCloseP1004[escalationIndex]!;
+    const state = replay(model, buildView, V0_CONFIG, demoCloseP1004.slice(0, escalationIndex + 1));
+
+    const task = state.current.tasks.find((t) => t.exceptionId === escalation.exceptionId)!;
+    expect(task.status).toBe('WAITING_FOR_CONTROLLER');
+    expect(task.ownerRole).toBe('Controller');
+    expect(task.ownerPersonId).toBe(PERSONAS.controller.personId);
+
+    const sam = openTasksForPerson(state, PERSONAS.controller.personId).map((t) => t.id);
+    expect(sam).toContain(task.id);
+    const escalator = openTasksForPerson(state, escalation.actor.personId).map((t) => t.id);
+    expect(escalator).not.toContain(task.id);
+
+    // The exception still records where the rule routed it — that is how the desk knows it was handed up.
+    const exception = state.current.exceptions.find((e) => e.id === escalation.exceptionId)!;
+    expect(exception.ownerRole).toBe('Project Accountant');
+  });
+});
+
+describe('the guided demo sits in real chairs', () => {
+  it('names only personas that exist', () => {
+    for (const step of GUIDE) {
+      if (step.persona) expect(isPersonaId(step.persona), step.label).toBe(true);
+    }
   });
 });
 

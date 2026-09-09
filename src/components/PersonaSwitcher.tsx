@@ -11,7 +11,9 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
-import { PERSONAS, type PersonaId, readPersonaCookie, writePersonaCookie } from './persona';
+import {
+  PERSONAS, PERSONA_CHANGED_EVENT, type PersonaId, readPersonaCookie, writePersonaCookie,
+} from './persona';
 
 export function PersonaSwitcher() {
   const router = useRouter();
@@ -19,8 +21,13 @@ export function PersonaSwitcher() {
   const [personaId, setPersonaId] = useState<PersonaId>('accountant');
   const [, startTransition] = useTransition();
 
+  // Follow the cookie on every route change, and whenever something else (the guided demo) rewrites it
+  // without navigating.
   useEffect(() => {
-    setPersonaId(readPersonaCookie());
+    const sync = () => setPersonaId(readPersonaCookie());
+    sync();
+    window.addEventListener(PERSONA_CHANGED_EVENT, sync);
+    return () => window.removeEventListener(PERSONA_CHANGED_EVENT, sync);
   }, [pathname]);
 
   const persona = PERSONAS[personaId];

@@ -276,6 +276,24 @@ export function waitingStateFor(role: Role): TaskStatus {
   }
 }
 
+/**
+ * The inverse of `waitingStateFor`: who a task in this state is waiting on. `null` once it is settled.
+ * An escalation moves a task to `WAITING_FOR_CONTROLLER`; whoever it was routed to originally is no longer
+ * the person it is waiting on, and every "on my desk" question must follow the status, not the routing.
+ */
+export function roleForWaitingState(status: TaskStatus): Role | null {
+  switch (status) {
+    case 'WAITING_FOR_PM':
+      return 'Project Manager';
+    case 'WAITING_FOR_ACCOUNTANT':
+      return 'Project Accountant';
+    case 'WAITING_FOR_CONTROLLER':
+      return 'Controller';
+    default:
+      return null;
+  }
+}
+
 /** A task is off the board when a human has resolved it or explicitly accepted the risk. */
 export function isSettled(status: TaskStatus): boolean {
   return status === 'RESOLVED' || status === 'ACCEPTED_RISK';

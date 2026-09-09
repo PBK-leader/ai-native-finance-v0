@@ -12,9 +12,9 @@ import { V0_CONFIG } from '@/config/v0Config';
 import { checkTransition } from '@/domain/taskStatus';
 import { waitingStateFor } from '@/domain/workflow';
 import type { DecisionPayload, ReviewDecision } from '@/domain/workflow';
-import { personId as toPersonId, projectId as toProjectId } from '@/domain/ids';
+import { projectId as toProjectId } from '@/domain/ids';
 import type { ExceptionId, ProjectId } from '@/domain/ids';
-import { PERSONAS, isPersonaId } from '@/components/persona';
+import { PERSONAS, isPersonaId } from '@/workflows/personas';
 import { canonical, buildView, engineState } from '@/workflows/engine';
 import { decisionStore } from '@/workflows/decisionStore';
 import { projectDecisions } from '@/workflows/projectDecisions';
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
       projectId: body.projectId ? (toProjectId(body.projectId) as ProjectId) : null,
       canonicalId: body.canonicalId,
     },
-    actor: { personId: toPersonId(persona.personId.replace(/^PER-/, '')), role: persona.role },
+    actor: { personId: persona.personId, role: persona.role },
     // Business date, deliberately not the wall clock: an overlay dated after the close would be filtered out
     // of every as-of selector and the answer would silently change nothing.
     effectiveDate: V0_CONFIG.closeDate,
