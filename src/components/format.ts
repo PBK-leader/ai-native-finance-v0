@@ -75,6 +75,23 @@ export function measure(value: number | null, unit: string): string {
   }
 }
 
+const AGENT_ACTION_LABEL: Record<string, string> = {
+  OBSERVED: 'Observed',
+  EXCEPTION_DETECTED: 'Detected',
+  TASK_CREATED: 'Opened task',
+  TASK_ROUTED: 'Routed',
+  RESPONSE_INCORPORATED: 'Incorporated response',
+  ANALYSIS_RERUN: 'Recomputed',
+  EXCEPTION_CLEARED: 'Cleared',
+  ESCALATED: 'Escalated',
+  CLOSE_STATUS_CHANGED: 'Close status changed',
+};
+
+/** Human label for an agent action type, shared by the activity trail and the agent console. */
+export function agentActionLabel(type: string): string {
+  return AGENT_ACTION_LABEL[type] ?? type;
+}
+
 export function statusLabel(status: string): string {
   switch (status) {
     case 'WAITING_FOR_PM':

@@ -9,19 +9,7 @@
 import type { EngineState } from '@/workflows/replay';
 import type { ProjectId } from '@/domain/ids';
 import { Empty } from './ui';
-import { usd } from './format';
-
-const ACTION_LABEL: Record<string, string> = {
-  OBSERVED: 'Observed',
-  EXCEPTION_DETECTED: 'Detected',
-  TASK_CREATED: 'Opened task',
-  TASK_ROUTED: 'Routed',
-  RESPONSE_INCORPORATED: 'Incorporated response',
-  ANALYSIS_RERUN: 'Recomputed',
-  EXCEPTION_CLEARED: 'Cleared',
-  ESCALATED: 'Escalated',
-  CLOSE_STATUS_CHANGED: 'Close status changed',
-};
+import { agentActionLabel, usd } from './format';
 
 const ACTION_TONE: Record<string, string> = {
   EXCEPTION_DETECTED: 'text-[var(--color-high)]',
@@ -84,7 +72,7 @@ export function ActivityTrail({
             </div>
             <div className="min-w-0 flex-1">
               <span className={`text-xs font-medium ${ACTION_TONE[action.type] ?? ''}`}>
-                {ACTION_LABEL[action.type] ?? action.type}
+                {agentActionLabel(action.type)}
               </span>
               <span className="ml-2 text-sm">{action.summary}</span>
             </div>

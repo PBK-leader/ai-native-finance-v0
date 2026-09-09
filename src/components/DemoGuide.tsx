@@ -14,6 +14,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState, useTransition } from 'react';
 import { GUIDE, GUIDE_LENGTH } from '@/workflows/demoScript';
+import { isPersonaId, writePersonaCookie } from './persona';
 
 const STORAGE_KEY = 'mep-guide-step';
 
@@ -39,6 +40,8 @@ export function DemoGuide() {
       window.localStorage.setItem(STORAGE_KEY, String(index));
 
       startTransition(async () => {
+        // Sit in the right chair first — the home screen is cut per person.
+        if (target.persona && isPersonaId(target.persona)) writePersonaCookie(target.persona);
         // Put the ledger in the state this beat of the story needs, then go to the right screen.
         if (target.load === 'reset') {
           await fetch('/api/reset', { method: 'POST' });

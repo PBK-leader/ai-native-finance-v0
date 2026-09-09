@@ -17,7 +17,7 @@
 
 import type { V0Config } from '@/config/v0Config';
 import type { CanonicalModel } from '@/domain/entities';
-import type { ProjectId } from '@/domain/ids';
+import type { PersonId, ProjectId } from '@/domain/ids';
 import type { ProjectMetrics } from '@/domain/metrics';
 import type { ReconciledView } from '@/domain/reconciliation';
 import { buildResolutionIndex, checkTransition, type RoutedException } from '@/domain/taskStatus';
@@ -279,6 +279,22 @@ export function tasksForProject(state: EngineState, projectId: ProjectId): Task[
   return state.current.tasks.filter((task) => task.projectId === projectId);
 }
 
+/**
+ * What is on one named person's desk, most urgent first: anything blocking a close before anything that is
+ * not, then by dollar impact. One definition, so the header count, the desk and the Command Center's
+ * "waiting on" list can never disagree about how many things Jamie has to do.
+ */
+export function openTasksForPerson(state: EngineState, personId: PersonId): Task[] {
+  const impactByException = new Map(state.current.exceptions.map((e) => [e.id, e.impact ?? 0]));
+  return state.current.tasks
+    .filter((task) => task.ownerPersonId === personId && !isSettled(task.status))
+    .sort(
+      (a, b) =>
+        Number(b.blocking) - Number(a.blocking) ||
+        (impactByException.get(b.exceptionId) ?? 0) - (impactByException.get(a.exceptionId) ?? 0),
+    );
+}
+
 export function exceptionById(state: EngineState, id: string): ExceptionRecord | undefined {
   return state.current.exceptions.find((e) => e.id === id);
 }
@@ -289,6 +305,21 @@ export function taskByExceptionId(state: EngineState, id: string): Task | undefi
 
 export function decisionsForException(state: EngineState, id: string): ReviewDecision[] {
   return state.decisions.filter((d) => d.exceptionId === id);
+}
+
+/**
+ * The costliest thing actually blocking a project's close, or `null` if nothing is.
+ *
+ * A single named definition, not something each screen that wants a sensible default is left to re-derive —
+ * "blocking" and "currentlyTriggering" both matter, and a screen that forgets one of them would answer "what
+ * is blocking this close" differently from every other screen asking the same question.
+ */
+export function topBlockingException(state: EngineState, projectId: ProjectId): ExceptionRecord | null {
+  const candidates = state.current.exceptions.filter(
+    (e) => e.projectId === projectId && e.blocking && e.currentlyTriggering,
+  );
+  if (candidates.length === 0) return null;
+  return candidates.reduce((best, e) => ((e.impact ?? 0) > (best.impact ?? 0) ? e : best));
 }
 
 /** Rule metadata, for explaining in the UI what a rule looks for. */

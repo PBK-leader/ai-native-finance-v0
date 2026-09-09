@@ -343,6 +343,16 @@ export function buildGraph(
       links.push(link('RELATES_TO', exception.id, nodeId, 'reconciliation'));
     }
 
+    // An exception is always scoped to its project by `projectId`, whether or not the rule's evidence
+    // happens to cite the project node directly (several AP rules cite only the invoice/commitment/vendor
+    // chain). Without this, a project is not reliably one hop from its own exceptions, and any type-filtered
+    // neighbourhood walk — such as the graph explorer's "why can't this close" preset — can silently fail to
+    // reach a real blocking exception because the only path to it ran through a node type the filter excluded.
+    // `BELONGS_TO`, not `RELATES_TO`: this is scoping, and must not be drawn as evidence the rule cited.
+    if (exception.projectId && !exception.evidence.nodeIds.includes(exception.projectId)) {
+      links.push(link('BELONGS_TO', exception.id, exception.projectId, 'master_data'));
+    }
+
     const owningAgent = agents.find((agent) => agent.ownedRules.includes(exception.ruleId));
     if (owningAgent) links.push(link('CREATED', owningAgent.id, exception.id, 'master_data'));
 

@@ -20,15 +20,16 @@ import { Card, CloseReadyTag, Empty, Metric, Td, Th } from '@/components/ui';
 import { ExceptionCard } from '@/components/ExceptionCard';
 import { ActivityTrail } from '@/components/ActivityTrail';
 import { pct, ratioPct, signedUsd, usd } from '@/components/format';
+import { currentPersona } from '@/components/personaServer';
 
 export const dynamic = 'force-dynamic';
 
 const TABS = [
   { id: 'overview', label: 'Overview' },
-  { id: 'forecast', label: 'Forecast & WIP' },
-  { id: 'ap', label: 'AP & Cost Control' },
-  { id: 'billing', label: 'Billing & Change Orders' },
-  { id: 'activity', label: 'Activity' },
+  { id: 'forecast', label: 'Forecast' },
+  { id: 'ap', label: 'Costs & invoices' },
+  { id: 'billing', label: 'Billing & change orders' },
+  { id: 'activity', label: 'History' },
 ] as const;
 
 type Tab = (typeof TABS)[number]['id'];
@@ -42,6 +43,7 @@ export default async function Project360({
   const { id } = await params;
   const { tab: rawTab } = await searchParams;
   const tab: Tab = (TABS.find((t) => t.id === rawTab)?.id ?? 'overview') as Tab;
+  const { persona: viewer } = await currentPersona();
 
   const state = engineState();
   const model = canonical();
@@ -77,21 +79,26 @@ export default async function Project360({
               Number(b.currentlyTriggering) - Number(a.currentlyTriggering) ||
               (b.impact ?? 0) - (a.impact ?? 0),
           )
-          .map((exception) => (
+          .map((exception) => {
+            const task = tasksByException.get(exception.id);
+            return (
             <ExceptionCard
               key={exception.id}
               exception={exception}
-              task={tasksByException.get(exception.id)}
+              task={task}
               decisions={state.decisions.filter((d) => d.exceptionId === exception.id)}
               ruleDescription={ruleDescription(exception.ruleId)}
               forecastTargets={forecastTargetsFor(metrics, exception)}
+              ownerName={task?.ownerPersonId ? model.index.personById.get(task.ownerPersonId)?.name : undefined}
+              viewer={viewer}
               suppressedByTitle={
                 exception.suppressedBy
                   ? exceptions.find((e) => e.id === exception.suppressedBy)?.title
                   : undefined
               }
             />
-          ))}
+            );
+          })}
       </div>
     );
   };
@@ -100,7 +107,7 @@ export default async function Project360({
     <div className="space-y-6">
       <div>
         <Link href="/" className="text-xs text-[var(--color-muted)] hover:underline">
-          ← Command Center
+          ← My desk
         </Link>
         <div className="mt-1 flex flex-wrap items-center gap-3">
           <h1 className="text-xl font-semibold tracking-tight">{project.name}</h1>
@@ -226,7 +233,7 @@ export default async function Project360({
             </Card>
           </div>
 
-          <Card title="Open items" subtitle="Everything the agents found on this project">
+          <Card title="What needs attention" subtitle="Everything found on this project, most urgent first">
             {renderExceptions(() => true)}
           </Card>
         </div>
@@ -305,7 +312,7 @@ export default async function Project360({
             </p>
           </Card>
 
-          <Card title="Forecast & WIP items">{renderExceptions((w) => w === 'Forecast')}</Card>
+          <Card title="Forecast items">{renderExceptions((w) => w === 'Forecast')}</Card>
         </div>
       )}
 
@@ -324,7 +331,7 @@ export default async function Project360({
             </div>
           </Card>
 
-          <Card title="AP & cost control items">
+          <Card title="Cost & invoice items">
             {renderExceptions((w) => w === 'AP' || w === 'Data Quality')}
           </Card>
         </div>
@@ -438,7 +445,7 @@ export default async function Project360({
 
       {tab === 'activity' && (
         <Card
-          title="Activity"
+          title="History"
           subtitle="What the agents observed, who they asked, what was answered, and what changed"
         >
           <ActivityTrail

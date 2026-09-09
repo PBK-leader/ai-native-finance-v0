@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import type { ExceptionRecord, Task } from '@/domain/workflow';
 import type { ForecastTarget } from '@/workflows/forecastTargets';
-import { PERSONAS, readPersonaCookie } from './persona';
+import { readPersonaCookie, type Persona } from './persona';
 
 type Mode = 'accept' | 'reject' | 'forecast' | 'sov' | 'answer' | 'escalate' | 'risk' | 'approve';
 
@@ -28,10 +28,15 @@ function adjustmentTypeFor(ruleId: string): 'RNI' | 'AP_UNPOSTED' | 'UNPOSTED_LA
 }
 
 export function ResolveForm({
-  task, exception, forecastTargets = [],
+  task, exception, forecastTargets = [], viewer,
 }: {
   task: Task;
   exception: ExceptionRecord;
+  /**
+   * Who is acting, resolved on the server from the same cookie the API will check. Read as a prop rather
+   * than from `document.cookie` during render, so the server-rendered and browser-rendered forms agree.
+   */
+  viewer: Persona;
   /**
    * The cost codes this question is actually about, resolved server-side from the canonical model.
    *
@@ -45,6 +50,7 @@ export function ResolveForm({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
   const [mode, setMode] = useState<Mode | null>(null);
   const [text, setText] = useState('');
   const [amount, setAmount] = useState(String(exception.impact ?? 0));
@@ -57,7 +63,6 @@ export function ResolveForm({
     })),
   );
 
-  const persona = PERSONAS[readPersonaCookie()];
   const adjustmentType = adjustmentTypeFor(exception.ruleId);
 
   const post = (payload: unknown) => {
@@ -83,24 +88,31 @@ export function ResolveForm({
 
       setMode(null);
       setText('');
+      setDone(true);
       router.refresh();
     });
   };
 
   const options = availableActions(
-    task, persona.role, adjustmentType !== null, exception.ruleId, forecastTargets.length > 0,
+    task, viewer.role, adjustmentType !== null, exception.ruleId, forecastTargets.length > 0,
   );
 
   if (options.length === 0) {
     return (
       <p className="mt-3 text-xs text-[var(--color-muted)]">
-        This task is waiting on {task.ownerRole.toLowerCase()}. Switch persona to act on it.
+        Only the {task.ownerRole.toLowerCase()} can act on this. In this demo, use &quot;Acting as&quot; at the top
+        right to sit in their chair.
       </p>
     );
   }
 
   return (
     <div className="mt-3 space-y-3">
+      {done && (
+        <p className="rounded border border-green-200 bg-green-50 px-3 py-2 text-xs text-[var(--color-ok)]">
+          Recorded. Every number that depends on this has been recalculated.
+        </p>
+      )}
       <div className="flex flex-wrap gap-2">
         {options.map((option) => (
           <button

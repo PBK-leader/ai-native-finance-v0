@@ -57,6 +57,12 @@ export type NeighbourhoodOptions = {
   nodeTypes?: readonly NodeType[];
   /** Restrict to these link types. Empty or absent means all types. */
   linkTypes?: readonly LinkType[];
+  /**
+   * Node types to include when reached but never to walk *through*. An agent, an accountant or a vendor is
+   * shared across the whole portfolio; a project-centred walk that continued past one would pull every
+   * other project's exceptions, tasks and invoices into the picture and stop being about this project.
+   */
+  terminalTypes?: readonly NodeType[];
   /** Safety valve so a dense hub cannot produce an unreadable picture. */
   maxNodes?: number;
 };
@@ -64,7 +70,7 @@ export type NeighbourhoodOptions = {
 export type Neighbourhood = {
   nodes: GraphNode[];
   links: GraphLink[];
-  /** How many hops from the root each node sits, for layout and for explaining the picture. */
+  /** How many hops from the root each node sits — kept for callers that explain or test reachability. */
   depthByNode: Map<string, number>;
   /** True when `maxNodes` cut the walk short, so the UI can say so rather than silently under-reporting. */
   truncated: boolean;
@@ -81,7 +87,9 @@ export function neighbourhood(
   rootId: string,
   options: NeighbourhoodOptions,
 ): Neighbourhood {
-  const { depth, nodeTypes, linkTypes, maxNodes = 400 } = options;
+  const { depth, nodeTypes, linkTypes, terminalTypes, maxNodes = 400 } = options;
+  const isTerminal = (node: GraphNode): boolean =>
+    !!terminalTypes && terminalTypes.includes(node.type) && node.id !== rootId;
 
   const root = index.nodes.get(rootId);
   if (!root) return { nodes: [], links: [], depthByNode: new Map(), truncated: false };
@@ -116,7 +124,7 @@ export function neighbourhood(
           }
           included.set(neighbourId, neighbour);
           depthByNode.set(neighbourId, d + 1);
-          next.push(neighbourId);
+          if (!isTerminal(neighbour)) next.push(neighbourId);
         }
         collectedLinks.set(link.id, link);
       }
@@ -126,10 +134,19 @@ export function neighbourhood(
     frontier = next;
   }
 
-  // Keep only links whose both ends survived filtering, so nothing implies an unsupported relationship.
-  const links = [...collectedLinks.values()].filter(
-    (l) => included.has(l.fromId) && included.has(l.toId),
-  );
+  // Closing pass. The walk only sees a link while expanding one of its ends, so a link between two nodes
+  // that were both reached but never expanded — two nodes at the last hop, or a terminal hub and a leaf —
+  // would be silently missing while both nodes are drawn. Omission is a quieter lie than invention: this
+  // adds only canonical links between nodes already included, so it cannot imply anything unsupported.
+  for (const nodeId of included.keys()) {
+    for (const link of linksFor(index, nodeId)) {
+      if (allowLink(link) && included.has(link.fromId) && included.has(link.toId)) {
+        collectedLinks.set(link.id, link);
+      }
+    }
+  }
+
+  const links = [...collectedLinks.values()];
 
   return { nodes: [...included.values()], links, depthByNode, truncated };
 }

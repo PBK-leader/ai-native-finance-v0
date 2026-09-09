@@ -17,6 +17,7 @@ import { Card, Empty } from '@/components/ui';
 import { ExceptionCard } from '@/components/ExceptionCard';
 import { dollarExposure } from '@/calculations/portfolio';
 import { usd } from '@/components/format';
+import { currentPersona } from '@/components/personaServer';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,6 +38,7 @@ export default async function WorkQueue({
   const projectFilter = params.project ?? 'All';
   const status = (params.status ?? 'open') as (typeof STATUSES)[number];
 
+  const { persona: viewer } = await currentPersona();
   const state = engineState();
   const model = canonical();
   const exceptionById = new Map(state.current.exceptions.map((e) => [e.id, e]));
@@ -78,12 +80,13 @@ export default async function WorkQueue({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold tracking-tight">Work Queue</h1>
+        <h1 className="text-xl font-semibold tracking-tight">Work queue</h1>
         <p className="mt-1 max-w-2xl text-sm">
           <span className="font-medium">What this answers:</span>{' '}
           <span className="text-[var(--color-muted)]">
-            Everything the agents found that needs a human — each with the evidence behind it, who owns it,
-            and what to do. This is the shared list a finance team works from.
+            Everything that needs a human across the whole team — who owns it, and what to do. Your own
+            items are already waiting on{' '}
+            <Link href="/" className="text-[var(--color-accent)] hover:underline">your desk</Link>.
           </span>
         </p>
         <p className="mt-2 text-sm text-[var(--color-muted)]">
@@ -148,6 +151,8 @@ export default async function WorkQueue({
                 task={task}
                 decisions={state.decisions.filter((d) => d.exceptionId === exception.id)}
                 ruleDescription={ruleDescription(exception.ruleId)}
+                ownerName={task.ownerPersonId ? model.index.personById.get(task.ownerPersonId)?.name : undefined}
+                viewer={viewer}
                 forecastTargets={
                   exception.projectId
                     ? forecastTargetsFor(
@@ -159,7 +164,7 @@ export default async function WorkQueue({
                 projectName={
                   exception.projectId
                     ? model.index.projectById.get(exception.projectId)?.name
-                    : 'Portfolio level'
+                    : 'Company-wide'
                 }
               />
             );

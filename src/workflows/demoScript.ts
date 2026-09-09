@@ -28,6 +28,12 @@ export type GuideStep = {
    * "leave the ledger alone", used for steps that only change which screen you are looking at.
    */
   load?: DemoId | 'reset';
+  /**
+   * Whose chair to sit in for this beat — a persona id from `components/persona.ts`. Home is cut per person,
+   * so the story has to say who is looking. Typed as a string here because this layer cannot import the UI's
+   * persona list; the guide validates it before use.
+   */
+  persona?: string;
 };
 
 export const GUIDE: GuideStep[] = [
@@ -36,19 +42,43 @@ export const GUIDE: GuideStep[] = [
     title: 'Six live jobs, and nobody can close the books',
     say:
       "This is Summit MEP — a $37 million electrical, mechanical and plumbing contractor with six active " +
-      "jobs. It's the last day of the month and the controller is trying to close. Look at the close-ready " +
-      "column: zero of six. Not because the jobs are in trouble, but because the finance team is still " +
-      "chasing answers that live in four different systems.",
+      "jobs. We're sitting in the Controller's chair on the last day of the month, trying to close. Look at " +
+      "'Ready to close': zero of six. Not because the jobs are in trouble, but because the finance team is " +
+      "still chasing answers that live in four different systems.",
     lookFor: [
-      'Close-ready: 0 of 6',
+      'Ready to close: 0 of 6',
       'Projected profit is down $675k since last month',
       '$1.12M underbilled — work performed that has not been invoiced',
+      'Top right: the system already knows what is waiting on the Controller personally',
     ],
     soWhat:
       'Today this is three weeks of a controller and two accountants emailing project managers. That is the ' +
       'cost we are attacking.',
     href: '/',
     load: 'reset',
+    persona: 'controller',
+  },
+  {
+    label: 'Meet the agents',
+    title: 'Four agents, each with a declared job, evidence scope, and a hard limit on what it can do',
+    say:
+      "Before the numbers: what found all this? Four agents. Three of them — Cost Control, Forecast, and " +
+      "Billing & Change Order — own disjoint sets of rules and run the same loop: observe the records they " +
+      "are entitled to see, detect, open an evidence-backed task, and route it to a named person. The fourth, " +
+      "the Close Orchestrator, owns no detection rule at all — its only job is deciding whether a project can " +
+      "close and escalating to a Controller when a human answer moves the numbers materially. This isn't a " +
+      "label on a function. Each agent declares the exact list of actions it is allowed to emit, and the " +
+      "runtime rejects anything outside it — that list, and the live count next to it, is what you're looking " +
+      "at on this screen right now.",
+    lookFor: [
+      'Each agent\'s goal, evidence scope, and owned rules, in the language a controller would use',
+      'The allowed-actions list with a live count — this session has already run the baseline pass',
+      'The Close Orchestrator owns zero detection rules; it only judges readiness and escalates',
+    ],
+    soWhat:
+      'This is the difference between "we added AI" and an auditable system: every action an agent can ever ' +
+      'take is enumerated and enforced in code, not asserted in a slide.',
+    href: '/agents',
   },
   {
     label: 'What is blocking',
@@ -116,7 +146,7 @@ export const GUIDE: GuideStep[] = [
     lookFor: [
       'Forecast final cost rose $125,000 after the PM answered',
       'Projected margin dropped from 11.9% to 9.4%',
-      'Open the Activity tab to see the full chain',
+      'Open the History tab to see the full chain',
     ],
     soWhat:
       'PMs will not fill in finance spreadsheets. They will answer one specific question about their own job. ' +
@@ -171,7 +201,7 @@ export const GUIDE: GuideStep[] = [
       "The job goes from not close-ready to Ready to close.",
     lookFor: [
       'Central University Science Lab: Ready to close',
-      'The Activity tab shows the entire chain in order',
+      'The History tab shows the entire chain in order',
       'The controller\'s risk acceptance is preserved with its written rationale',
     ],
     soWhat:
@@ -184,14 +214,16 @@ export const GUIDE: GuideStep[] = [
     label: 'The moat',
     title: 'Everything is connected, and everything is traceable',
     say:
-      "Last thing. This is the operating graph — every object in the business and how they relate. It is not " +
-      "a picture bolted onto a dashboard; it is the same structure the calculations run on. Click any node " +
-      "and you get its properties and its source records. The green edges are relationships a human created " +
-      "during this close.",
+      "Last thing. This is the operating graph — every object in the business and how they relate, read " +
+      "left to right in the order the money moves: raw records, what they reconcile to, the agent that " +
+      "looked, what it flagged, who owns it, what they decided. It is not a picture bolted onto a dashboard; " +
+      "it is the same structure the calculations run on. Hover anything and its whole chain lights up. The " +
+      "green lines are relationships a human created during this close.",
     lookFor: [
-      'Click the project at the centre, then follow a change order out to its schedule-of-values line',
-      'Every node shows the source file and record it came from',
-      'Dashed edges were derived by matching records across systems',
+      'The selected exception on load — hover it and trace left to the invoices and PO that prove it',
+      'The Agents column: follow "detected" from Billing & Change Order Agent into the exceptions it found',
+      'Open the AP invoice bundle to see every record; click any card for its source file and row',
+      'The green line from the human decision back to the schedule-of-values line it created',
     ],
     soWhat:
       'This is what makes the second customer cheaper than the first. Once a contractor is modelled, every ' +
